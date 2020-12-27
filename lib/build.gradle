@@ -2,6 +2,7 @@
 plugins {
     id 'java-library'
     id 'com.diffplug.spotless'
+    id 'jacoco'
 }
 
 repositories {
@@ -10,3 +11,5 @@ repositories {
 
 apply from: rootProject.file('compile.gradle')
 apply from: rootProject.file('spotless.gradle')
+apply from: rootProject.file('test.gradle')
+apply from: rootProject.file('jacoco.gradle')

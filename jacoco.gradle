@@ -1,0 +1,35 @@
+// Configure JacoCo
+jacoco {
+    toolVersion = '0.8.6'
+}
+
+jacocoTestReport {
+    reports {
+        csv.enabled false
+        xml.enabled true
+        html.enabled true
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                counter = 'METHOD'
+                minimum = 0.9
+            }
+        }
+        rule {
+            limit {
+                counter = 'BRANCH'
+                minimum = 0.8
+            }
+        }
+        rule {
+            limit {
+                counter = 'INSTRUCTION'
+                minimum = 0.8
+            }
+        }
+    }
+}
