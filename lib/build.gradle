@@ -15,6 +15,7 @@ apply from: rootProject.file('spotless.gradle')
 apply from: rootProject.file('test.gradle')
 apply from: rootProject.file('jacoco.gradle')
 apply from: rootProject.file('sonarqube.gradle')
+apply from: rootProject.file('javadoc.gradle')
 
 // This is a workaround to avoid misleading warning on Sonar about missing bytecode dependencies
 // See: https://jira.sonarsource.com/browse/SONARJAVA-3114)

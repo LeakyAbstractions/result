@@ -1,0 +1,11 @@
+// Configure Javadoc
+javadoc {
+    options.addBooleanOption('html5', true)
+    configure(options) {
+        tags(
+                'apiNote:a:API Note:',
+                'implNote:a:Impl Note:',
+                'implSpec:a:Impl Spec:'
+                )
+    }
+}
