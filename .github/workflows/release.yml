@@ -1,0 +1,89 @@
+
+# Publish a new Release
+name: Release
+
+on:
+  create:
+    tags:
+      - '*'
+
+env:
+  GRADLE_OPTS: '-Dorg.gradle.daemon=false'
+
+jobs:
+  build:
+
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+
+    # ================================
+    # CHECKOUT
+    # ================================
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    # ================================
+    # SET UP JDK
+    # ================================
+    - name: Set up JDK
+      uses: actions/setup-java@v1
+      with:
+        java-version: 14
+
+    # ================================
+    # CACHE GRADLE
+    # ================================
+    - name: Cache Gradle packages
+      uses: actions/cache@v2
+      with:
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+
+    # ================================
+    # GENERATE CHANGELOG
+    # ================================
+    - name: Generate changelog
+      id: changelog
+      shell: bash
+      run: |
+        CURRENT_VERSION=$(./gradlew --quiet printProperty -Pkey=version)
+        PREVIOUS_VERSION=$(./gradlew --quiet printProperty -Pkey=previousVersion)
+        echo "Generating changelog from previous version: $PREVIOUS_VERSION to current version: $CURRENT_VERSION"
+        CHANGELOG=$(git log --format="- %s%%0A" ${PREVIOUS_VERSION}..${CURRENT_VERSION})
+        echo "##[set-output name=changes;]$(echo ${CHANGELOG})"
+
+    # ================================
+    # CREATE RELEASE
+    # ================================
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        body: |
+          Changes in this release:
+          ${{ steps.changelog.outputs.changes }}
+        draft: false
+        prerelease: false
+
+    # ================================
+    # PUBLISH
+    # ================================
+    - name: Publish with Gradle
+      id: publish
+      env:
+        GITHUB_USERNAME: ${{ secrets.PUBLISH_USERNAME }}
+        GITHUB_PASSWORD: ${{ secrets.PUBLISH_PASSWORD }}
+        BINTRAY_USERNAME: ${{ secrets.BINTRAY_USERNAME }}
+        BINTRAY_PASSWORD: ${{ secrets.BINTRAY_PASSWORD }}
+      run: ./gradlew publish bintrayUpload

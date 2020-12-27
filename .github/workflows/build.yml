@@ -1,0 +1,92 @@
+
+# Continuous Integration
+name: Build
+
+on:
+  push:
+    branches:
+    - '*'
+  pull_request:
+    branches:
+    - main
+    - develop
+
+env:
+  GRADLE_OPTS: '-Dorg.gradle.daemon=false'
+  SONAR_HOST_URL: https://sonarcloud.io
+  SONAR_ORGANIZATION: leakyabstractions
+
+jobs:
+  build:
+
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+
+    # ================================
+    # CHECKOUT
+    # ================================
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    # ================================
+    # SET UP JDK
+    # ================================
+    - name: Set up JDK
+      uses: actions/setup-java@v1
+      with:
+        java-version: 14
+
+    # ================================
+    # CACHE SONARCLOUD PACKAGES
+    # ================================
+    - name: Cache SonarCloud packages
+      uses: actions/cache@v2
+      with:
+        key: ${{ runner.os }}-sonar
+        path: |
+          ~/.sonar/cache
+        restore-keys: |
+          ${{ runner.os }}-sonar
+
+    # ================================
+    # CACHE GRADLE PACKAGES
+    # ================================
+    - name: Cache Gradle packages
+      uses: actions/cache@v2
+      with:
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+
+    # ================================
+    # BUILD
+    # ================================
+    - name: Build
+      run: ./gradlew build --info
+
+    # ================================
+    # TEST
+    # ================================
+    - name: Test
+      run: ./gradlew test --info
+
+    # ================================
+    # CODE COVERAGE
+    # ================================
+    - name: Code Coverage
+      run: ./gradlew jacocoTestReport jacocoTestCoverageVerification --info
+
+    # ================================
+    # ANALYZE RESULT
+    # ================================
+    - name: Analyze Library RESULT
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_RESULT }}
+      run: ./gradlew :lib:sonarqube --info

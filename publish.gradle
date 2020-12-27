@@ -53,6 +53,7 @@ bintray {
     pkg {
         repo                    = 'maven'
         name                    = project.artifactId
+        desc                    = project.artifactDescription
         userOrg                 = 'leakyabstractions'
         licenses                = [ rootProject.licenseId ]
         websiteUrl              = rootProject.homepage
@@ -60,7 +61,7 @@ bintray {
         vcsUrl                  = rootProject.repository
         githubRepo              = rootProject.githubId
         githubReleaseNotesFile  = 'README.md'
-        labels                  = project.artifactLabels
+        labels                  = project.artifactLabels.split(',\\s*')
         publicDownloadNumbers   = true
         version {
             released            = new Date()
