@@ -1,0 +1,15 @@
+// Configure SonarQube
+sonarqube {
+    properties {
+        property 'sonar.host.url',          System.env.SONAR_HOST_URL
+        property 'sonar.organization',      System.env.SONAR_ORGANIZATION
+        property 'sonar.projectName',       project.sonarProjectName
+        property 'sonar.projectKey',        project.sonarProjectKey
+        property 'sonar.projectVersion',    rootProject.version
+        property 'sonar.links.homepage',    rootProject.homepage
+        property 'sonar.links.ci',          rootProject.ci
+        property 'sonar.links.issue',       rootProject.issues
+        property 'sonar.links.scm',         rootProject.repository
+        property 'sonar.sourceEncoding',    'UTF-8'
+    }
+}
