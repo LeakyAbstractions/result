@@ -4,6 +4,7 @@ plugins {
     id 'com.diffplug.spotless'
     id 'jacoco'
     id 'org.sonarqube'
+    id 'com.jfrog.bintray'
     id 'maven-publish'
 }
 
