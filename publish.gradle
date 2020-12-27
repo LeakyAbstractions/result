@@ -1,0 +1,45 @@
+// Package javadoc and sources
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+// Configure publishing repositories and publications
+publishing {
+    repositories {
+        maven {
+            name = 'GitHubPackages'
+            url = uri('https://maven.pkg.github.com/LeakyAbstractions/result')
+            credentials {
+                username = System.env.GITHUB_USERNAME
+                password = System.env.GITHUB_PASSWORD
+            }
+        }
+    }
+    publications {
+        mavenRelease(MavenPublication) {
+            pom {
+                groupId         = rootProject.group
+                artifactId      = project.artifactId
+                name            = project.artifactName
+                description     = project.artifactDescription
+                version         = rootProject.version
+                url             = rootProject.homepage
+                licenses {
+                    license {
+                        name    = rootProject.licenseName
+                        url     = rootProject.licenseUrl
+                    }
+                }
+                developers {
+                    developer {
+                        id      = rootProject.developerId
+                        name    = rootProject.developerName
+                        email   = rootProject.developerEmail
+                    }
+                }
+            }
+            from(components.java)
+        }
+    }
+}

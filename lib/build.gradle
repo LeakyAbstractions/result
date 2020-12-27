@@ -4,6 +4,7 @@ plugins {
     id 'com.diffplug.spotless'
     id 'jacoco'
     id 'org.sonarqube'
+    id 'maven-publish'
 }
 
 repositories {
@@ -16,6 +17,7 @@ apply from: rootProject.file('test.gradle')
 apply from: rootProject.file('jacoco.gradle')
 apply from: rootProject.file('sonarqube.gradle')
 apply from: rootProject.file('javadoc.gradle')
+apply from: rootProject.file('publish.gradle')
 
 // This is a workaround to avoid misleading warning on Sonar about missing bytecode dependencies
 // See: https://jira.sonarsource.com/browse/SONARJAVA-3114)
