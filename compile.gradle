@@ -1,0 +1,7 @@
+// Configure java compiler
+sourceCompatibility = '14'
+targetCompatibility = '14'
+
+tasks.withType(JavaCompile).all {
+    options.compilerArgs.addAll(['-Xlint:all', '-Werror'])
+}

@@ -6,3 +6,5 @@ plugins {
 repositories {
     jcenter()
 }
+
+apply from: rootProject.file('compile.gradle')
