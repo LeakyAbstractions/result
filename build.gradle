@@ -1,4 +1,8 @@
 
+plugins {
+    id 'com.diffplug.spotless' version '5.0.0' apply false
+}
+
 /**
  * Print project property by key
  * - Usage: `./gradlew -q printProperty -Pkey=description`
