@@ -1,0 +1,26 @@
+
+plugins {
+    id 'java-library'
+    id 'com.jfrog.bintray'
+    id 'maven-publish'
+    id 'jacoco'
+    id 'com.diffplug.spotless'
+    id 'org.sonarqube'
+}
+
+repositories {
+    jcenter()
+}
+
+apply from: rootProject.file('compile.gradle')
+apply from: rootProject.file('spotless.gradle')
+apply from: rootProject.file('test.gradle')
+apply from: rootProject.file('jacoco.gradle')
+apply from: rootProject.file('sonarqube.gradle')
+apply from: rootProject.file('javadoc.gradle')
+apply from: rootProject.file('publish.gradle')
+
+dependencies {
+    api project(":lib")
+    api 'org.assertj:assertj-core:3.18.1'
+}
