@@ -27,7 +27,7 @@ To add a dependency on Result using [Maven](https://maven.apache.org/), use the 
 <dependency>
     <groupId>com.leakyabstractions</groupId>
     <artifactId>result</artifactId>
-    <version>0.1.2</version>
+    <version>0.1.3</version>
     <type>pom</type>
 </dependency>
 ```
@@ -39,7 +39,7 @@ internally:
 
 ```gradle
 dependencies {
-    implementation 'com.leakyabstractions:result:0.1.2'
+    implementation 'com.leakyabstractions:result:0.1.3'
 }
 ```
 
@@ -47,7 +47,7 @@ If you are building a library that will use `Result` type in its public API, you
 
 ```gradle
 dependencies {
-    api 'com.leakyabstractions:result:0.1.2'
+    api 'com.leakyabstractions:result:0.1.3'
 }
 ```
 
@@ -66,7 +66,7 @@ To add a dependency on Result using **Maven**, use the following:
 <dependency>
     <groupId>com.leakyabstractions</groupId>
     <artifactId>result-assertj</artifactId>
-    <version>0.1.2</version>
+    <version>0.1.3</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -75,6 +75,6 @@ To add a dependency using **Gradle**:
 
 ```gradle
 dependencies {
-    testImplementation 'com.leakyabstractions:result-assertj:0.1.2'
+    testImplementation 'com.leakyabstractions:result-assertj:0.1.3'
 }
 ```
