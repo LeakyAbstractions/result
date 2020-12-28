@@ -1,3 +1,3 @@
 theme: jekyll-theme-leap-day
 title: Result Library for Java
-description: A Java library to handle success/failure without exceptions
+description: A Java library to handle success and failure without exceptions
