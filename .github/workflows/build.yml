@@ -90,3 +90,12 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_RESULT }}
       run: ./gradlew :lib:sonarqube --info
+
+    # ================================
+    # ANALYZE RESULT-ASSERTJ
+    # ================================
+    - name: Analyze Library RESULT-ASSERTJ
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_RESULT_ASSERTJ }}
+      run: ./gradlew :lib-assertj:sonarqube --info
