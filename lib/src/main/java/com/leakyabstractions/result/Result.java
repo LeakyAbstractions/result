@@ -39,13 +39,14 @@ import java.util.function.Predicate;
  *           <li>are considered equal solely based on {@code equals()}, not based on reference equality
  *           ({@code ==});</li>
  *           <li>do not have accessible constructors, but are instead instantiated through factory methods (such as the
- *           ones provided by {@code DefaultResult}) which make no commitment as to the identity of returned
+ *           ones provided by {@link DefaultResult}) which make no commitment as to the identity of returned
  *           instances;</li>
  *           <li>are <em>freely substitutable</em> when equal, meaning that interchanging any two instances {@code x}
  *           and {@code y} that are equal according to {@code equals()} in any computation or method invocation should
  *           produce no visible change in behavior.</li>
  *           </ul>
  * @author Guillermo Calvo
+ * @see DefaultResult
  * @param <S> the type of the success value
  * @param <F> the type of the failure value
  */
