@@ -1,0 +1,17 @@
+// Configure Javadoc
+javadoc {
+    options {
+        title project.artifactName
+        header "${project.artifactName} ${rootProject.version}"
+        links 'https://docs.oracle.com/en/java/javase/14/docs/api/'
+        author true
+        addBooleanOption('html5', true)
+    }
+    configure(options) {
+        tags(
+                'apiNote:a:API Note:',
+                'implNote:a:Impl Note:',
+                'implSpec:a:Impl Spec:'
+                )
+    }
+}

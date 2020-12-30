@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"com.leakyabstractions.result","l":"DefaultResult"},{"p":"com.leakyabstractions.result","l":"Result"}];updateSearchResults();
