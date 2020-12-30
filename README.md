@@ -1,13 +1,13 @@
 
 [![Build Status](https://github.com/leakyabstractions/result/workflows/Build/badge.svg)](https://github.com/LeakyAbstractions/result/actions?query=workflow%3ABuild)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=LeakyAbstractions_result&metric=alert_status)](https://sonarcloud.io/dashboard?id=LeakyAbstractions_result)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=LeakyAbstractions_result&metric=coverage)](https://sonarcloud.io/dashboard?id=LeakyAbstractions_result)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=LeakyAbstractions_result&metric=coverage)](https://sonarcloud.io/component_measures?id=LeakyAbstractions_result&metric=coverage&view=list)
 [![Latest release](https://img.shields.io/github/release/leakyabstractions/result.svg)](https://github.com/leakyabstractions/result/releases/latest)
 [![Download](https://api.bintray.com/packages/leakyabstractions/maven/result/images/download.svg)](https://bintray.com/leakyabstractions/maven/result/)
 
-![Result](docs/result-banner-centered.png)
-
 # Result Library for Java
+
+![Result](https://dev.leakyabstractions.com/result/result-banner-centered.png)
 
 The purpose of this library is to provide a type-safe encapsulation of operation results that may have succeeded or
 failed, instead of throwing exceptions.
@@ -15,66 +15,68 @@ failed, instead of throwing exceptions.
 If you like `Optional` but feel that it sometimes falls too short, you'll love `Result`.
 
 
-## Adding Result to Your Build
+## Result Library in a Nutshell
 
-The library has no external dependencies and it is very lightweight. Adding it to your build should be very easy.
+Before _Result_, we would wrap `someMethod` invocation inside a `try` block so that errors can be handled inside a
+`catch` block.
 
-### Maven
-
-To add a dependency on Result using [Maven](https://maven.apache.org/), use the following:
-
-```xml
-<dependency>
-    <groupId>com.leakyabstractions</groupId>
-    <artifactId>result</artifactId>
-    <version>0.1.3</version>
-    <type>pom</type>
-</dependency>
+```
+    int length = 0;
+    try {
+        String result = this.someMethod();
+        this.commit(result);
+        length = result.length()
+    } catch(SomeException problem) {
+        this.rollback(problem);
+    }
+    return length;
 ```
 
-### Gradle
+This approach is lengthy, and that's not the only problem -- it's also slow. Conventional wisdom says that exceptional
+logic shouldn't be used for normal program flow.
 
-To add a dependency using [Gradle](https://gradle.org/), if you are building an application that will use `Result`
-internally:
+_Result_ makes us deal with expected, non-exceptional error situations explicitly as a way of enforcing good programming
+practices.
 
-```gradle
-dependencies {
-    implementation 'com.leakyabstractions:result:0.1.3'
-}
+Let's now look at how the above code could be refactored with _Result_:
+
+```
+    Result<String, SomeFailure> result = this.someMethod();
+    result.handle(this::commit, this::rollback);
+    return result.map(String::length);
 ```
 
-If you are building a library that will use `Result` type in its public API, you should use:
+In the above example, we use only three lines of code to replace the nine that worked in the first example. But we can
+make it even shorter by chaining methods in typical functional programming style:
 
-```gradle
-dependencies {
-    api 'com.leakyabstractions:result:0.1.3'
-}
+```
+    return this.someMethod().handle(this::commit, this::rollback).map(String::length);
 ```
 
-For more information on when to use `api` and `implementation`, read the [Gradle documentation on API and implementation
-separation](https://docs.gradle.org/current/userguide/java_library_plugin.html#sec:java_library_separation).
+
+## Getting Started
+
+Please read the [Quick Guide](https://dev.leakyabstractions.com/result/) to know how to add this library to your build
+and further info about _Result_ features.
 
 
-## Asserting Result objects
+## Javadoc
 
-Additionaly you can use fluent assertions (based on [AssertJ](https://assertj.github.io/)) for Result objects in your
-unit tests.
+Here you can find the full [Result API documentation](https://dev.leakyabstractions.com/result/api/).
 
-To add a dependency on Result using **Maven**, use the following:
 
-```xml
-<dependency>
-    <groupId>com.leakyabstractions</groupId>
-    <artifactId>result-assertj</artifactId>
-    <version>0.1.3</version>
-    <scope>test</scope>
-</dependency>
-```
+## Looking for Support?
 
-To add a dependency using **Gradle**:
+We'd love to help. Check out the [support guidelines](https://dev.leakyabstractions.com/result/SUPPORT.html).
 
-```gradle
-dependencies {
-    testImplementation 'com.leakyabstractions:result-assertj:0.1.3'
-}
-```
+
+## Contributions Welcome
+
+If you'd like to contribute to this project, please [start here](https://dev.leakyabstractions.com/result/CONTRIBUTING.html).
+
+
+## Code of Conduct
+
+This project is governed by the
+[Contributor Covenant Code of Conduct](https://dev.leakyabstractions.com/result/CODE_OF_CONDUCT.html).
+By participating, you are expected to uphold this code.
