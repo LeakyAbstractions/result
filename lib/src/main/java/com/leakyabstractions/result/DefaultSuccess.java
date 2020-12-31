@@ -58,21 +58,21 @@ final class DefaultSuccess<S, F> implements Result<S, F> {
     }
 
     @Override
-    public Result<S, F> handle(Consumer<? super S> successConsumer, Consumer<? super F> failureConsumer) {
-        Objects.requireNonNull(successConsumer);
-        successConsumer.accept(this.value);
+    public Result<S, F> ifSuccess(Consumer<? super S> successAction) {
+        Objects.requireNonNull(successAction);
+        successAction.accept(this.value);
         return this;
     }
 
     @Override
-    public Result<S, F> handleFailure(Consumer<? super F> failureConsumer) {
+    public Result<S, F> ifSuccessOrElse(Consumer<? super S> successAction, Consumer<? super F> failureAction) {
+        Objects.requireNonNull(successAction);
+        successAction.accept(this.value);
         return this;
     }
 
     @Override
-    public Result<S, F> handle(Consumer<? super S> successConsumer) {
-        Objects.requireNonNull(successConsumer);
-        successConsumer.accept(this.value);
+    public Result<S, F> ifFailure(Consumer<? super F> failureAction) {
         return this;
     }
 

@@ -24,7 +24,7 @@ import java.util.function.Predicate;
  * <p>
  * Additional methods that depend on fulfillment state are provided, such as {@link #orElse(java.lang.Object) orElse()}
  * (return an <em>alternative success value</em> if the operation failed) and
- * {@link #handle(java.util.function.Consumer) handle()} (execute a block of code if the operation succeeded).
+ * {@link #ifSuccess(java.util.function.Consumer) ifSuccess()} (execute a block of code if the operation succeeded).
  * 
  * @apiNote A variable whose type is {@code Result} should never itself be {@code null}; it should always point to a
  *          {@code Result} instance.
@@ -127,33 +127,34 @@ public interface Result<S, F> {
     F getFailureOrElseThrow();
 
     /**
-     * Invoke one of the provided consumers, depending on the fulfillment status of this result.
+     * Perform the given action with the success value if this is a successful result; otherwise do nothing.
      * 
-     * @param successHandler block to be executed if this is a successful result
-     * @param failureHandler block to be executed if this is a failed result
-     * @throws NullPointerException if this is a successful result and {@code successHandler}; or if this is a failed
-     *             result and {@code failureHandler} is {@code null}
+     * @param successAction the action to be performed if this is a successful result
+     * @throws NullPointerException if this is a successful result and {@code successAction} is {@code null}
      * @return this result
      */
-    Result<S, F> handle(Consumer<? super S> successHandler, Consumer<? super F> failureHandler);
+    Result<S, F> ifSuccess(Consumer<? super S> successAction);
 
     /**
-     * Invoke the provided consumer with the success value if this is a successful result; otherwise do nothing.
+     * Perform the given action with the success value if this is a successful result; otherwise perform the given
+     * failure-based action.
      * 
-     * @param successHandler block to be executed if this is a successful result
-     * @throws NullPointerException if this is a successful result and {@code successHandler} is {@code null}
+     * @param successAction the action to be performed if this is a successful result
+     * @param failureAction the action to be performed if this is a failed result
+     * @throws NullPointerException if this is a successful result and {@code successAction}; or if this is a failed
+     *             result and {@code failureAction} is {@code null}
      * @return this result
      */
-    Result<S, F> handle(Consumer<? super S> successHandler);
+    Result<S, F> ifSuccessOrElse(Consumer<? super S> successAction, Consumer<? super F> failureAction);
 
     /**
-     * Invoke the provided consumer with the failure value if this is a failed result; otherwise do nothing.
+     * Perform the given action with the failure value if this is a failed result; otherwise do nothing.
      * 
-     * @param failureHandler block to be executed if this is a failed result
-     * @throws NullPointerException if this is a failed result and {@code failureHandler} is {@code null}
+     * @param failureAction the action to be performed if this is a failed result
+     * @throws NullPointerException if this is a failed result and {@code failureAction} is {@code null}
      * @return this result
      */
-    Result<S, F> handleFailure(Consumer<? super F> failureHandler);
+    Result<S, F> ifFailure(Consumer<? super F> failureAction);
 
     /**
      * Return a new failed result if this is a successful result whose value does not match the provided predicate;
@@ -166,7 +167,7 @@ public interface Result<S, F> {
      * @param predicate a predicate to apply to the success value if this is a successful result
      * @param failureMapper a mapping function which will produce the value to be held by a new failed result
      * @throws NullPointerException if this is a successful result whose value does not match the provided predicate and
-     *             {@code failureHandler} is {@code null}
+     *             {@code failureAction} is {@code null}
      * @return a new failed result if this is a successful result whose value does not match the provided predicate;
      *         otherwise this result
      */
