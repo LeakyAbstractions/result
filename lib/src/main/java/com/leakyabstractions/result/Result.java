@@ -206,7 +206,7 @@ public interface Result<S, F> {
      * @return a new successful result with a new <em>success</em> value if this is a successful result; otherwise a
      *         failed result with the same <em>failure</em> value
      */
-    <S2> Result<S2, F> map(Function<? super S, S2> successMapper);
+    <S2> Result<S2, F> mapSuccess(Function<? super S, S2> successMapper);
 
     /**
      * Apply the provided mapping {@link Function} to the failure value if this is a failed result and return a new
@@ -262,7 +262,7 @@ public interface Result<S, F> {
      * @return the result of applying a {@code Result}-bearing mapping function the success value if this is a
      *         successful result; otherwise a failed result with the same <em>failure</em> value.
      */
-    <S2> Result<S2, F> flatMap(Function<? super S, Result<S2, F>> successFlatMapper);
+    <S2> Result<S2, F> flatMapSuccess(Function<? super S, Result<S2, F>> successFlatMapper);
 
     /**
      * Apply the provided {@code Result}-bearing mapping {@link Function} to the failure value and return the produced

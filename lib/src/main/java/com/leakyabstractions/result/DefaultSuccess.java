@@ -92,7 +92,7 @@ final class DefaultSuccess<S, F> implements Result<S, F> {
     }
 
     @Override
-    public <S2> Result<S2, F> map(Function<? super S, S2> successMapper) {
+    public <S2> Result<S2, F> mapSuccess(Function<? super S, S2> successMapper) {
         Objects.requireNonNull(successMapper);
         return new DefaultSuccess<>(successMapper.apply(this.value));
     }
@@ -112,7 +112,7 @@ final class DefaultSuccess<S, F> implements Result<S, F> {
     }
 
     @Override
-    public <S2> Result<S2, F> flatMap(Function<? super S, Result<S2, F>> successFlatMapper) {
+    public <S2> Result<S2, F> flatMapSuccess(Function<? super S, Result<S2, F>> successFlatMapper) {
         Objects.requireNonNull(successFlatMapper);
         return successFlatMapper.apply(this.value);
     }

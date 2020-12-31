@@ -93,7 +93,7 @@ final class DefaultFailure<S, F> implements Result<S, F> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <S2> Result<S2, F> map(Function<? super S, S2> successMapper) {
+    public <S2> Result<S2, F> mapSuccess(Function<? super S, S2> successMapper) {
         return (Result<S2, F>) this;
     }
 
@@ -113,7 +113,7 @@ final class DefaultFailure<S, F> implements Result<S, F> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <S2> Result<S2, F> flatMap(Function<? super S, Result<S2, F>> successFlatMapper) {
+    public <S2> Result<S2, F> flatMapSuccess(Function<? super S, Result<S2, F>> successFlatMapper) {
         return (Result<S2, F>) this;
     }
 
