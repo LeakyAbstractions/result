@@ -130,7 +130,7 @@ void should_be_failure_too() {
 
 ## Conditional Actions
 
-The `handle` family of methods enable us to run some code on the wrapped success/failure value. Before _Result_, we
+The `if...` family of methods enable us to run some code on the wrapped success/failure value. Before _Result_, we
 would do:
 
 ```java
@@ -155,27 +155,27 @@ Let's now look at how the above code could be refactored with _Result_:
 
 ```java
 Result<String, SomeFailure> result = this.someMethod();
-result.handle(this::commit, this::rollback);
+result.ifSuccessOrElse(this::commit, this::rollback);
 return result.isSuccess();
 ```
 
-The first parameter passed to [`handle()`][HANDLE] will be executed if `someMethod` succeeded; otherwise the second one
-will.
+The first action passed to [`ifSuccessOrElse()`][IF_SUCCESS_OR_ELSE] will be performed if `someMethod` succeeded;
+otherwise the second one will.
 
 The above example not only shorter but also faster. We can make it even shorter by chaining methods in typical
 functional programming style:
 
 ```java
-return this.someMethod().handle(this::commit, this::rollback).isSuccess();
+return this.someMethod().ifSuccessOrElse(this::commit, this::rollback).isSuccess();
 ```
 
-There are other methods [`handle()`][HANDLE_SUCCESS] and [`handleFailure()`][HANDLE_FAILURE] to handle either one of the
-success/failure cases only:
+There are other methods [`ifSuccess()`][IF_SUCCESS] and [`ifFailure()`][IF_FAILURE] to handle either one of the success/
+failure cases only:
 
 ```java
 return this.someMethod(123)
-    .handle(this::commit) // commits only if the result is success
-    .handleFailure(this::rollback) // rolbacks only if the result is failure
+    .ifSuccess(this::commit) // commits only if the result is success
+    .ifFailure(this::rollback) // rolbacks only if the result is failure
     .isSuccess();
 ```
 
@@ -570,9 +570,9 @@ expected to uphold this code.
 [WRAP]: api/com/leakyabstractions/result/DefaultResult.html#wrap(java.util.concurrent.Callable)
 [IS_SUCCESS]: api/com/leakyabstractions/result/Result.html#isSuccess()
 [IS_FAILURE]: api/com/leakyabstractions/result/Result.html#isFailure()
-[HANDLE]: api/com/leakyabstractions/result/Result.html#handle(java.util.function.Consumer,java.util.function.Consumer)
-[HANDLE_SUCCESS]: api/com/leakyabstractions/result/Result.html#handle(java.util.function.Consumer)
-[HANDLE_FAILURE]: api/com/leakyabstractions/result/Result.html#handleFailure(java.util.function.Consumer)
+[IF_SUCCESS_OR_ELSE]: api/com/leakyabstractions/result/Result.html#ifSuccessOrElse(java.util.function.Consumer,java.util.function.Consumer)
+[IF_SUCCESS]: api/com/leakyabstractions/result/Result.html#ifSuccess(java.util.function.Consumer)
+[IF_FAILURE]: api/com/leakyabstractions/result/Result.html#ifFailure(java.util.function.Consumer)
 [OR_ELSE]: api/com/leakyabstractions/result/Result.html#orElse(S)
 [OR_ELSE_MAP]: api/com/leakyabstractions/result/Result.html#orElseMap(java.util.function.Function)
 [OR_ELSE_THROW]: api/com/leakyabstractions/result/Result.html#orElseThrow()

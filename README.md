@@ -45,7 +45,7 @@ Let's now look at how the above code could be refactored with _Result_:
 ```java
 
     Result<String, SomeFailure> result = this.someMethod();
-    result.handle(this::commit, this::rollback);
+    result.ifSuccessOrElse(this::commit, this::rollback);
     return result.map(String::length);
 
 ```
@@ -55,7 +55,7 @@ make it even shorter by chaining methods in typical functional programming style
 
 ```java
 
-    return this.someMethod().handle(this::commit, this::rollback).map(String::length);
+    return this.someMethod().ifSuccessOrElse(this::commit, this::rollback).map(String::length);
 
 ```
 
