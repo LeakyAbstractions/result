@@ -31,7 +31,7 @@ class DefaultResult_combineVarArgs_Test {
         final Result<String, IOException> result4 = success("success4");
         // When
         final Result<List<String>, Stream<Exception>> result = combine(result1, result2, result3, result4)
-                .map(this::toList);
+                .mapSuccess(this::toList);
         // Then
         assertThat(result).isEqualTo(success(list("success1", "success2", "success3", "success4")));
     }
