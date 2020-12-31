@@ -130,7 +130,7 @@ void should_be_failure_too() {
 
 ## Conditional Actions
 
-The `handle` family of methods enable us to run some code on the wrapped success/failure value. Before _Result_, we
+The `if...` family of methods enable us to run some code on the wrapped success/failure value. Before _Result_, we
 would do:
 
 ```java
@@ -155,34 +155,34 @@ Let's now look at how the above code could be refactored with _Result_:
 
 ```java
 Result<String, SomeFailure> result = this.someMethod();
-result.handle(this::commit, this::rollback);
+result.ifSuccessOrElse(this::commit, this::rollback);
 return result.isSuccess();
 ```
 
-The first parameter passed to [`handle()`][HANDLE] will be executed if `someMethod` succeeded; otherwise the second one
-will.
+The first action passed to [`ifSuccessOrElse()`][IF_SUCCESS_OR_ELSE] will be performed if `someMethod` succeeded;
+otherwise the second one will.
 
 The above example not only shorter but also faster. We can make it even shorter by chaining methods in typical
 functional programming style:
 
 ```java
-return this.someMethod().handle(this::commit, this::rollback).isSuccess();
+return this.someMethod().ifSuccessOrElse(this::commit, this::rollback).isSuccess();
 ```
 
-There are other methods [`handle()`][HANDLE_SUCCESS] and [`handleFailure()`][HANDLE_FAILURE] to handle either one of the
-success/failure cases only:
+There are other methods [`ifSuccess()`][IF_SUCCESS] and [`ifFailure()`][IF_FAILURE] to handle either one of the success/
+failure cases only:
 
 ```java
 return this.someMethod(123)
-    .handle(this::commit) // commits only if the result is success
-    .handleFailure(this::rollback) // rolbacks only if the result is failure
+    .ifSuccess(this::commit) // commits only if the result is success
+    .ifFailure(this::rollback) // rolbacks only if the result is failure
     .isSuccess();
 ```
 
 
 ## Unwrapping Values
 
-The [`Optional::orElse`][https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/Optional.html#orElse(T)]
+The [`Optional::orElse`](https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/Optional.html#orElse(T))
 method is used to retrieve the value wrapped inside an `Optional` instance, or a _default value_ in case the optional is
 empty.
 
@@ -312,7 +312,7 @@ The `filter` method is normally used to reject wrapped success values based on a
 
 In the previous section, we looked at how to reject or accept a success value based on a filter.
 
-We can use a similar syntax to transform the _Result_ value with the `map` family of methods:
+We can use a similar syntax to transform the _Result_ value with the `map...` family of methods:
 
 ```java
 @Test
@@ -320,19 +320,19 @@ void should_return_string_length() {
     // Given
     Result<String, Integer> result = success("ABCD");
     // When
-    Result<Integer, String> mapped = result.map(String::length);
+    Result<Integer, String> mapped = result.mapSuccess(String::length);
     // Then
     assertThat(mapped.orElseThrow()).isEqualTo(4);
 }
 ```
 
-In this example, we wrap a string inside a _Result_ object and use its [`map()`][MAP] method to perform an action on the
-contained string. The action we perform is to retrieve the length of the string.
+In this example, we wrap a string inside a _Result_ object and use its [`mapSuccess()`][MAP_SUCCESS] method to perform
+an action on the contained string. The action we perform is to retrieve the length of the string.
 
 The `map` method returns the result of the computation wrapped inside _Result_. We then have to call an appropriate
 method on the returned result to retrieve its value.
 
-There is another [`map()`][MAP_SUCCESS] method to transform either success/failure value at once:
+There is another [`map()`][MAP] method to transform either success/failure value at once:
 
 ```java
 @Test
@@ -372,9 +372,9 @@ void should_return_is_empty() {
 }
 ```
 
-Just like the `map` methods, we also have the `flatMap` family of methods as an alternative for transforming values. The
-difference is that `map` does not alter the success/failure state of the result, whereas with `flatMap`, you can start
-with a successful result and end up with a failed one, and _vice versa_.
+Just like the `map...` methods, we also have the `flatMap...` family of methods as an alternative for transforming
+values. The difference is that `map...` methods don't alter the success/failure state of the result, whereas with
+`flatMap...` ones, you can start with a successful result and end up with a failed one, and _vice versa_.
 
 Previously, we created simple `String` and `Integer` objects for wrapping in a _Result_ instance. However, frequently,
 we will receive these objects as we invoke third-party methods.
@@ -415,7 +415,7 @@ Result<File, Problem> openFile(String path) {
 ```
 
 If we wanted to obtain the file path from the user _and then_ invoke the above method to get the file object, we could
-use [`flatMap`][FLATMAP_SUCCESS] to fluently transform one result into another:
+use [`flatMapSuccess`][FLATMAP_SUCCESS] to fluently transform one result into another:
 
 ```java
 @Test
@@ -424,7 +424,7 @@ void should_contain_file() {
     User user = new User("Rachel", true);
     // When
     Result<File, Problem> result = user.getCustomConfigPath()
-        .flatMap(this::openFile);
+        .flatMapSuccess(this::openFile);
     // Then
     assertThat(result.orElseThrow()).isAbsolute();
 }
@@ -435,7 +435,7 @@ void should_contain_user_problem() {
     User user = new User("Monica", false);
     // When
     Result<File, Problem> result = user.getCustomConfigPath()
-        .flatMap(this::openFile);
+        .flatMapSuccess(this::openFile);
     // Then
     assertThat(result.getFailure()).isInstanceOf(UserProblem.class);
 }
@@ -446,7 +446,7 @@ void should_contain_file_problem() {
     User user = new User("../../wrong//path/", true);
     // When
     Result<File, Problem> result = user.getCustomConfigPath()
-        .flatMap(this::openFile);
+        .flatMapSuccess(this::openFile);
     // Then
     assertThat(result.getFailure()).isInstanceOf(FileProblem.class);
 }
@@ -570,9 +570,9 @@ expected to uphold this code.
 [WRAP]: api/com/leakyabstractions/result/DefaultResult.html#wrap(java.util.concurrent.Callable)
 [IS_SUCCESS]: api/com/leakyabstractions/result/Result.html#isSuccess()
 [IS_FAILURE]: api/com/leakyabstractions/result/Result.html#isFailure()
-[HANDLE]: api/com/leakyabstractions/result/Result.html#handle(java.util.function.Consumer,java.util.function.Consumer)
-[HANDLE_SUCCESS]: api/com/leakyabstractions/result/Result.html#handle(java.util.function.Consumer)
-[HANDLE_FAILURE]: api/com/leakyabstractions/result/Result.html#handleFailure(java.util.function.Consumer)
+[IF_SUCCESS_OR_ELSE]: api/com/leakyabstractions/result/Result.html#ifSuccessOrElse(java.util.function.Consumer,java.util.function.Consumer)
+[IF_SUCCESS]: api/com/leakyabstractions/result/Result.html#ifSuccess(java.util.function.Consumer)
+[IF_FAILURE]: api/com/leakyabstractions/result/Result.html#ifFailure(java.util.function.Consumer)
 [OR_ELSE]: api/com/leakyabstractions/result/Result.html#orElse(S)
 [OR_ELSE_MAP]: api/com/leakyabstractions/result/Result.html#orElseMap(java.util.function.Function)
 [OR_ELSE_THROW]: api/com/leakyabstractions/result/Result.html#orElseThrow()
@@ -580,8 +580,8 @@ expected to uphold this code.
 [GET_FAILURE_OR_ELSE_THROW]: api/com/leakyabstractions/result/Result.html#getFailureOrElseThrow()
 [FILTER]: api/com/leakyabstractions/result/Result.html#filter(java.util.function.Predicate,java.util.function.Function)
 [MAP]: api/com/leakyabstractions/result/Result.html#map(java.util.function.Function,java.util.function.Function)
-[MAP_SUCCESS]: api/com/leakyabstractions/result/Result.html#map(java.util.function.Function)
+[MAP_SUCCESS]: api/com/leakyabstractions/result/Result.html#mapSuccess(java.util.function.Function)
 [MAP_FAILURE]: api/com/leakyabstractions/result/Result.html#mapFailure(java.util.function.Function)
 [FLATMAP]: api/com/leakyabstractions/result/Result.html#flatMap(java.util.function.Function,java.util.function.Function)
-[FLATMAP_SUCCESS]: api/com/leakyabstractions/result/Result.html#flatMap(java.util.function.Function)
+[FLATMAP_SUCCESS]: api/com/leakyabstractions/result/Result.html#flatMapSuccess(java.util.function.Function)
 [FLATMAP_FAILURE]: api/com/leakyabstractions/result/Result.html#flatMapFailure(java.util.function.Function)

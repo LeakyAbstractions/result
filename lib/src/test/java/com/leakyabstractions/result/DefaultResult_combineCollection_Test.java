@@ -32,7 +32,7 @@ class DefaultResult_combineCollection_Test {
         final Result<String, Exception> result4 = success("success4");
         final List<Result<String, Exception>> results = list(result1, result2, result3, result4);
         // When
-        final Result<List<String>, Stream<Exception>> result = combine(results).map(this::toList);
+        final Result<List<String>, Stream<Exception>> result = combine(results).mapSuccess(this::toList);
         // Then
         assertThat(result).isEqualTo(success(list("success1", "success2", "success3", "success4")));
     }

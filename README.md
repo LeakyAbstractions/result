@@ -20,7 +20,8 @@ If you like `Optional` but feel that it sometimes falls too short, you'll love `
 Before _Result_, we would wrap `someMethod` invocation inside a `try` block so that errors can be handled inside a
 `catch` block.
 
-```
+```java
+
     int length = 0;
     try {
         String result = this.someMethod();
@@ -30,6 +31,7 @@ Before _Result_, we would wrap `someMethod` invocation inside a `try` block so t
         this.rollback(problem);
     }
     return length;
+
 ```
 
 This approach is lengthy, and that's not the only problem -- it's also slow. Conventional wisdom says that exceptional
@@ -40,17 +42,21 @@ practices.
 
 Let's now look at how the above code could be refactored with _Result_:
 
-```
+```java
+
     Result<String, SomeFailure> result = this.someMethod();
-    result.handle(this::commit, this::rollback);
-    return result.map(String::length);
+    result.ifSuccessOrElse(this::commit, this::rollback);
+    return result.mapSuccess(String::length);
+
 ```
 
 In the above example, we use only three lines of code to replace the nine that worked in the first example. But we can
 make it even shorter by chaining methods in typical functional programming style:
 
-```
-    return this.someMethod().handle(this::commit, this::rollback).map(String::length);
+```java
+
+    return this.someMethod().ifSuccessOrElse(this::commit, this::rollback).mapSuccess(String::length);
+
 ```
 
 

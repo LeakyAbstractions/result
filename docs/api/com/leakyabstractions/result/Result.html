@@ -40,7 +40,7 @@ loadScripts(document, 'script');</script>
 <li><a href="../../../index-all.html">Index</a></li>
 <li><a href="../../../help-doc.html">Help</a></li>
 </ul>
-<div class="about-language">Result Library 0.1.3</div>
+<div class="about-language">Result Library 0.1.5</div>
 </div>
 <div class="sub-nav">
 <div>
@@ -101,7 +101,7 @@ loadScripts(document, 'script');</script>
  <p>
  Additional methods that depend on fulfillment state are provided, such as <a href="#orElse(S)"><code>orElse()</code></a>
  (return an <em>alternative success value</em> if the operation failed) and
- <a href="#handle(java.util.function.Consumer)"><code>handle()</code></a> (execute a block of code if the operation succeeded).</div>
+ <a href="#ifSuccess(java.util.function.Consumer)"><code>ifSuccess()</code></a> (execute a block of code if the operation succeeded).</div>
 <dl class="notes">
 <dt>Author:</dt>
 <dd>Guillermo Calvo</dd>
@@ -158,14 +158,6 @@ loadScripts(document, 'script');</script>
 </td>
 </tr>
 <tr class="row-color" id="i1">
-<td class="col-first"><code>&lt;S2&gt;&nbsp;<a href="Result.html" title="interface in com.leakyabstractions.result">Result</a>&lt;S2,&#8203;<a href="Result.html" title="type parameter in Result">F</a>&gt;</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#flatMap(java.util.function.Function)">flatMap</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;? super <a href="Result.html" title="type parameter in Result">S</a>,&#8203;<a href="Result.html" title="interface in com.leakyabstractions.result">Result</a>&lt;S2,&#8203;<a href="Result.html" title="type parameter in Result">F</a>&gt;&gt;&nbsp;successFlatMapper)</code></th>
-<td class="col-last">
-<div class="block">Apply the provided <code>Result</code>-bearing mapping <a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link"><code>Function</code></a> to the success value and return the produced
- result if this is a successful result; otherwise return a failed result with the same <em>failure</em> value.</div>
-</td>
-</tr>
-<tr class="alt-color" id="i2">
 <td class="col-first"><code>&lt;S2,&#8203;
 F2&gt;&nbsp;<a href="Result.html" title="interface in com.leakyabstractions.result">Result</a>&lt;S2,&#8203;F2&gt;</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#flatMap(java.util.function.Function,java.util.function.Function)">flatMap</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;? super <a href="Result.html" title="type parameter in Result">S</a>,&#8203;<a href="Result.html" title="interface in com.leakyabstractions.result">Result</a>&lt;S2,&#8203;F2&gt;&gt;&nbsp;successFlatMapper,
@@ -175,12 +167,20 @@ F2&gt;&nbsp;<a href="Result.html" title="interface in com.leakyabstractions.resu
  the produced result.</div>
 </td>
 </tr>
-<tr class="row-color" id="i3">
+<tr class="alt-color" id="i2">
 <td class="col-first"><code>&lt;F2&gt;&nbsp;<a href="Result.html" title="interface in com.leakyabstractions.result">Result</a>&lt;<a href="Result.html" title="type parameter in Result">S</a>,&#8203;F2&gt;</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#flatMapFailure(java.util.function.Function)">flatMapFailure</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;? super <a href="Result.html" title="type parameter in Result">F</a>,&#8203;<a href="Result.html" title="interface in com.leakyabstractions.result">Result</a>&lt;<a href="Result.html" title="type parameter in Result">S</a>,&#8203;F2&gt;&gt;&nbsp;failureFlatMapper)</code></th>
 <td class="col-last">
 <div class="block">Apply the provided <code>Result</code>-bearing mapping <a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link"><code>Function</code></a> to the failure value and return the produced
  result if this is a failed result; otherwise return a successful result with the same <em>success</em> value.</div>
+</td>
+</tr>
+<tr class="row-color" id="i3">
+<td class="col-first"><code>&lt;S2&gt;&nbsp;<a href="Result.html" title="interface in com.leakyabstractions.result">Result</a>&lt;S2,&#8203;<a href="Result.html" title="type parameter in Result">F</a>&gt;</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#flatMapSuccess(java.util.function.Function)">flatMapSuccess</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;? super <a href="Result.html" title="type parameter in Result">S</a>,&#8203;<a href="Result.html" title="interface in com.leakyabstractions.result">Result</a>&lt;S2,&#8203;<a href="Result.html" title="type parameter in Result">F</a>&gt;&gt;&nbsp;successFlatMapper)</code></th>
+<td class="col-last">
+<div class="block">Apply the provided <code>Result</code>-bearing mapping <a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link"><code>Function</code></a> to the success value and return the produced
+ result if this is a successful result; otherwise return a failed result with the same <em>failure</em> value.</div>
 </td>
 </tr>
 <tr class="alt-color" id="i4">
@@ -192,24 +192,25 @@ F2&gt;&nbsp;<a href="Result.html" title="interface in com.leakyabstractions.resu
 </tr>
 <tr class="row-color" id="i5">
 <td class="col-first"><code><a href="Result.html" title="interface in com.leakyabstractions.result">Result</a>&lt;<a href="Result.html" title="type parameter in Result">S</a>,&#8203;<a href="Result.html" title="type parameter in Result">F</a>&gt;</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#handle(java.util.function.Consumer)">handle</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;? super <a href="Result.html" title="type parameter in Result">S</a>&gt;&nbsp;successHandler)</code></th>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#ifFailure(java.util.function.Consumer)">ifFailure</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;? super <a href="Result.html" title="type parameter in Result">F</a>&gt;&nbsp;failureAction)</code></th>
 <td class="col-last">
-<div class="block">Invoke the provided consumer with the success value if this is a successful result; otherwise do nothing.</div>
+<div class="block">Perform the given action with the failure value if this is a failed result; otherwise do nothing.</div>
 </td>
 </tr>
 <tr class="alt-color" id="i6">
 <td class="col-first"><code><a href="Result.html" title="interface in com.leakyabstractions.result">Result</a>&lt;<a href="Result.html" title="type parameter in Result">S</a>,&#8203;<a href="Result.html" title="type parameter in Result">F</a>&gt;</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#handle(java.util.function.Consumer,java.util.function.Consumer)">handle</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;? super <a href="Result.html" title="type parameter in Result">S</a>&gt;&nbsp;successHandler,
-<a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;? super <a href="Result.html" title="type parameter in Result">F</a>&gt;&nbsp;failureHandler)</code></th>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#ifSuccess(java.util.function.Consumer)">ifSuccess</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;? super <a href="Result.html" title="type parameter in Result">S</a>&gt;&nbsp;successAction)</code></th>
 <td class="col-last">
-<div class="block">Invoke one of the provided consumers, depending on the fulfillment status of this result.</div>
+<div class="block">Perform the given action with the success value if this is a successful result; otherwise do nothing.</div>
 </td>
 </tr>
 <tr class="row-color" id="i7">
 <td class="col-first"><code><a href="Result.html" title="interface in com.leakyabstractions.result">Result</a>&lt;<a href="Result.html" title="type parameter in Result">S</a>,&#8203;<a href="Result.html" title="type parameter in Result">F</a>&gt;</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#handleFailure(java.util.function.Consumer)">handleFailure</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;? super <a href="Result.html" title="type parameter in Result">F</a>&gt;&nbsp;failureHandler)</code></th>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#ifSuccessOrElse(java.util.function.Consumer,java.util.function.Consumer)">ifSuccessOrElse</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;? super <a href="Result.html" title="type parameter in Result">S</a>&gt;&nbsp;successAction,
+<a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;? super <a href="Result.html" title="type parameter in Result">F</a>&gt;&nbsp;failureAction)</code></th>
 <td class="col-last">
-<div class="block">Invoke the provided consumer with the failure value if this is a failed result; otherwise do nothing.</div>
+<div class="block">Perform the given action with the success value if this is a successful result; otherwise perform the given
+ failure-based action.</div>
 </td>
 </tr>
 <tr class="alt-color" id="i8">
@@ -227,15 +228,6 @@ F2&gt;&nbsp;<a href="Result.html" title="interface in com.leakyabstractions.resu
 </td>
 </tr>
 <tr class="alt-color" id="i10">
-<td class="col-first"><code>&lt;S2&gt;&nbsp;<a href="Result.html" title="interface in com.leakyabstractions.result">Result</a>&lt;S2,&#8203;<a href="Result.html" title="type parameter in Result">F</a>&gt;</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#map(java.util.function.Function)">map</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;? super <a href="Result.html" title="type parameter in Result">S</a>,&#8203;S2&gt;&nbsp;successMapper)</code></th>
-<td class="col-last">
-<div class="block">Apply the provided mapping <a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link"><code>Function</code></a> to the success value if this is a successful result and return a new
- successful <code>Result</code> with the produced value; otherwise return a failed result with the same
- <em>failure</em> value.</div>
-</td>
-</tr>
-<tr class="row-color" id="i11">
 <td class="col-first"><code>&lt;S2,&#8203;
 F2&gt;&nbsp;<a href="Result.html" title="interface in com.leakyabstractions.result">Result</a>&lt;S2,&#8203;F2&gt;</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#map(java.util.function.Function,java.util.function.Function)">map</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;? super <a href="Result.html" title="type parameter in Result">S</a>,&#8203;S2&gt;&nbsp;successMapper,
@@ -245,13 +237,22 @@ F2&gt;&nbsp;<a href="Result.html" title="interface in com.leakyabstractions.resu
  with the produced value.</div>
 </td>
 </tr>
-<tr class="alt-color" id="i12">
+<tr class="row-color" id="i11">
 <td class="col-first"><code>&lt;F2&gt;&nbsp;<a href="Result.html" title="interface in com.leakyabstractions.result">Result</a>&lt;<a href="Result.html" title="type parameter in Result">S</a>,&#8203;F2&gt;</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#mapFailure(java.util.function.Function)">mapFailure</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;? super <a href="Result.html" title="type parameter in Result">F</a>,&#8203;F2&gt;&nbsp;failureMapper)</code></th>
 <td class="col-last">
 <div class="block">Apply the provided mapping <a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link"><code>Function</code></a> to the failure value if this is a failed result and return a new
  failed <code>Result</code> with the produced value; otherwise return a successful result with the same
  <em>success</em> value.</div>
+</td>
+</tr>
+<tr class="alt-color" id="i12">
+<td class="col-first"><code>&lt;S2&gt;&nbsp;<a href="Result.html" title="interface in com.leakyabstractions.result">Result</a>&lt;S2,&#8203;<a href="Result.html" title="type parameter in Result">F</a>&gt;</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#mapSuccess(java.util.function.Function)">mapSuccess</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;? super <a href="Result.html" title="type parameter in Result">S</a>,&#8203;S2&gt;&nbsp;successMapper)</code></th>
+<td class="col-last">
+<div class="block">Apply the provided mapping <a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link"><code>Function</code></a> to the success value if this is a successful result and return a new
+ successful <code>Result</code> with the produced value; otherwise return a failed result with the same
+ <em>failure</em> value.</div>
 </td>
 </tr>
 <tr class="row-color" id="i13">
@@ -418,50 +419,51 @@ F2&gt;&nbsp;<a href="Result.html" title="interface in com.leakyabstractions.resu
 </section>
 </li>
 <li>
-<section class="detail" id="handle(java.util.function.Consumer,java.util.function.Consumer)">
-<h3>handle</h3>
-<div class="member-signature"><span class="return-type"><a href="Result.html" title="interface in com.leakyabstractions.result">Result</a>&lt;<a href="Result.html" title="type parameter in Result">S</a>,&#8203;<a href="Result.html" title="type parameter in Result">F</a>&gt;</span>&nbsp;<span class="member-name">handle</span>&#8203;(<span class="parameters"><a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;? super <a href="Result.html" title="type parameter in Result">S</a>&gt;&nbsp;successHandler,
-<a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;? super <a href="Result.html" title="type parameter in Result">F</a>&gt;&nbsp;failureHandler)</span></div>
-<div class="block">Invoke one of the provided consumers, depending on the fulfillment status of this result.</div>
+<section class="detail" id="ifSuccess(java.util.function.Consumer)">
+<h3>ifSuccess</h3>
+<div class="member-signature"><span class="return-type"><a href="Result.html" title="interface in com.leakyabstractions.result">Result</a>&lt;<a href="Result.html" title="type parameter in Result">S</a>,&#8203;<a href="Result.html" title="type parameter in Result">F</a>&gt;</span>&nbsp;<span class="member-name">ifSuccess</span>&#8203;(<span class="parameters"><a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;? super <a href="Result.html" title="type parameter in Result">S</a>&gt;&nbsp;successAction)</span></div>
+<div class="block">Perform the given action with the success value if this is a successful result; otherwise do nothing.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>successHandler</code> - block to be executed if this is a successful result</dd>
-<dd><code>failureHandler</code> - block to be executed if this is a failed result</dd>
+<dd><code>successAction</code> - the action to be performed if this is a successful result</dd>
 <dt>Returns:</dt>
 <dd>this result</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if this is a successful result and <code>successHandler</code>; or if this is a failed
-             result and <code>failureHandler</code> is <code>null</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if this is a successful result and <code>successAction</code> is <code>null</code></dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="handle(java.util.function.Consumer)">
-<h3>handle</h3>
-<div class="member-signature"><span class="return-type"><a href="Result.html" title="interface in com.leakyabstractions.result">Result</a>&lt;<a href="Result.html" title="type parameter in Result">S</a>,&#8203;<a href="Result.html" title="type parameter in Result">F</a>&gt;</span>&nbsp;<span class="member-name">handle</span>&#8203;(<span class="parameters"><a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;? super <a href="Result.html" title="type parameter in Result">S</a>&gt;&nbsp;successHandler)</span></div>
-<div class="block">Invoke the provided consumer with the success value if this is a successful result; otherwise do nothing.</div>
+<section class="detail" id="ifSuccessOrElse(java.util.function.Consumer,java.util.function.Consumer)">
+<h3>ifSuccessOrElse</h3>
+<div class="member-signature"><span class="return-type"><a href="Result.html" title="interface in com.leakyabstractions.result">Result</a>&lt;<a href="Result.html" title="type parameter in Result">S</a>,&#8203;<a href="Result.html" title="type parameter in Result">F</a>&gt;</span>&nbsp;<span class="member-name">ifSuccessOrElse</span>&#8203;(<span class="parameters"><a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;? super <a href="Result.html" title="type parameter in Result">S</a>&gt;&nbsp;successAction,
+<a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;? super <a href="Result.html" title="type parameter in Result">F</a>&gt;&nbsp;failureAction)</span></div>
+<div class="block">Perform the given action with the success value if this is a successful result; otherwise perform the given
+ failure-based action.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>successHandler</code> - block to be executed if this is a successful result</dd>
+<dd><code>successAction</code> - the action to be performed if this is a successful result</dd>
+<dd><code>failureAction</code> - the action to be performed if this is a failed result</dd>
 <dt>Returns:</dt>
 <dd>this result</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if this is a successful result and <code>successHandler</code> is <code>null</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if this is a successful result and <code>successAction</code>; or if this is a failed
+             result and <code>failureAction</code> is <code>null</code></dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="handleFailure(java.util.function.Consumer)">
-<h3>handleFailure</h3>
-<div class="member-signature"><span class="return-type"><a href="Result.html" title="interface in com.leakyabstractions.result">Result</a>&lt;<a href="Result.html" title="type parameter in Result">S</a>,&#8203;<a href="Result.html" title="type parameter in Result">F</a>&gt;</span>&nbsp;<span class="member-name">handleFailure</span>&#8203;(<span class="parameters"><a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;? super <a href="Result.html" title="type parameter in Result">F</a>&gt;&nbsp;failureHandler)</span></div>
-<div class="block">Invoke the provided consumer with the failure value if this is a failed result; otherwise do nothing.</div>
+<section class="detail" id="ifFailure(java.util.function.Consumer)">
+<h3>ifFailure</h3>
+<div class="member-signature"><span class="return-type"><a href="Result.html" title="interface in com.leakyabstractions.result">Result</a>&lt;<a href="Result.html" title="type parameter in Result">S</a>,&#8203;<a href="Result.html" title="type parameter in Result">F</a>&gt;</span>&nbsp;<span class="member-name">ifFailure</span>&#8203;(<span class="parameters"><a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;? super <a href="Result.html" title="type parameter in Result">F</a>&gt;&nbsp;failureAction)</span></div>
+<div class="block">Perform the given action with the failure value if this is a failed result; otherwise do nothing.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>failureHandler</code> - block to be executed if this is a failed result</dd>
+<dd><code>failureAction</code> - the action to be performed if this is a failed result</dd>
 <dt>Returns:</dt>
 <dd>this result</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if this is a failed result and <code>failureHandler</code> is <code>null</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if this is a failed result and <code>failureAction</code> is <code>null</code></dd>
 </dl>
 </section>
 </li>
@@ -485,7 +487,7 @@ F2&gt;&nbsp;<a href="Result.html" title="interface in com.leakyabstractions.resu
          otherwise this result</dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if this is a successful result whose value does not match the provided predicate and
-             <code>failureHandler</code> is <code>null</code></dd>
+             <code>failureAction</code> is <code>null</code></dd>
 </dl>
 </section>
 </li>
@@ -517,9 +519,9 @@ F2&gt;</span>&nbsp;<span class="return-type"><a href="Result.html" title="interf
 </section>
 </li>
 <li>
-<section class="detail" id="map(java.util.function.Function)">
-<h3>map</h3>
-<div class="member-signature"><span class="type-parameters">&lt;S2&gt;</span>&nbsp;<span class="return-type"><a href="Result.html" title="interface in com.leakyabstractions.result">Result</a>&lt;S2,&#8203;<a href="Result.html" title="type parameter in Result">F</a>&gt;</span>&nbsp;<span class="member-name">map</span>&#8203;(<span class="parameters"><a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;? super <a href="Result.html" title="type parameter in Result">S</a>,&#8203;S2&gt;&nbsp;successMapper)</span></div>
+<section class="detail" id="mapSuccess(java.util.function.Function)">
+<h3>mapSuccess</h3>
+<div class="member-signature"><span class="type-parameters">&lt;S2&gt;</span>&nbsp;<span class="return-type"><a href="Result.html" title="interface in com.leakyabstractions.result">Result</a>&lt;S2,&#8203;<a href="Result.html" title="type parameter in Result">F</a>&gt;</span>&nbsp;<span class="member-name">mapSuccess</span>&#8203;(<span class="parameters"><a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;? super <a href="Result.html" title="type parameter in Result">S</a>,&#8203;S2&gt;&nbsp;successMapper)</span></div>
 <div class="block">Apply the provided mapping <a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link"><code>Function</code></a> to the success value if this is a successful result and return a new
  successful <code>Result</code> with the produced value; otherwise return a failed result with the same
  <em>failure</em> value.
@@ -594,9 +596,9 @@ F2&gt;</span>&nbsp;<span class="return-type"><a href="Result.html" title="interf
 </section>
 </li>
 <li>
-<section class="detail" id="flatMap(java.util.function.Function)">
-<h3>flatMap</h3>
-<div class="member-signature"><span class="type-parameters">&lt;S2&gt;</span>&nbsp;<span class="return-type"><a href="Result.html" title="interface in com.leakyabstractions.result">Result</a>&lt;S2,&#8203;<a href="Result.html" title="type parameter in Result">F</a>&gt;</span>&nbsp;<span class="member-name">flatMap</span>&#8203;(<span class="parameters"><a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;? super <a href="Result.html" title="type parameter in Result">S</a>,&#8203;<a href="Result.html" title="interface in com.leakyabstractions.result">Result</a>&lt;S2,&#8203;<a href="Result.html" title="type parameter in Result">F</a>&gt;&gt;&nbsp;successFlatMapper)</span></div>
+<section class="detail" id="flatMapSuccess(java.util.function.Function)">
+<h3>flatMapSuccess</h3>
+<div class="member-signature"><span class="type-parameters">&lt;S2&gt;</span>&nbsp;<span class="return-type"><a href="Result.html" title="interface in com.leakyabstractions.result">Result</a>&lt;S2,&#8203;<a href="Result.html" title="type parameter in Result">F</a>&gt;</span>&nbsp;<span class="member-name">flatMapSuccess</span>&#8203;(<span class="parameters"><a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;? super <a href="Result.html" title="type parameter in Result">S</a>,&#8203;<a href="Result.html" title="interface in com.leakyabstractions.result">Result</a>&lt;S2,&#8203;<a href="Result.html" title="type parameter in Result">F</a>&gt;&gt;&nbsp;successFlatMapper)</span></div>
 <div class="block">Apply the provided <code>Result</code>-bearing mapping <a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link"><code>Function</code></a> to the success value and return the produced
  result if this is a successful result; otherwise return a failed result with the same <em>failure</em> value.
  <p>
@@ -661,7 +663,7 @@ F2&gt;</span>&nbsp;<span class="return-type"><a href="Result.html" title="interf
 <li><a href="../../../index-all.html">Index</a></li>
 <li><a href="../../../help-doc.html">Help</a></li>
 </ul>
-<div class="about-language">Result Library 0.1.3</div>
+<div class="about-language">Result Library 0.1.5</div>
 </div>
 <div class="sub-nav">
 <div>

@@ -10,23 +10,23 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests for {@link DefaultSuccess#handleFailure(Consumer)}.
+ * Tests for {@link DefaultSuccess#ifSuccess(Consumer)}.
  * 
  * @author Guillermo Calvo
  */
-@DisplayName("DefaultSuccess handleFailure")
-class DefaultSuccess_handleFailure_Test {
+@DisplayName("DefaultSuccess ifSuccess")
+class DefaultSuccess_ifSuccess_Test {
 
     @Test
-    void should_ignore_failure_handler() {
+    void should_perform_success_action() {
         // Given
-        final AtomicBoolean failureHandled = new AtomicBoolean(false);
-        final Consumer<Object> failureHandler = f -> failureHandled.set(true);
+        final AtomicBoolean successHandled = new AtomicBoolean(false);
+        final Consumer<Object> successAction = s -> successHandled.set(true);
         final Result<?, ?> success = new DefaultSuccess<>("SUCCESS");
         // When
-        final Result<?, ?> result = success.handleFailure(failureHandler);
+        final Result<?, ?> result = success.ifSuccess(successAction);
         // Then
         assertThat(result).isSameAs(success);
-        assertThat(failureHandled).isFalse();
+        assertThat(successHandled).isTrue();
     }
 }

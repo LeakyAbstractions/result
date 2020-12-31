@@ -9,7 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests for {@link DefaultFailure#map(Function)}.
+ * Tests for {@link DefaultFailure#mapSuccess(Function)}.
  * 
  * @author Guillermo Calvo
  */
@@ -22,7 +22,7 @@ class DefaultFailure_mapSuccess_Test {
         final Result<Integer, String> failure = new DefaultFailure<>("FAILURE");
         final Function<Integer, String> successMapper = s -> "SUCCESS";
         // When
-        final Result<String, String> result = failure.map(successMapper);
+        final Result<String, String> result = failure.mapSuccess(successMapper);
         // Then
         assertThat(result).isEqualTo(failure);
     }

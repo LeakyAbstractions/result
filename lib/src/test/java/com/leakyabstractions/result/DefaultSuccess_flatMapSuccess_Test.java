@@ -9,7 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests for {@link DefaultSuccess#flatMap(Function)}.
+ * Tests for {@link DefaultSuccess#flatMapSuccess(Function)}.
  * 
  * @author Guillermo Calvo
  */
@@ -25,7 +25,7 @@ class DefaultSuccess_flatMapSuccess_Test {
         final Result<Integer, String> success = new DefaultSuccess<>(123);
         final Function<Integer, Result<String, String>> successFlatMapper = s -> new DefaultFailure<>(FAILURE);
         // When
-        final Result<String, String> result = success.flatMap(successFlatMapper);
+        final Result<String, String> result = success.flatMapSuccess(successFlatMapper);
         // Then
         assertThat(result).isEqualTo(new DefaultFailure<>(FAILURE));
     }
@@ -36,7 +36,7 @@ class DefaultSuccess_flatMapSuccess_Test {
         final Result<Integer, Integer> success = new DefaultSuccess<>(123);
         final Function<Integer, Result<String, Integer>> successFlatMapper = s -> new DefaultSuccess<>(SUCCESS);
         // When
-        final Result<String, Integer> result = success.flatMap(successFlatMapper);
+        final Result<String, Integer> result = success.flatMapSuccess(successFlatMapper);
         // Then
         assertThat(result).isEqualTo(new DefaultSuccess<>(SUCCESS));
     }
