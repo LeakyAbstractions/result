@@ -2,6 +2,7 @@
 package com.leakyabstractions.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.function.Function;
 
@@ -22,8 +23,9 @@ class DefaultSuccess_orElseThrow_with_Mapper_Test {
     void should_not_throw_exception() {
         // Given
         final Result<String, String> success = new DefaultSuccess<>(SUCCESS);
+        final Function<String, RuntimeException> failureMapper = f -> fail("Should not happen");
         // When
-        final String value = success.orElseThrow(RuntimeException::new);
+        final String value = success.orElseThrow(failureMapper);
         // Then
         assertThat(value).isSameAs(SUCCESS);
     }
@@ -32,7 +34,7 @@ class DefaultSuccess_orElseThrow_with_Mapper_Test {
     void should_not_throw_exception_even_if_value_is_null() {
         // Given
         final Result<String, Integer> success = new DefaultSuccess<>(null);
-        final Function<Integer, NullPointerException> failureMapper = f -> new NullPointerException();
+        final Function<Integer, NullPointerException> failureMapper = f -> fail("Should not happen");
         // When
         final String value = success.orElseThrow(failureMapper);
         // Then

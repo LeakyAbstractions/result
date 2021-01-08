@@ -21,7 +21,7 @@ class DefaultFailure_mapFailure_Test {
     void should_use_failure_mapping() {
         // Given
         final Result<Integer, Integer> failure = new DefaultFailure<>(123);
-        final UnaryOperator<Integer> failureMapper = s -> s + 198;
+        final UnaryOperator<Integer> failureMapper = f -> f + 198;
         // When
         final Result<Integer, Integer> result = failure.mapFailure(failureMapper);
         // Then

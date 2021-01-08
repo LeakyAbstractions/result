@@ -2,6 +2,7 @@
 package com.leakyabstractions.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.function.Function;
 
@@ -16,30 +17,29 @@ import org.junit.jupiter.api.Test;
 @DisplayName("DefaultFailure flatMap")
 class DefaultFailure_flatMap_Test {
 
-    private static final String SUCCESS = "SUCCESS";
-    private static final String FAILURE = "FAILURE";
-
     @Test
     void should_return_new_success_when_failure_function_returns_success() {
         // Given
         final Result<Integer, Integer> failure = new DefaultFailure<>(123);
-        final Function<Integer, Result<String, String>> successFlatMapper = s -> new DefaultSuccess<>(SUCCESS);
-        final Function<Integer, Result<String, String>> failureFlatMapper = f -> new DefaultSuccess<>(SUCCESS);
+        final Function<Integer, Result<String, String>> successFlatMapper = s -> fail("Should not happen");
+        final Result<String, String> another = new DefaultSuccess<>("SUCCESS");
+        final Function<Integer, Result<String, String>> failureFlatMapper = f -> another;
         // When
         final Result<String, String> result = failure.flatMap(successFlatMapper, failureFlatMapper);
         // Then
-        assertThat(result).isEqualTo(new DefaultSuccess<>(SUCCESS));
+        assertThat(result).isSameAs(another);
     }
 
     @Test
     void should_return_new_failure_when_failure_function_returns_failure() {
         // Given
         final Result<Integer, Integer> failure = new DefaultFailure<>(123);
-        final Function<Integer, Result<String, String>> successFlatMapper = s -> new DefaultSuccess<>(SUCCESS);
-        final Function<Integer, Result<String, String>> failureFlatMapper = f -> new DefaultFailure<>(FAILURE);
+        final Function<Integer, Result<String, String>> successFlatMapper = s -> fail("Should not happen");
+        final Result<String, String> another = new DefaultFailure<>("FAILURE");
+        final Function<Integer, Result<String, String>> failureFlatMapper = f -> another;
         // When
         final Result<String, String> result = failure.flatMap(successFlatMapper, failureFlatMapper);
         // Then
-        assertThat(result).isEqualTo(new DefaultFailure<>(FAILURE));
+        assertThat(result).isSameAs(another);
     }
 }

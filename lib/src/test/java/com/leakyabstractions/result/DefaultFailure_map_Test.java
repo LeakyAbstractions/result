@@ -2,6 +2,7 @@
 package com.leakyabstractions.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.function.Function;
 
@@ -16,15 +17,18 @@ import org.junit.jupiter.api.Test;
 @DisplayName("DefaultFailure map")
 class DefaultFailure_map_Test {
 
+    private static final String FAILURE = "FAILURE";
+
     @Test
     void should_use_failure_mapping_only() {
         // Given
         final Result<Integer, Integer> failure = new DefaultFailure<>(123);
-        final Function<Integer, String> successMapper = s -> "SUCCESS";
-        final Function<Integer, String> failureMapper = f -> "FAILURE";
+        final Function<Integer, String> successMapper = s -> fail("Should not happen");
+        final Function<Integer, String> failureMapper = f -> FAILURE;
+        final Result<String, String> expected = new DefaultFailure<>(FAILURE);
         // When
         final Result<String, String> result = failure.map(successMapper, failureMapper);
         // Then
-        assertThat(result).isEqualTo(new DefaultFailure<>("FAILURE"));
+        assertThat(result).isEqualTo(expected);
     }
 }

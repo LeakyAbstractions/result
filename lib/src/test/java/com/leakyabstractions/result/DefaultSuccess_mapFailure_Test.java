@@ -2,6 +2,7 @@
 package com.leakyabstractions.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.function.Function;
 
@@ -20,10 +21,10 @@ class DefaultSuccess_mapFailure_Test {
     void should_ignore_failure_mapping() {
         // Given
         final Result<String, Integer> success = new DefaultSuccess<>("SUCCESS");
-        final Function<Integer, String> failureMapper = f -> "FAILURE";
+        final Function<Integer, String> failureMapper = f -> fail("Should not happen");
         // When
         final Result<String, String> result = success.mapFailure(failureMapper);
         // Then
-        assertThat(result).isEqualTo(success);
+        assertThat(result).isSameAs(success);
     }
 }

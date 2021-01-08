@@ -21,7 +21,7 @@ class DefaultFailure_orElseMap_Test {
         // Given
         final Result<Integer, String> failure = new DefaultFailure<>("FAILURE");
         // When
-        final Integer value = failure.orElseMap(e -> 321);
+        final Integer value = failure.orElseMap(f -> 321);
         // Then
         assertThat(value).isEqualTo(321);
     }

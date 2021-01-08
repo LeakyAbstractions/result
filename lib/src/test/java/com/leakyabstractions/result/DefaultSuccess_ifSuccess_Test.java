@@ -20,13 +20,13 @@ class DefaultSuccess_ifSuccess_Test {
     @Test
     void should_perform_success_action() {
         // Given
-        final AtomicBoolean successHandled = new AtomicBoolean(false);
-        final Consumer<Object> successAction = s -> successHandled.set(true);
+        final AtomicBoolean actionPerformed = new AtomicBoolean(false);
+        final Consumer<Object> successAction = s -> actionPerformed.set(true);
         final Result<?, ?> success = new DefaultSuccess<>("SUCCESS");
         // When
         final Result<?, ?> result = success.ifSuccess(successAction);
         // Then
         assertThat(result).isSameAs(success);
-        assertThat(successHandled).isTrue();
+        assertThat(actionPerformed).isTrue();
     }
 }

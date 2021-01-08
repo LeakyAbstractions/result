@@ -2,6 +2,7 @@
 package com.leakyabstractions.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.function.Function;
 
@@ -20,7 +21,7 @@ class DefaultSuccess_flatMapFailure_Test {
     void should_return_equal_success_no_matter_what() {
         // Given
         final Result<String, Integer> success = new DefaultSuccess<>("SUCCESS");
-        final Function<Integer, Result<String, String>> failureFlatMapper = s -> new DefaultFailure<>("FAILURE");
+        final Function<Integer, Result<String, String>> failureFlatMapper = f -> fail("Should not happen");
         // When
         final Result<String, String> result = success.flatMapFailure(failureFlatMapper);
         // Then

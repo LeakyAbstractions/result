@@ -2,8 +2,8 @@
 package com.leakyabstractions.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
 import org.junit.jupiter.api.DisplayName;
@@ -20,13 +20,11 @@ class DefaultFailure_ifSuccess_Test {
     @Test
     void should_ignore_success_action() {
         // Given
-        final AtomicBoolean successHandled = new AtomicBoolean(false);
-        final Consumer<Object> successAction = f -> successHandled.set(true);
+        final Consumer<Object> successAction = s -> fail("Should not happen");
         final Result<?, ?> failure = new DefaultFailure<>("FAILURE");
         // When
         final Result<?, ?> result = failure.ifSuccess(successAction);
         // Then
         assertThat(result).isSameAs(failure);
-        assertThat(successHandled).isFalse();
     }
 }

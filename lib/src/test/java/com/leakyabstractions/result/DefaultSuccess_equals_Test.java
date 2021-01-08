@@ -30,16 +30,18 @@ class DefaultSuccess_equals_Test {
     void should_be_equal_to_a_successful_result_with_the_same_value() {
         // Given
         final Result<String, Integer> success = new DefaultSuccess<>(SUCCESS);
+        final Result<String, Integer> another = new DefaultSuccess<>(SUCCESS);
         // Then
-        assertThat(success).isEqualTo(new DefaultSuccess<>(SUCCESS));
+        assertThat(success).isEqualTo(another);
     }
 
     @Test
     void should_be_equal_to_a_successful_result_with_an_equal_value() {
         // Given
         final Result<String, Integer> success = new DefaultSuccess<>(SUCCESS);
+        final Result<String, Integer> another = new DefaultSuccess<>(new String("SUCCESS"));
         // Then
-        assertThat(success).isEqualTo(new DefaultSuccess<>(new String("SUCCESS")));
+        assertThat(success).isEqualTo(another);
     }
 
     @Test
@@ -54,15 +56,17 @@ class DefaultSuccess_equals_Test {
     void should_not_be_equal_to_a_successful_result_with_a_different_value() {
         // Given
         final Result<String, Integer> success = new DefaultSuccess<>(SUCCESS);
+        final Result<String, Integer> another = new DefaultSuccess<>("FAILURE");
         // Then
-        assertThat(success).isNotEqualTo(new DefaultSuccess<>("FAILURE"));
+        assertThat(success).isNotEqualTo(another);
     }
 
     @Test
     void should_not_be_equal_to_a_failed_result_with_the_same_value() {
         // Given
-        final Result<String, Integer> success = new DefaultSuccess<>(SUCCESS);
+        final Result<String, String> success = new DefaultSuccess<>(SUCCESS);
+        final Result<String, String> another = new DefaultFailure<>(SUCCESS);
         // Then
-        assertThat(success).isNotEqualTo(new DefaultFailure<>(SUCCESS));
+        assertThat(success).isNotEqualTo(another);
     }
 }

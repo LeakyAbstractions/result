@@ -2,6 +2,7 @@
 package com.leakyabstractions.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -21,8 +22,8 @@ class DefaultFailure_filter_Test {
     void should_return_itself_no_matter_what() {
         // Given
         final Result<Integer, String> failure = new DefaultFailure<>("FAILURE");
-        final Predicate<Integer> filter = s -> false;
-        final Function<Integer, String> failureMapper = s -> "ANOTHER";
+        final Predicate<Integer> filter = s -> fail("Should not happen");
+        final Function<Integer, String> failureMapper = s -> fail("Should not happen");
         // When
         final Result<Integer, String> result = failure.filter(filter, failureMapper);
         // Then

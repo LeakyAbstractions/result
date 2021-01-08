@@ -17,12 +17,10 @@ import org.junit.jupiter.api.Test;
 @DisplayName("DefaultSuccess getFailureOrElseThrow")
 class DefaultSuccess_getFailureOrElseThrow_Test {
 
-    private static final String SUCCESS = "SUCCESS";
-
     @Test
     void should_throw_exception() {
         // Given
-        final Result<String, Integer> success = new DefaultSuccess<>(SUCCESS);
+        final Result<String, Integer> success = new DefaultSuccess<>("SUCCESS");
         // When
         final ThrowingCallable callable = () -> success.getFailureOrElseThrow();
         // Then

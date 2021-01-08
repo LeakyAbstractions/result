@@ -20,13 +20,13 @@ class DefaultFailure_ifFailure_Test {
     @Test
     void should_perform_failure_action() {
         // Given
-        final AtomicBoolean failureHandled = new AtomicBoolean(false);
-        final Consumer<Object> failureAction = s -> failureHandled.set(true);
+        final AtomicBoolean actionPerformed = new AtomicBoolean(false);
+        final Consumer<Object> failureAction = f -> actionPerformed.set(true);
         final Result<?, ?> failure = new DefaultFailure<>("FAILURE");
         // When
         final Result<?, ?> result = failure.ifFailure(failureAction);
         // Then
         assertThat(result).isSameAs(failure);
-        assertThat(failureHandled).isTrue();
+        assertThat(actionPerformed).isTrue();
     }
 }

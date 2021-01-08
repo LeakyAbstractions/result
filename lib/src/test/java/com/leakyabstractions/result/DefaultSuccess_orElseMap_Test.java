@@ -2,6 +2,7 @@
 package com.leakyabstractions.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.function.Function;
 
@@ -22,7 +23,7 @@ class DefaultSuccess_orElseMap_Test {
     void should_ignore_failure_mapper() {
         // Given
         final Result<String, Integer> success = new DefaultSuccess<>(SUCCESS);
-        final Function<Integer, String> failureMapper = e -> "ANOTHER";
+        final Function<Integer, String> failureMapper = f -> fail("Should not happen");
         // When
         final String value = success.orElseMap(failureMapper);
         // Then
@@ -33,8 +34,9 @@ class DefaultSuccess_orElseMap_Test {
     void should_ignore_failure_mapper_even_if_value_is_null() {
         // Given
         final Result<String, Integer> success = new DefaultSuccess<>(null);
+        final Function<Integer, String> failureMapper = f -> fail("Should not happen");
         // When
-        final String value = success.orElseMap(e -> "ANOTHER");
+        final String value = success.orElseMap(failureMapper);
         // Then
         assertThat(value).isNull();
     }
