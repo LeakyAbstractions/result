@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.Callable;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -223,5 +224,76 @@ public final class DefaultResult {
      */
     public static <F> Optional<F> toOptionalFailure(Result<?, F> result) {
         return result.isFailure() ? Optional.ofNullable(result.getFailureOrElseThrow()) : Optional.empty();
+    }
+
+    /**
+     * Create a new lazy result based on the given result supplier.
+     * <p>
+     * Lazy results can be manipulated just like any other result; they will try to defer the invocation of the given
+     * supplier as long as possible. The purpose is to encapsulate an expensive operation that may be omitted if there's
+     * no actual need to examine the result.
+     * <p>
+     * These results can be lazily <em>filtered</em> and <em>transformed</em> without actually performing the expensive
+     * operation:
+     * <ul>
+     * <li>{@link Result#filter(java.util.function.Predicate, Function)}</li>
+     * <li>{@link Result#map(Function, Function)}</li>
+     * <li>{@link Result#mapSuccess(Function)}</li>
+     * <li>{@link Result#mapFailure(Function)}</li>
+     * <li>{@link Result#flatMap(Function, Function)}</li>
+     * <li>{@link Result#flatMapSuccess(Function)}</li>
+     * <li>{@link Result#flatMapFailure(Function)}</li>
+     * </ul>
+     * <p>
+     * On the other hand, the supplier will be invoked if any of these <em>terminal operations</em> is performed on a
+     * lazy result:
+     * <ul>
+     * <li>{@link Result#isSuccess()}</li>
+     * <li>{@link Result#isFailure()}</li>
+     * <li>{@link Result#orElse(Object)}</li>
+     * <li>{@link Result#orElseMap(Function)}</li>
+     * <li>{@link Result#orElseThrow()}</li>
+     * <li>{@link Result#orElseThrow(Function)}</li>
+     * <li>{@link Result#getFailureOrElseThrow()}</li>
+     * </ul>
+     * <p>
+     * Finally, conditional actions can be performed lazily if they are {@link LazyConsumer} objects; otherwise they
+     * will be performed immediately:
+     * <ul>
+     * <li>{@link Result#ifSuccess(Consumer)}</li>
+     * <li>{@link Result#ifSuccessOrElse(Consumer, Consumer)}</li>
+     * <li>{@link Result#ifFailure(Consumer)}</li>
+     * </ul>
+     * <p>
+     * Once a lazy result retrieves the supplied result, all future operations will be performed immediately and the
+     * returned Result objects might not be lazy.
+     * <p>
+     * The supplier is guaranteed to be invoked at most once. It must return a non-null result object; if it throws an
+     * exception or returns {@code null} then the behavior of the lazy result will be undefined.
+     * 
+     * @param <S> the type of the success value
+     * @param <F> the type of the failure value
+     * @param supplier the function that will eventually supply the actual result
+     * @return the new lazy result
+     * @see DefaultResult#lazy(Consumer)
+     */
+    public static <S, F> Result<S, F> lazy(Supplier<Result<S, F>> supplier) {
+        return new LazyResult<>(supplier);
+    }
+
+    /**
+     * Creates a new lazy consumer based on a regular one.
+     * <p>
+     * Lazy consumers are intended to be passed as parameters to {@link Result#ifSuccess(Consumer)},
+     * {@link Result#ifSuccessOrElse(Consumer, Consumer)} and {@link Result#ifFailure(Consumer)} when the action only
+     * needs to be performed if the lazy result eventually retrieves an actual result from its supplier.
+     * 
+     * @param <T> the type of the input to the action
+     * @param consumer the regular consumer that may be eventually performed
+     * @return the new lazy consumer
+     * @see LazyConsumer
+     */
+    public static <T> LazyConsumer<T> lazy(Consumer<T> consumer) {
+        return Objects.requireNonNull(consumer)::accept;
     }
 }
