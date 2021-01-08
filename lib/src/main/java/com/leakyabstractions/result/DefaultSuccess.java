@@ -126,9 +126,8 @@ final class DefaultSuccess<S, F> implements Result<S, F> {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (!(obj instanceof Result)) return false;
-        final Result<?, ?> other = (Result<?, ?>) obj;
-        return other.isSuccess() && Objects.equals(this.value, other.orElseThrow());
+        if (!(obj instanceof DefaultSuccess)) return false;
+        return Objects.equals(this.value, ((DefaultSuccess<?, ?>) obj).value);
     }
 
     @Override

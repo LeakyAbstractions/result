@@ -126,9 +126,8 @@ final class DefaultFailure<S, F> implements Result<S, F> {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (!(obj instanceof Result)) return false;
-        final Result<?, ?> other = (Result<?, ?>) obj;
-        return other.isFailure() && Objects.equals(this.value, other.getFailureOrElseThrow());
+        if (!(obj instanceof DefaultFailure)) return false;
+        return Objects.equals(this.value, ((DefaultFailure<?, ?>) obj).value);
     }
 
     @Override
