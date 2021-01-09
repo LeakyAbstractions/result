@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
  * @author Guillermo Calvo
  */
 @DisplayName("Results lazy with supplier")
-class Results_lazy_with_Supplier {
+class Results_lazy_with_Supplier_Test {
 
     private static final String SUCCESS = "SUCCESS";
     private static final String FAILURE = "FAILURE";

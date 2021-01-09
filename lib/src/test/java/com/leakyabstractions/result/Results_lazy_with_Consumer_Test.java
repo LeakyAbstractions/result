@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
  * @author Guillermo Calvo
  */
 @DisplayName("Results lazy with consumer")
-class Results_lazy_with_Consumer {
+class Results_lazy_with_Consumer_Test {
 
     @Test
     void should_throw_exception_when_null_consumer() {
