@@ -32,7 +32,7 @@ class LazyResult_hashCode_Test {
     @Test
     void should_return_same_hash_code_as_the_success_result() {
         // Given
-        final Result<String, Integer> result = new DefaultSuccess<>(SUCCESS);
+        final Result<String, Integer> result = new Success<>(SUCCESS);
         final Supplier<Result<String, Integer>> supplier = () -> result;
         final Result<String, Integer> lazy = new LazyResult<>(supplier);
         // When
@@ -45,7 +45,7 @@ class LazyResult_hashCode_Test {
     @Test
     void should_return_same_hash_code_as_the_failure_result() {
         // Given
-        final Result<Integer, String> result = new DefaultFailure<>(FAILURE);
+        final Result<Integer, String> result = new Failure<>(FAILURE);
         final Supplier<Result<Integer, String>> supplier = () -> result;
         final Result<Integer, String> lazy = new LazyResult<>(supplier);
         // When

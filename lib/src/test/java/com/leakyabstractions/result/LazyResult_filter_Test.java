@@ -41,7 +41,7 @@ class LazyResult_filter_Test {
     @Test
     void should_eventually_evaluate_predicate_when_needed() {
         // Given
-        final Supplier<Result<String, Integer>> supplier = () -> new DefaultSuccess<>(SUCCESS);
+        final Supplier<Result<String, Integer>> supplier = () -> new Success<>(SUCCESS);
         final Result<String, Integer> lazy = new LazyResult<>(supplier);
         final AtomicBoolean filterEvaluated = new AtomicBoolean(false);
         final Predicate<String> filter = s -> {
@@ -60,7 +60,7 @@ class LazyResult_filter_Test {
     @Test
     void should_not_be_lazy_when_already_supplied() {
         // Given
-        final Supplier<Result<String, String>> supplier = () -> new DefaultSuccess<>(SUCCESS);
+        final Supplier<Result<String, String>> supplier = () -> new Success<>(SUCCESS);
         final Result<String, String> lazy = new LazyResult<>(supplier);
         final Predicate<String> filter = s -> false;
         final Function<String, String> mapper = s -> FAILURE;
@@ -69,6 +69,6 @@ class LazyResult_filter_Test {
         final Result<String, String> result = lazy.filter(filter, mapper);
         // Then
         assertThat(supplied).isSameAs(SUCCESS);
-        assertThat(result).isEqualTo(new DefaultFailure<>(FAILURE));
+        assertThat(result).isEqualTo(new Failure<>(FAILURE));
     }
 }

@@ -38,7 +38,7 @@ class LazyResult_ifSuccessOrElse_Test {
 
     @Test
     void should_not_be_lazy_and_perform_success_action_only() {
-        final Result<String, String> supplied = new DefaultSuccess<>(SUCCESS);
+        final Result<String, String> supplied = new Success<>(SUCCESS);
         final Result<String, String> lazy = new LazyResult<>(() -> supplied);
         final AtomicBoolean actionPerformed = new AtomicBoolean(false);
         final Consumer<String> successAction = s -> actionPerformed.set(true);
@@ -52,7 +52,7 @@ class LazyResult_ifSuccessOrElse_Test {
 
     @Test
     void should_not_be_lazy_and_perform_failure_action_only() {
-        final Result<String, String> failure = new DefaultFailure<>(FAILURE);
+        final Result<String, String> failure = new Failure<>(FAILURE);
         final Supplier<Result<String, String>> supplier = () -> failure;
         final Result<String, String> lazy = new LazyResult<>(supplier);
         final AtomicBoolean actionPerformed = new AtomicBoolean(false);
@@ -67,7 +67,7 @@ class LazyResult_ifSuccessOrElse_Test {
 
     @Test
     void should_eventually_perform_action() {
-        final Supplier<Result<String, String>> supplier = () -> new DefaultSuccess<>(SUCCESS);
+        final Supplier<Result<String, String>> supplier = () -> new Success<>(SUCCESS);
         final Result<String, String> lazy = new LazyResult<>(supplier);
         final AtomicBoolean actionPerformed = new AtomicBoolean(false);
         final LazyConsumer<String> successAction = s -> actionPerformed.set(true);
@@ -85,7 +85,7 @@ class LazyResult_ifSuccessOrElse_Test {
 
     @Test
     void should_perform_action_if_already_supplied() {
-        final Result<String, String> failure = new DefaultFailure<>(FAILURE);
+        final Result<String, String> failure = new Failure<>(FAILURE);
         final Supplier<Result<String, String>> supplier = () -> failure;
         final Result<String, String> lazy = new LazyResult<>(supplier);
         final AtomicBoolean actionPerformed = new AtomicBoolean(false);

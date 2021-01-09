@@ -37,7 +37,7 @@ class LazyResult_map_Test {
     @Test
     void should_eventually_map_when_needed() {
         // Given
-        final Supplier<Result<Integer, Integer>> supplier = () -> new DefaultSuccess<>(123);
+        final Supplier<Result<Integer, Integer>> supplier = () -> new Success<>(123);
         final LazyResult<Integer, Integer> lazy = new LazyResult<>(supplier);
         final Function<Integer, String> successMapper = s -> SUCCESS;
         final Function<Integer, String> failureMapper = f -> fail("Should not happen");
@@ -50,9 +50,9 @@ class LazyResult_map_Test {
     @Test
     void should_not_be_lazy_if_already_supplied() {
         // Given
-        final Supplier<Result<Integer, Integer>> supplier = () -> new DefaultFailure<>(123);
+        final Supplier<Result<Integer, Integer>> supplier = () -> new Failure<>(123);
         final LazyResult<Integer, Integer> lazy = new LazyResult<>(supplier);
-        final Result<Integer, String> expected = new DefaultFailure<>(FAILURE);
+        final Result<Integer, String> expected = new Failure<>(FAILURE);
         final Function<Integer, String> successMapper = s -> fail("Should not happen");
         final Function<Integer, String> failureMapper = f -> FAILURE;
         // When

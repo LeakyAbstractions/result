@@ -21,7 +21,7 @@ class LazyResult_orElse_Test {
     @Test
     void should_return_other() {
         // Given
-        final Supplier<Result<Integer, String>> supplier = () -> new DefaultFailure<>("FAILURE");
+        final Supplier<Result<Integer, String>> supplier = () -> new Failure<>("FAILURE");
         final Result<Integer, String> lazy = new LazyResult<>(supplier);
         // When
         final Integer value = lazy.orElse(123);
@@ -32,7 +32,7 @@ class LazyResult_orElse_Test {
     @Test
     void should_ignore_other() {
         // Given
-        final Supplier<Result<String, Integer>> supplier = () -> new DefaultSuccess<>(SUCCESS);
+        final Supplier<Result<String, Integer>> supplier = () -> new Success<>(SUCCESS);
         final Result<String, Integer> lazy = new LazyResult<>(supplier);
         // When
         final String value = lazy.orElse("ANOTHER");
@@ -43,7 +43,7 @@ class LazyResult_orElse_Test {
     @Test
     void should_ignore_other_even_if_value_is_null() {
         // Given
-        final Supplier<Result<String, Integer>> supplier = () -> new DefaultSuccess<>(null);
+        final Supplier<Result<String, Integer>> supplier = () -> new Success<>(null);
         final Result<String, Integer> lazy = new LazyResult<>(supplier);
         // When
         final String value = lazy.orElse("ANOTHER");

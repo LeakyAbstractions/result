@@ -37,7 +37,7 @@ class LazyResult_ifFailure_Test {
     @Test
     void should_not_be_lazy_and_ignore_failure_action() {
         // Given
-        final Result<String, String> success = new DefaultSuccess<>("SUCCESS");
+        final Result<String, String> success = new Success<>("SUCCESS");
         final Supplier<Result<String, String>> supplier = () -> success;
         final Result<String, String> lazy = new LazyResult<>(supplier);
         final Consumer<String> failureAction = f -> fail("Should not happen");
@@ -49,7 +49,7 @@ class LazyResult_ifFailure_Test {
 
     @Test
     void should_not_be_lazy_and_perform_failure_action() {
-        final Result<String, String> failure = new DefaultFailure<>(FAILURE);
+        final Result<String, String> failure = new Failure<>(FAILURE);
         final Supplier<Result<String, String>> supplier = () -> failure;
         final Result<String, String> lazy = new LazyResult<>(supplier);
         final AtomicBoolean actionPerformed = new AtomicBoolean(false);
@@ -63,7 +63,7 @@ class LazyResult_ifFailure_Test {
 
     @Test
     void should_eventually_perform_action() {
-        final Supplier<Result<String, String>> supplier = () -> new DefaultFailure<>(FAILURE);
+        final Supplier<Result<String, String>> supplier = () -> new Failure<>(FAILURE);
         final Result<String, String> lazy = new LazyResult<>(supplier);
         final AtomicBoolean actionPerformed = new AtomicBoolean(false);
         final LazyConsumer<String> failureAction = f -> actionPerformed.set(true);
@@ -80,7 +80,7 @@ class LazyResult_ifFailure_Test {
 
     @Test
     void should_perform_action_if_already_supplied() {
-        final Result<String, String> failure = new DefaultFailure<>(FAILURE);
+        final Result<String, String> failure = new Failure<>(FAILURE);
         final Supplier<Result<String, String>> supplier = () -> failure;
         final Result<String, String> lazy = new LazyResult<>(supplier);
         final AtomicBoolean actionPerformed = new AtomicBoolean(false);

@@ -39,7 +39,7 @@ class LazyResult_toString_Test {
     @Test
     void should_return_expected_string_when_supplied() {
         // Given
-        final Supplier<Result<String, Integer>> supplier = () -> new DefaultSuccess<>("TESTING");
+        final Supplier<Result<String, Integer>> supplier = () -> new Success<>("TESTING");
         final Result<String, Integer> lazy = new LazyResult<>(supplier);
         // When
         lazy.orElseThrow();

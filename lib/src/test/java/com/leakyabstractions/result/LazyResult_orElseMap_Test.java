@@ -23,7 +23,7 @@ class LazyResult_orElseMap_Test {
     @Test
     void should_use_failure_mapper() {
         // Given
-        final Supplier<Result<Integer, String>> supplier = () -> new DefaultFailure<>("FAILURE");
+        final Supplier<Result<Integer, String>> supplier = () -> new Failure<>("FAILURE");
         final Result<Integer, String> lazy = new LazyResult<>(supplier);
         final Function<String, Integer> failureMapper = f -> 321;
         // When
@@ -35,7 +35,7 @@ class LazyResult_orElseMap_Test {
     @Test
     void should_ignore_failure_mapper() {
         // Given
-        final Supplier<Result<String, Integer>> supplier = () -> new DefaultSuccess<>(SUCCESS);
+        final Supplier<Result<String, Integer>> supplier = () -> new Success<>(SUCCESS);
         final Result<String, Integer> lazy = new LazyResult<>(supplier);
         final Function<Integer, String> failureMapper = f -> fail("Should not happen");
         // When
@@ -47,7 +47,7 @@ class LazyResult_orElseMap_Test {
     @Test
     void should_ignore_failure_mapper_even_if_value_is_null() {
         // Given
-        final Supplier<Result<String, Integer>> supplier = () -> new DefaultSuccess<>(null);
+        final Supplier<Result<String, Integer>> supplier = () -> new Success<>(null);
         final Result<String, Integer> success = new LazyResult<>(supplier);
         final Function<Integer, String> failureMapper = f -> fail("Should not happen");
         // When

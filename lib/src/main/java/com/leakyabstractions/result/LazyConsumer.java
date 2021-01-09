@@ -6,8 +6,8 @@ import java.util.function.Consumer;
 /**
  * Represents an action to be <em>lazily</em> performed with the success/failure value of a result.
  * <p>
- * Unlike regular ones, lazy consumers won't force a {@link DefaultResult#lazy(java.util.function.Supplier) lazy result}
- * to retrieve the backing result from its supplier. In other words, they may be ignored if the lazy result ends up not
+ * Unlike regular ones, lazy consumers won't force a {@link Results#lazy(java.util.function.Supplier) lazy result} to
+ * retrieve the backing result from its supplier. In other words, they may be ignored if the lazy result ends up not
  * invoking its result supplier.
  * <p>
  * Instances of objects implementing this interface are intended to be passed as parameters to
@@ -22,7 +22,7 @@ import java.util.function.Consumer;
  *
  * @author Guillermo Calvo
  * @param <T> the type of the input to the action
- * @see DefaultResult#lazy(Consumer)
+ * @see Results#lazy(Consumer)
  */
 @FunctionalInterface
 public interface LazyConsumer<T> extends Consumer<T> {

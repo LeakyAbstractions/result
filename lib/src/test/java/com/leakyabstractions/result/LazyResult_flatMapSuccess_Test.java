@@ -36,9 +36,9 @@ class LazyResult_flatMapSuccess_Test {
     @Test
     void should_eventually_flat_map_when_needed() {
         // Given
-        final Supplier<Result<String, String>> supplier = () -> new DefaultSuccess<>(SUCCESS);
+        final Supplier<Result<String, String>> supplier = () -> new Success<>(SUCCESS);
         final LazyResult<String, String> lazy = new LazyResult<>(supplier);
-        final Function<String, Result<String, String>> successFlatMapper = s -> new DefaultFailure<>(FAILURE);
+        final Function<String, Result<String, String>> successFlatMapper = s -> new Failure<>(FAILURE);
         // When
         final String value = lazy.flatMapSuccess(successFlatMapper).getFailureOrElseThrow();
         // Then
@@ -48,9 +48,9 @@ class LazyResult_flatMapSuccess_Test {
     @Test
     void should_not_be_lazy_if_already_supplied() {
         // Given
-        final Supplier<Result<String, String>> supplier = () -> new DefaultSuccess<>(SUCCESS);
+        final Supplier<Result<String, String>> supplier = () -> new Success<>(SUCCESS);
         final LazyResult<String, String> lazy = new LazyResult<>(supplier);
-        final Result<String, String> another = new DefaultSuccess<>("ANOTHER");
+        final Result<String, String> another = new Success<>("ANOTHER");
         final Function<String, Result<String, String>> successFlatMapper = s -> another;
         // When
         final String value = lazy.orElseThrow();

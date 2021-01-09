@@ -25,7 +25,7 @@ class LazyResult_mapFailure_Test {
     @Test
     void should_be_lazy() {
         // Given
-        final Supplier<Result<String, String>> supplier = () -> new DefaultFailure<>(FAILURE);
+        final Supplier<Result<String, String>> supplier = () -> new Failure<>(FAILURE);
         final LazyResult<String, String> lazy = new LazyResult<>(supplier);
         final Function<String, Integer> failureMapper = f -> fail("Should not happen");
         // When
@@ -37,7 +37,7 @@ class LazyResult_mapFailure_Test {
     @Test
     void should_eventually_map_when_needed() {
         // Given
-        final Supplier<Result<String, String>> supplier = () -> new DefaultFailure<>(FAILURE);
+        final Supplier<Result<String, String>> supplier = () -> new Failure<>(FAILURE);
         final LazyResult<String, String> lazy = new LazyResult<>(supplier);
         final Function<String, String> failureMapper = f -> ANOTHER;
         // When
@@ -49,7 +49,7 @@ class LazyResult_mapFailure_Test {
     @Test
     void should_ignore_failure_mapping() {
         // Given
-        final Supplier<Result<String, String>> supplier = () -> new DefaultSuccess<>(SUCCESS);
+        final Supplier<Result<String, String>> supplier = () -> new Success<>(SUCCESS);
         final LazyResult<String, String> lazy = new LazyResult<>(supplier);
         final Function<String, String> failureMapper = f -> fail("Should not happen");
         // When
@@ -61,10 +61,10 @@ class LazyResult_mapFailure_Test {
     @Test
     void should_not_be_lazy_if_already_supplied() {
         // Given
-        final Supplier<Result<String, Integer>> supplier = () -> new DefaultFailure<>(123);
+        final Supplier<Result<String, Integer>> supplier = () -> new Failure<>(123);
         final LazyResult<String, Integer> lazy = new LazyResult<>(supplier);
         final Function<Integer, String> failureMapper = f -> FAILURE;
-        final DefaultFailure<Object, String> expected = new DefaultFailure<>(FAILURE);
+        final Failure<Object, String> expected = new Failure<>(FAILURE);
         // When
         final Integer value = lazy.getFailureOrElseThrow();
         final Result<String, String> result = lazy.mapFailure(failureMapper);

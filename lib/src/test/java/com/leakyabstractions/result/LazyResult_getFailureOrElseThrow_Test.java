@@ -24,7 +24,7 @@ class LazyResult_getFailureOrElseThrow_Test {
     @Test
     void should_throw_exception() {
         // Given
-        final Supplier<Result<String, Integer>> supplier = () -> new DefaultSuccess<>("SUCCESS");
+        final Supplier<Result<String, Integer>> supplier = () -> new Success<>("SUCCESS");
         final Result<String, Integer> lazy = new LazyResult<>(supplier);
         // When
         final ThrowingCallable callable = () -> lazy.getFailureOrElseThrow();
@@ -35,7 +35,7 @@ class LazyResult_getFailureOrElseThrow_Test {
     @Test
     void should_return_same_value() {
         // Given
-        final Supplier<Result<Integer, String>> supplier = () -> new DefaultFailure<>(FAILURE);
+        final Supplier<Result<Integer, String>> supplier = () -> new Failure<>(FAILURE);
         final Result<Integer, String> lazy = new LazyResult<>(supplier);
         // When
         final String value = lazy.getFailureOrElseThrow();
@@ -46,7 +46,7 @@ class LazyResult_getFailureOrElseThrow_Test {
     @Test
     void should_not_throw_exception_even_if_value_is_null() {
         // Given
-        final Supplier<Result<Integer, String>> supplier = () -> new DefaultFailure<>(null);
+        final Supplier<Result<Integer, String>> supplier = () -> new Failure<>(null);
         final Result<Integer, String> lazy = new LazyResult<>(supplier);
         // When
         final String value = lazy.getFailureOrElseThrow();

@@ -1,8 +1,8 @@
 
 package com.leakyabstractions.result.assertj;
 
-import static com.leakyabstractions.result.DefaultResult.failure;
-import static com.leakyabstractions.result.DefaultResult.success;
+import static com.leakyabstractions.result.Results.failure;
+import static com.leakyabstractions.result.Results.success;
 import static com.leakyabstractions.result.assertj.AssertionsUtil.assertThatAssertionErrorIsThrownBy;
 import static com.leakyabstractions.result.assertj.ResultAssertions.assertThat;
 import static com.leakyabstractions.result.assertj.ResultShouldBe.shouldBeFailure;

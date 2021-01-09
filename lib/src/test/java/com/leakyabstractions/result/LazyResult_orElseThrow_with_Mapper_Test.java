@@ -26,7 +26,7 @@ class LazyResult_orElseThrow_with_Mapper_Test {
     @Test
     void should_throw_exception() {
         // Given
-        final Supplier<Result<Integer, String>> supplier = () -> new DefaultFailure<>(FAILURE);
+        final Supplier<Result<Integer, String>> supplier = () -> new Failure<>(FAILURE);
         final Result<Integer, String> lazy = new LazyResult<>(supplier);
         final Function<String, RuntimeException> failureMapper = RuntimeException::new;
         // When
@@ -40,7 +40,7 @@ class LazyResult_orElseThrow_with_Mapper_Test {
     @Test
     void should_not_throw_exception() {
         // Given
-        final Supplier<Result<String, String>> supplier = () -> new DefaultSuccess<>(SUCCESS);
+        final Supplier<Result<String, String>> supplier = () -> new Success<>(SUCCESS);
         final Result<String, String> lazy = new LazyResult<>(supplier);
         final Function<String, RuntimeException> failureMapper = f -> fail("Should not happen");
         // When
@@ -52,7 +52,7 @@ class LazyResult_orElseThrow_with_Mapper_Test {
     @Test
     void should_not_throw_exception_even_if_value_is_null() {
         // Given
-        final Supplier<Result<String, Integer>> supplier = () -> new DefaultSuccess<>(null);
+        final Supplier<Result<String, Integer>> supplier = () -> new Success<>(null);
         final Result<String, Integer> lazy = new LazyResult<>(supplier);
         final Function<Integer, NullPointerException> failureMapper = f -> new NullPointerException();
         // When
