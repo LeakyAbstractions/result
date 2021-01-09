@@ -13,14 +13,14 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 /**
- * Contains factory methods to create {@link Result} instances.
+ * This class consists exclusively of static methods that operate on or return {@link Result} instances.
  * 
  * @author Guillermo Calvo
  */
-public final class Results {
+public class Results {
 
     private Results() {
-        /** Static methods only */
+        /** Suppresses default constructor, ensuring non-instantiability */
     }
 
     /**
