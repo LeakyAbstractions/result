@@ -69,13 +69,13 @@ separation](https://docs.gradle.org/current/userguide/java_library_plugin.html#s
 
 There are several ways of creating _Result_ objects.
 
-To create a successful result, we simply need to use static method [`DefaultResult.success()`][NEW_SUCCESS]:
+To create a successful result, we simply need to use static method [`Results.success()`][NEW_SUCCESS]:
 
 ```java
 @Test
 void should_be_success() {
     // When
-    Result<Integer, ?> result = DefaultResult.success(123);
+    Result<Integer, ?> result = Results.success(123);
     // Then
     assertThat(result.isSuccess()).isTrue();
 }
@@ -85,19 +85,19 @@ Note that we can use methods [`isSuccess()`][IS_SUCCESS]  or [`isFailure()`][IS_
 successful or not.
 
 On the other hand, if we want to create a failed result, we can use static method
-[`DefaultResult.failure()`][NEW_FAILURE]:
+[`Results.failure()`][NEW_FAILURE]:
 
 ```java
 @Test
 void should_not_be_success() {
     // When
-    Result<?, String> result = DefaultResult.failure("The operation failed");
+    Result<?, String> result = Results.failure("The operation failed");
     // Then
     assertThat(result.isSuccess()).isFalse();
 }
 ```
 
-We can also use static method [`DefaultResult.ofOptional()`][OF_OPTIONAL] to create results that depend on an optional
+We can also use static method [`Results.ofOptional()`][OF_OPTIONAL] to create results that depend on an optional
 value:
 
 ```java
@@ -106,14 +106,14 @@ void should_be_failure() {
     // Given
     Optional<String> optional = Optional.empty();
     // When
-    Result<String, Void> result = DefaultResult.ofOptional(optional);
+    Result<String, Void> result = Results.ofOptional(optional);
     // Then
     assertThat(result.isFailure()).isTrue();
 }
 ```
 
 And sometimes it might come in handy to encapsulate actual thrown exceptions inside a result object via static method
-[`DefaultResult.wrap()`][WRAP]:
+[`Results.wrap()`][WRAP]:
 
 ```java
 @Test
@@ -121,10 +121,52 @@ void should_be_failure_too() {
     // Given
     Callable<String> callable = () -> { throw new RuntimeException("Whoops!") };
     // When
-    Result<String, Exception> result = DefaultResult.wrap(callable);
+    Result<String, Exception> result = Results.wrap(callable);
     // Then
     assertThat(result.isFailure()).isTrue();
 }
+```
+
+There's also a way to encapsulate expensive operations that can be entirely omitted (as an optimization) if there's no
+actual need to examine the result. To create a _lazy_ result we need to use static method [`Results.lazy()`][LAZY]:
+
+```java
+    Result<String, Void> expensiveCalculation(AtomicLong timesExecuted) {
+        timesExecuted.getAndIncrement();
+        return Results.success("HELLO");
+    }
+
+    @Test
+    void should_not_execute_expensive_action() {
+        final AtomicLong timesExecuted = new AtomicLong();
+        // Given
+        final Result<String, Void> lazy = Results
+                .lazy(() -> this.expensiveCalculation(timesExecuted));
+        // When
+        final Result<Integer, Void> transformed = lazy.mapSuccess(String::length);
+        // Then
+        assertThat(transformed).isNotNull();
+        assertThat(timesExecuted).hasValue(0);
+    }
+```
+
+Lazy results can be manipulated just like any other result; they will try to defer the invocation of the given supplier
+as long as possible. For example, when we actually try to determine if the operation succeeded or failed.
+
+```java
+    @Test
+    void should_execute_expensive_action() {
+        final AtomicLong timesExecuted = new AtomicLong();
+        // Given
+        final Result<String, Void> lazy = Results
+                .lazy(() -> this.expensiveCalculation(timesExecuted));
+        // When
+        final Result<Integer, Void> transformed = lazy.mapSuccess(String::length);
+        final boolean success = transformed.isSuccess();
+        // Then
+        assertThat(success).isTrue();
+        assertThat(timesExecuted).hasValue(1);
+    }
 ```
 
 
@@ -564,10 +606,11 @@ This project is governed by the [Contributor Covenant Code of Conduct](CODE_OF_C
 expected to uphold this code.
 
 
-[NEW_SUCCESS]: api/com/leakyabstractions/result/DefaultResult.html#success(S)
-[NEW_FAILURE]: api/com/leakyabstractions/result/DefaultResult.html#failure(F)
-[OF_OPTIONAL]: api/com/leakyabstractions/result/DefaultResult.html#ofOptional(java.util.Optional)
-[WRAP]: api/com/leakyabstractions/result/DefaultResult.html#wrap(java.util.concurrent.Callable)
+[NEW_SUCCESS]: api/com/leakyabstractions/result/Results.html#success(S)
+[NEW_FAILURE]: api/com/leakyabstractions/result/Results.html#failure(F)
+[OF_OPTIONAL]: api/com/leakyabstractions/result/Results.html#ofOptional(java.util.Optional)
+[WRAP]: api/com/leakyabstractions/result/Results.html#wrap(java.util.concurrent.Callable)
+[LAZY]: api/com/leakyabstractions/result/Results.html#lazy(java.util.function.Supplier)
 [IS_SUCCESS]: api/com/leakyabstractions/result/Result.html#isSuccess()
 [IS_FAILURE]: api/com/leakyabstractions/result/Result.html#isFailure()
 [IF_SUCCESS_OR_ELSE]: api/com/leakyabstractions/result/Result.html#ifSuccessOrElse(java.util.function.Consumer,java.util.function.Consumer)

@@ -34,7 +34,7 @@ loadScripts(document, 'script');</script>
 <li class="nav-bar-cell1-rev">Index</li>
 <li><a href="help-doc.html">Help</a></li>
 </ul>
-<div class="about-language">Result Library 0.1.5</div>
+<div class="about-language">Result Library 0.1.6</div>
 </div>
 <div class="sub-nav">
 <div class="nav-list-search"><label for="search">SEARCH:</label>
@@ -52,30 +52,23 @@ loadScripts(document, 'script');</script>
 <div class="header">
 <h1>Index</h1>
 </div>
-<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:W">W</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a>
+<a href="#I:C">C</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:W">W</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a>
 <h2 class="title" id="I:C">C</h2>
 <dl class="index">
 <dt><a href="com/leakyabstractions/result/package-summary.html">com.leakyabstractions.result</a> - package com.leakyabstractions.result</dt>
 <dd>&nbsp;</dd>
-<dt><span class="member-name-link"><a href="com/leakyabstractions/result/DefaultResult.html#combine(com.leakyabstractions.result.Result...)">combine(Result&lt;? extends S, ? extends F&gt;...)</a></span> - Static method in class com.leakyabstractions.result.<a href="com/leakyabstractions/result/DefaultResult.html" title="class in com.leakyabstractions.result">DefaultResult</a></dt>
+<dt><span class="member-name-link"><a href="com/leakyabstractions/result/Results.html#combine(com.leakyabstractions.result.Result...)">combine(Result&lt;? extends S, ? extends F&gt;...)</a></span> - Static method in class com.leakyabstractions.result.<a href="com/leakyabstractions/result/Results.html" title="class in com.leakyabstractions.result">Results</a></dt>
 <dd>
 <div class="block">Create a new result based on a variable list of <a href="com/leakyabstractions/result/Result.html" title="interface in com.leakyabstractions.result"><code>Result</code></a> objects.</div>
 </dd>
-<dt><span class="member-name-link"><a href="com/leakyabstractions/result/DefaultResult.html#combine(java.util.Collection)">combine(Collection&lt;Result&lt;S, F&gt;&gt;)</a></span> - Static method in class com.leakyabstractions.result.<a href="com/leakyabstractions/result/DefaultResult.html" title="class in com.leakyabstractions.result">DefaultResult</a></dt>
+<dt><span class="member-name-link"><a href="com/leakyabstractions/result/Results.html#combine(java.util.Collection)">combine(Collection&lt;Result&lt;S, F&gt;&gt;)</a></span> - Static method in class com.leakyabstractions.result.<a href="com/leakyabstractions/result/Results.html" title="class in com.leakyabstractions.result">Results</a></dt>
 <dd>
 <div class="block">Create a new result based on a <a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link"><code>Collection</code></a> of <a href="com/leakyabstractions/result/Result.html" title="interface in com.leakyabstractions.result"><code>Result</code></a> objects.</div>
 </dd>
 </dl>
-<h2 class="title" id="I:D">D</h2>
-<dl class="index">
-<dt><a href="com/leakyabstractions/result/DefaultResult.html" title="class in com.leakyabstractions.result"><span class="type-name-link">DefaultResult</span></a> - Class in <a href="com/leakyabstractions/result/package-summary.html">com.leakyabstractions.result</a></dt>
-<dd>
-<div class="block">Contains factory methods to create <a href="com/leakyabstractions/result/Result.html" title="interface in com.leakyabstractions.result"><code>Result</code></a> instances.</div>
-</dd>
-</dl>
 <h2 class="title" id="I:F">F</h2>
 <dl class="index">
-<dt><span class="member-name-link"><a href="com/leakyabstractions/result/DefaultResult.html#failure(F)">failure(F)</a></span> - Static method in class com.leakyabstractions.result.<a href="com/leakyabstractions/result/DefaultResult.html" title="class in com.leakyabstractions.result">DefaultResult</a></dt>
+<dt><span class="member-name-link"><a href="com/leakyabstractions/result/Results.html#failure(F)">failure(F)</a></span> - Static method in class com.leakyabstractions.result.<a href="com/leakyabstractions/result/Results.html" title="class in com.leakyabstractions.result">Results</a></dt>
 <dd>
 <div class="block">Create a new failed result with a given value.</div>
 </dd>
@@ -131,6 +124,21 @@ loadScripts(document, 'script');</script>
 <div class="block">Return <code>true</code> if this is a successful result; otherwise return <code>false</code>.</div>
 </dd>
 </dl>
+<h2 class="title" id="I:L">L</h2>
+<dl class="index">
+<dt><span class="member-name-link"><a href="com/leakyabstractions/result/Results.html#lazy(java.util.function.Consumer)">lazy(Consumer&lt;T&gt;)</a></span> - Static method in class com.leakyabstractions.result.<a href="com/leakyabstractions/result/Results.html" title="class in com.leakyabstractions.result">Results</a></dt>
+<dd>
+<div class="block">Creates a new lazy consumer based on a regular one.</div>
+</dd>
+<dt><span class="member-name-link"><a href="com/leakyabstractions/result/Results.html#lazy(java.util.function.Supplier)">lazy(Supplier&lt;Result&lt;S, F&gt;&gt;)</a></span> - Static method in class com.leakyabstractions.result.<a href="com/leakyabstractions/result/Results.html" title="class in com.leakyabstractions.result">Results</a></dt>
+<dd>
+<div class="block">Create a new lazy result based on the given result supplier.</div>
+</dd>
+<dt><a href="com/leakyabstractions/result/LazyConsumer.html" title="interface in com.leakyabstractions.result"><span class="type-name-link">LazyConsumer</span></a>&lt;<a href="com/leakyabstractions/result/LazyConsumer.html" title="type parameter in LazyConsumer">T</a>&gt; - Interface in <a href="com/leakyabstractions/result/package-summary.html">com.leakyabstractions.result</a></dt>
+<dd>
+<div class="block">Represents an action to be <em>lazily</em> performed with the success/failure value of a result.</div>
+</dd>
+</dl>
 <h2 class="title" id="I:M">M</h2>
 <dl class="index">
 <dt><span class="member-name-link"><a href="com/leakyabstractions/result/Result.html#map(java.util.function.Function,java.util.function.Function)">map(Function&lt;? super S, S2&gt;, Function&lt;? super F, F2&gt;)</a></span> - Method in interface com.leakyabstractions.result.<a href="com/leakyabstractions/result/Result.html" title="interface in com.leakyabstractions.result">Result</a></dt>
@@ -153,19 +161,19 @@ loadScripts(document, 'script');</script>
 </dl>
 <h2 class="title" id="I:O">O</h2>
 <dl class="index">
-<dt><span class="member-name-link"><a href="com/leakyabstractions/result/DefaultResult.html#ofNullable(S)">ofNullable(S)</a></span> - Static method in class com.leakyabstractions.result.<a href="com/leakyabstractions/result/DefaultResult.html" title="class in com.leakyabstractions.result">DefaultResult</a></dt>
+<dt><span class="member-name-link"><a href="com/leakyabstractions/result/Results.html#ofNullable(S)">ofNullable(S)</a></span> - Static method in class com.leakyabstractions.result.<a href="com/leakyabstractions/result/Results.html" title="class in com.leakyabstractions.result">Results</a></dt>
 <dd>
 <div class="block">Create a new result based on a possibly <code>null</code> value.</div>
 </dd>
-<dt><span class="member-name-link"><a href="com/leakyabstractions/result/DefaultResult.html#ofNullable(S,java.util.function.Supplier)">ofNullable(S, Supplier&lt;? extends F&gt;)</a></span> - Static method in class com.leakyabstractions.result.<a href="com/leakyabstractions/result/DefaultResult.html" title="class in com.leakyabstractions.result">DefaultResult</a></dt>
+<dt><span class="member-name-link"><a href="com/leakyabstractions/result/Results.html#ofNullable(S,java.util.function.Supplier)">ofNullable(S, Supplier&lt;? extends F&gt;)</a></span> - Static method in class com.leakyabstractions.result.<a href="com/leakyabstractions/result/Results.html" title="class in com.leakyabstractions.result">Results</a></dt>
 <dd>
 <div class="block">Create a new result based on a possibly <code>null</code> value and a function that supplies failure values.</div>
 </dd>
-<dt><span class="member-name-link"><a href="com/leakyabstractions/result/DefaultResult.html#ofOptional(java.util.Optional)">ofOptional(Optional&lt;S&gt;)</a></span> - Static method in class com.leakyabstractions.result.<a href="com/leakyabstractions/result/DefaultResult.html" title="class in com.leakyabstractions.result">DefaultResult</a></dt>
+<dt><span class="member-name-link"><a href="com/leakyabstractions/result/Results.html#ofOptional(java.util.Optional)">ofOptional(Optional&lt;S&gt;)</a></span> - Static method in class com.leakyabstractions.result.<a href="com/leakyabstractions/result/Results.html" title="class in com.leakyabstractions.result">Results</a></dt>
 <dd>
 <div class="block">Create a new result based on a possibly empty <a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link"><code>Optional</code></a>.</div>
 </dd>
-<dt><span class="member-name-link"><a href="com/leakyabstractions/result/DefaultResult.html#ofOptional(java.util.Optional,java.util.function.Supplier)">ofOptional(Optional&lt;S&gt;, Supplier&lt;? extends F&gt;)</a></span> - Static method in class com.leakyabstractions.result.<a href="com/leakyabstractions/result/DefaultResult.html" title="class in com.leakyabstractions.result">DefaultResult</a></dt>
+<dt><span class="member-name-link"><a href="com/leakyabstractions/result/Results.html#ofOptional(java.util.Optional,java.util.function.Supplier)">ofOptional(Optional&lt;S&gt;, Supplier&lt;? extends F&gt;)</a></span> - Static method in class com.leakyabstractions.result.<a href="com/leakyabstractions/result/Results.html" title="class in com.leakyabstractions.result">Results</a></dt>
 <dd>
 <div class="block">Create a new result based on a possibly empty <a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link"><code>Optional</code></a> and a function that supplies failure values.</div>
 </dd>
@@ -194,22 +202,26 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Represents the result of an operation that may have succeeded or failed.</div>
 </dd>
+<dt><a href="com/leakyabstractions/result/Results.html" title="class in com.leakyabstractions.result"><span class="type-name-link">Results</span></a> - Class in <a href="com/leakyabstractions/result/package-summary.html">com.leakyabstractions.result</a></dt>
+<dd>
+<div class="block">This class consists exclusively of static methods that operate on or return <a href="com/leakyabstractions/result/Result.html" title="interface in com.leakyabstractions.result"><code>Result</code></a> instances.</div>
+</dd>
 </dl>
 <h2 class="title" id="I:S">S</h2>
 <dl class="index">
-<dt><span class="member-name-link"><a href="com/leakyabstractions/result/DefaultResult.html#success(S)">success(S)</a></span> - Static method in class com.leakyabstractions.result.<a href="com/leakyabstractions/result/DefaultResult.html" title="class in com.leakyabstractions.result">DefaultResult</a></dt>
+<dt><span class="member-name-link"><a href="com/leakyabstractions/result/Results.html#success(S)">success(S)</a></span> - Static method in class com.leakyabstractions.result.<a href="com/leakyabstractions/result/Results.html" title="class in com.leakyabstractions.result">Results</a></dt>
 <dd>
 <div class="block">Create a new successful result with a given value.</div>
 </dd>
 </dl>
 <h2 class="title" id="I:T">T</h2>
 <dl class="index">
-<dt><span class="member-name-link"><a href="com/leakyabstractions/result/DefaultResult.html#toOptional(com.leakyabstractions.result.Result)">toOptional(Result&lt;S, ?&gt;)</a></span> - Static method in class com.leakyabstractions.result.<a href="com/leakyabstractions/result/DefaultResult.html" title="class in com.leakyabstractions.result">DefaultResult</a></dt>
+<dt><span class="member-name-link"><a href="com/leakyabstractions/result/Results.html#toOptional(com.leakyabstractions.result.Result)">toOptional(Result&lt;S, ?&gt;)</a></span> - Static method in class com.leakyabstractions.result.<a href="com/leakyabstractions/result/Results.html" title="class in com.leakyabstractions.result">Results</a></dt>
 <dd>
 <div class="block">Return an <a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link"><code>Optional</code></a> object with the success value if the given result is successful and the success value
  is not <code>null</code>; otherwise return an empty <code>Optional</code>.</div>
 </dd>
-<dt><span class="member-name-link"><a href="com/leakyabstractions/result/DefaultResult.html#toOptionalFailure(com.leakyabstractions.result.Result)">toOptionalFailure(Result&lt;?, F&gt;)</a></span> - Static method in class com.leakyabstractions.result.<a href="com/leakyabstractions/result/DefaultResult.html" title="class in com.leakyabstractions.result">DefaultResult</a></dt>
+<dt><span class="member-name-link"><a href="com/leakyabstractions/result/Results.html#toOptionalFailure(com.leakyabstractions.result.Result)">toOptionalFailure(Result&lt;?, F&gt;)</a></span> - Static method in class com.leakyabstractions.result.<a href="com/leakyabstractions/result/Results.html" title="class in com.leakyabstractions.result">Results</a></dt>
 <dd>
 <div class="block">Return an <a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link"><code>Optional</code></a> object with the failure value if the given result is failed and the failure value is
  not <code>null</code>; otherwise return an empty <code>Optional</code>.</div>
@@ -217,16 +229,16 @@ loadScripts(document, 'script');</script>
 </dl>
 <h2 class="title" id="I:W">W</h2>
 <dl class="index">
-<dt><span class="member-name-link"><a href="com/leakyabstractions/result/DefaultResult.html#wrap(java.util.concurrent.Callable)">wrap(Callable&lt;S&gt;)</a></span> - Static method in class com.leakyabstractions.result.<a href="com/leakyabstractions/result/DefaultResult.html" title="class in com.leakyabstractions.result">DefaultResult</a></dt>
+<dt><span class="member-name-link"><a href="com/leakyabstractions/result/Results.html#wrap(java.util.concurrent.Callable)">wrap(Callable&lt;S&gt;)</a></span> - Static method in class com.leakyabstractions.result.<a href="com/leakyabstractions/result/Results.html" title="class in com.leakyabstractions.result">Results</a></dt>
 <dd>
 <div class="block">Create a new result based on a <a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/concurrent/Callable.html" title="class or interface in java.util.concurrent" class="external-link"><code>Callable</code></a>.</div>
 </dd>
-<dt><span class="member-name-link"><a href="com/leakyabstractions/result/DefaultResult.html#wrap(java.util.concurrent.Callable,java.util.function.Function)">wrap(Callable&lt;S&gt;, Function&lt;? super Exception, F&gt;)</a></span> - Static method in class com.leakyabstractions.result.<a href="com/leakyabstractions/result/DefaultResult.html" title="class in com.leakyabstractions.result">DefaultResult</a></dt>
+<dt><span class="member-name-link"><a href="com/leakyabstractions/result/Results.html#wrap(java.util.concurrent.Callable,java.util.function.Function)">wrap(Callable&lt;S&gt;, Function&lt;? super Exception, F&gt;)</a></span> - Static method in class com.leakyabstractions.result.<a href="com/leakyabstractions/result/Results.html" title="class in com.leakyabstractions.result">Results</a></dt>
 <dd>
 <div class="block">Create a new result based on a <a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/concurrent/Callable.html" title="class or interface in java.util.concurrent" class="external-link"><code>Callable</code></a> and a mapping function that generates failure values.</div>
 </dd>
 </dl>
-<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:W">W</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a></main>
+<a href="#I:C">C</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:W">W</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a></main>
 <footer role="contentinfo">
 <nav role="navigation">
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
@@ -240,7 +252,7 @@ loadScripts(document, 'script');</script>
 <li class="nav-bar-cell1-rev">Index</li>
 <li><a href="help-doc.html">Help</a></li>
 </ul>
-<div class="about-language">Result Library 0.1.5</div>
+<div class="about-language">Result Library 0.1.6</div>
 </div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 <span class="skip-nav" id="skip.navbar.bottom">

@@ -15,7 +15,7 @@
 <script type="text/javascript" src="script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="all-classes-index-page">
-<script type="text/javascript">var data = {"i0":2,"i1":1};
+<script type="text/javascript">var data = {"i0":1,"i1":1,"i2":2};
 var tabs = {65535:["t0","All Classes"],1:["t1","Interface Summary"],2:["t2","Class Summary"]};
 var altColor = "alt-color";
 var rowColor = "row-color";
@@ -40,7 +40,7 @@ loadScripts(document, 'script');</script>
 <li><a href="index-all.html">Index</a></li>
 <li><a href="help-doc.html">Help</a></li>
 </ul>
-<div class="about-language">Result Library 0.1.5</div>
+<div class="about-language">Result Library 0.1.6</div>
 </div>
 <div class="sub-nav">
 <div class="nav-list-search"><label for="search">SEARCH:</label>
@@ -70,15 +70,21 @@ loadScripts(document, 'script');</script>
 </thead>
 <tbody>
 <tr class="alt-color" id="i0">
-<td class="col-first"><a href="com/leakyabstractions/result/DefaultResult.html" title="class in com.leakyabstractions.result">DefaultResult</a></td>
+<td class="col-first"><a href="com/leakyabstractions/result/LazyConsumer.html" title="interface in com.leakyabstractions.result">LazyConsumer</a>&lt;<a href="com/leakyabstractions/result/LazyConsumer.html" title="type parameter in LazyConsumer">T</a>&gt;</td>
 <th class="col-last" scope="row">
-<div class="block">Contains factory methods to create <a href="com/leakyabstractions/result/Result.html" title="interface in com.leakyabstractions.result"><code>Result</code></a> instances.</div>
+<div class="block">Represents an action to be <em>lazily</em> performed with the success/failure value of a result.</div>
 </th>
 </tr>
 <tr class="row-color" id="i1">
 <td class="col-first"><a href="com/leakyabstractions/result/Result.html" title="interface in com.leakyabstractions.result">Result</a>&lt;<a href="com/leakyabstractions/result/Result.html" title="type parameter in Result">S</a>,&#8203;<a href="com/leakyabstractions/result/Result.html" title="type parameter in Result">F</a>&gt;</td>
 <th class="col-last" scope="row">
 <div class="block">Represents the result of an operation that may have succeeded or failed.</div>
+</th>
+</tr>
+<tr class="alt-color" id="i2">
+<td class="col-first"><a href="com/leakyabstractions/result/Results.html" title="class in com.leakyabstractions.result">Results</a></td>
+<th class="col-last" scope="row">
+<div class="block">This class consists exclusively of static methods that operate on or return <a href="com/leakyabstractions/result/Result.html" title="interface in com.leakyabstractions.result"><code>Result</code></a> instances.</div>
 </th>
 </tr>
 </tbody>
@@ -99,7 +105,7 @@ loadScripts(document, 'script');</script>
 <li><a href="index-all.html">Index</a></li>
 <li><a href="help-doc.html">Help</a></li>
 </ul>
-<div class="about-language">Result Library 0.1.5</div>
+<div class="about-language">Result Library 0.1.6</div>
 </div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
 <span class="skip-nav" id="skip.navbar.bottom">

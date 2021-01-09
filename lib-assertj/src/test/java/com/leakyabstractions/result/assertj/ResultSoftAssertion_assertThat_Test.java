@@ -1,7 +1,7 @@
 
 package com.leakyabstractions.result.assertj;
 
-import static com.leakyabstractions.result.DefaultResult.success;
+import static com.leakyabstractions.result.Results.success;
 import static com.leakyabstractions.result.assertj.ResultShouldBe.shouldBeFailure;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
