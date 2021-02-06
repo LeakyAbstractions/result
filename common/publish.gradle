@@ -4,6 +4,10 @@ java {
     withSourcesJar()
 }
 
+ext.jdkVersion = java.util.Optional.ofNullable(System.getenv('JDK_VERSION'))
+ext.releaseMetadata = ext.jdkVersion.map({ '-jdk' + it }).orElse('')
+ext.artifactVersion = rootProject.version + ext.releaseMetadata
+
 // Configure publishing repositories and publications
 publishing {
     repositories {
@@ -31,7 +35,7 @@ publishing {
                 artifactId      = project.artifactId
                 name            = project.artifactName
                 description     = project.artifactDescription
-                version         = rootProject.version
+                version         = artifactVersion
                 url             = rootProject.homepage
                 licenses {
                     license {
