@@ -1,6 +1,6 @@
 // Configure java compiler
-sourceCompatibility = '14'
-targetCompatibility = '14'
+sourceCompatibility = System.getenv('JDK_VERSION') ?: '8'
+targetCompatibility = System.getenv('JDK_VERSION') ?: '8'
 
 tasks.withType(JavaCompile).all {
     options.compilerArgs.addAll(['-Xlint:all', '-Werror'])
