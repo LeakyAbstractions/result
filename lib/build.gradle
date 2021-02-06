@@ -19,7 +19,3 @@ apply from: rootProject.file('common/jacoco.gradle')
 apply from: rootProject.file('common/sonarqube.gradle')
 apply from: rootProject.file('common/javadoc.gradle')
 apply from: rootProject.file('common/publish.gradle')
-
-// This is a workaround to avoid misleading warning on Sonar about missing bytecode dependencies
-// See: https://jira.sonarsource.com/browse/SONARJAVA-3114)
-sonarqube.properties['sonar.java.libraries'] = "${project.buildDir}/classes"
