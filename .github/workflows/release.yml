@@ -81,8 +81,10 @@ jobs:
     - name: Publish with Gradle
       id: publish
       env:
+        SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+        SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
         GITHUB_USERNAME: ${{ secrets.PUBLISH_USERNAME }}
         GITHUB_PASSWORD: ${{ secrets.PUBLISH_PASSWORD }}
-        BINTRAY_USERNAME: ${{ secrets.BINTRAY_USERNAME }}
-        BINTRAY_PASSWORD: ${{ secrets.BINTRAY_PASSWORD }}
-      run: ./gradlew publish bintrayUpload
+        SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+        SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+      run: ./gradlew publish
