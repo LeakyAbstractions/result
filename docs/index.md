@@ -11,6 +11,14 @@ If you like `Optional` but feel that it sometimes falls too short, you'll love `
 
 The library has no external dependencies and it is very lightweight. Adding it to your build should be very easy.
 
+Artifact coordinates:
+
+- Group ID: `com.leakyabstractions`
+- Artifact ID: `result`
+- Version: `{{ site.current_version }}`
+
+Additionally, you may use version `{{ site.current_version }}-jdk8` if you require compatibility with Java 8.
+
 To add a dependency on _Result_ using [**Maven**](https://maven.apache.org/), use the following:
 
 ```xml
