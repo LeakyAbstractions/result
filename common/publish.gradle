@@ -15,6 +15,14 @@ publishing {
                 password = System.env.GITHUB_PASSWORD
             }
         }
+        maven {
+            name = 'Sonatype'
+            url = uri('https://oss.sonatype.org/service/local/staging/deploy/maven2')
+            credentials {
+                username = System.env.SONATYPE_USERNAME
+                password = System.env.SONATYPE_PASSWORD
+            }
+        }
     }
     publications {
         mavenRelease(MavenPublication) {
