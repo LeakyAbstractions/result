@@ -17,7 +17,10 @@ Artifact coordinates:
 - Artifact ID: `result`
 - Version: `{{ site.current_version }}`
 
-Additionally, you may use version `{{ site.current_version }}-jdk8` if you require compatibility with Java 8.
+Additionally, if you require compatibility with older JDKs you may use these alternate versions:
+
+- `{{ site.current_version }}-jdk8`
+- `{{ site.current_version }}-jdk11`
 
 To add a dependency on _Result_ using [**Maven**](https://maven.apache.org/), use the following:
 
