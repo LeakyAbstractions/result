@@ -24,14 +24,14 @@ To add a dependency on _Result_ using [**Maven**](https://maven.apache.org/), us
 </dependencies>
 ```
 
-And make sure [**Bintray JCenter**](https://bintray.com/bintray/jcenter) is in your repository list:
+And make sure [**Maven Central repository**](https://search.maven.org/) is in your repository list:
 
 ```xml
 <repositories>
     <repository>
         <id>central</id>
-        <name>bintray</name>
-        <url>https://jcenter.bintray.com</url>
+        <name>Maven Central Repository</name>
+        <url>https://repo.maven.apache.org/maven2</url>
     </repository>
 </repositories>
 ```
@@ -45,11 +45,11 @@ dependencies {
 }
 ```
 
-And make sure **Bintray JCenter** is in your repository list:
+And make sure **Maven Central repository** is in your repository list:
 
 ```gradle
 repositories {
-    jcenter()
+    mavenCentral()
 }
 ```
 
