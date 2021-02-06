@@ -1,0 +1,59 @@
+
+# Publish a new Release compatible with JDK11
+name: Release JDK11
+
+on:
+  create:
+    tags: ['[0-9]+.[0-9]+.[0-9]+*']
+
+env:
+  GRADLE_OPTS: '-Dorg.gradle.daemon=false'
+  JDK_VERSION: 11
+
+jobs:
+  build:
+
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+
+    # ================================
+    # CHECKOUT
+    # ================================
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    # ================================
+    # SET UP JDK
+    # ================================
+    - name: Set up JDK
+      uses: actions/setup-java@v1
+      with:
+        java-version: 14
+
+    # ================================
+    # CACHE GRADLE
+    # ================================
+    - name: Cache Gradle packages
+      uses: actions/cache@v2
+      with:
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        restore-keys: |
+          ${{ runner.os }}-gradle-jdk11-
+
+    # ================================
+    # PUBLISH
+    # ================================
+    - name: Publish with Gradle
+      id: publish
+      env:
+        SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+        SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+        SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+        SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+      run: ./gradlew publish -x publishMavenReleasePublicationToGitHubPackagesRepository
