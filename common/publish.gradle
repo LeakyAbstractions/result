@@ -38,6 +38,22 @@ publishing {
                         email   = rootProject.developerEmail
                     }
                 }
+                organization {
+                    name        = rootProject.organizationName
+                    url         = rootProject.organizationUrl
+                }
+                issueManagement {
+                    system      = rootProject.issuesSystem
+                    url         = rootProject.issuesUrl
+                }
+                ciManagement {
+                    system      = rootProject.ciSystem
+                    url         = rootProject.ciUrl
+                }
+                scm {
+                    url         = rootProject.repository
+                    connection  = rootProject.checkout
+                }
             }
             from(components.java)
         }

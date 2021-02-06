@@ -7,8 +7,8 @@ sonarqube {
         property 'sonar.projectKey',        project.sonarProjectKey
         property 'sonar.projectVersion',    rootProject.version
         property 'sonar.links.homepage',    rootProject.homepage
-        property 'sonar.links.ci',          rootProject.ci
-        property 'sonar.links.issue',       rootProject.issues
+        property 'sonar.links.ci',          rootProject.ciUrl
+        property 'sonar.links.issue',       rootProject.issuesUrl
         property 'sonar.links.scm',         rootProject.repository
         property 'sonar.sourceEncoding',    'UTF-8'
     }
