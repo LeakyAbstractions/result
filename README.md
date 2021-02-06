@@ -2,8 +2,8 @@
 [![Build Status](https://github.com/leakyabstractions/result/workflows/Build/badge.svg)](https://github.com/LeakyAbstractions/result/actions?query=workflow%3ABuild)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=LeakyAbstractions_result&metric=alert_status)](https://sonarcloud.io/dashboard?id=LeakyAbstractions_result)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=LeakyAbstractions_result&metric=coverage)](https://sonarcloud.io/component_measures?id=LeakyAbstractions_result&metric=coverage&view=list)
-[![Latest release](https://img.shields.io/github/release/leakyabstractions/result.svg)](https://github.com/leakyabstractions/result/releases/latest)
-[![Download](https://api.bintray.com/packages/leakyabstractions/maven/result/images/download.svg)](https://bintray.com/leakyabstractions/maven/result/)
+[![Maven Central](https://img.shields.io/maven-central/v/com.leakyabstractions/result?color=light-green&logo=java)](https://search.maven.org/artifact/com.leakyabstractions/result)
+[![Latest Release](https://img.shields.io/github/release/leakyabstractions/result.svg?logo=github)](https://github.com/leakyabstractions/result/releases/latest)
 
 # Result Library for Java
 

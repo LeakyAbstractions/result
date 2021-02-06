@@ -1,6 +1,6 @@
 
-# Publish a new Release compatible with JDK8
-name: Release JDK8
+# Publish a new Release compatible with JDK11
+name: Release JDK11
 
 on:
   create:
@@ -8,7 +8,7 @@ on:
 
 env:
   GRADLE_OPTS: '-Dorg.gradle.daemon=false'
-  JDK_VERSION: 8
+  JDK_VERSION: 11
 
 jobs:
   build:
@@ -44,7 +44,7 @@ jobs:
           ~/.gradle/caches
           ~/.gradle/wrapper
         restore-keys: |
-          ${{ runner.os }}-gradle-jdk8-
+          ${{ runner.os }}-gradle-jdk11-
 
     # ================================
     # PUBLISH
