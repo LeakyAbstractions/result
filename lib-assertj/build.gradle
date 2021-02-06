@@ -1,11 +1,10 @@
 
 plugins {
     id 'java-library'
-    id 'com.jfrog.bintray'
-    id 'maven-publish'
-    id 'jacoco'
     id 'com.diffplug.spotless'
+    id 'jacoco'
     id 'org.sonarqube'
+    id 'maven-publish'
 }
 
 repositories {
