@@ -598,7 +598,7 @@ public void should_pass_too() {
 
 ## Javadoc
 
-Here's the full [Result API documentation](https://dev.leakyabstractions.com/result/api/).
+Here's the full [Result API documentation](https://javadoc.io/doc/com.leakyabstractions/result/).
 
 
 ## Looking for Support?
@@ -617,25 +617,25 @@ This project is governed by the [Contributor Covenant Code of Conduct](CODE_OF_C
 expected to uphold this code.
 
 
-[NEW_SUCCESS]: api/com/leakyabstractions/result/Results.html#success(S)
-[NEW_FAILURE]: api/com/leakyabstractions/result/Results.html#failure(F)
-[OF_OPTIONAL]: api/com/leakyabstractions/result/Results.html#ofOptional(java.util.Optional)
-[WRAP]: api/com/leakyabstractions/result/Results.html#wrap(java.util.concurrent.Callable)
-[LAZY]: api/com/leakyabstractions/result/Results.html#lazy(java.util.function.Supplier)
-[IS_SUCCESS]: api/com/leakyabstractions/result/Result.html#isSuccess()
-[IS_FAILURE]: api/com/leakyabstractions/result/Result.html#isFailure()
-[IF_SUCCESS_OR_ELSE]: api/com/leakyabstractions/result/Result.html#ifSuccessOrElse(java.util.function.Consumer,java.util.function.Consumer)
-[IF_SUCCESS]: api/com/leakyabstractions/result/Result.html#ifSuccess(java.util.function.Consumer)
-[IF_FAILURE]: api/com/leakyabstractions/result/Result.html#ifFailure(java.util.function.Consumer)
-[OR_ELSE]: api/com/leakyabstractions/result/Result.html#orElse(S)
-[OR_ELSE_MAP]: api/com/leakyabstractions/result/Result.html#orElseMap(java.util.function.Function)
-[OR_ELSE_THROW]: api/com/leakyabstractions/result/Result.html#orElseThrow()
-[OR_ELSE_THROW_WITH_MAPPER]: api/com/leakyabstractions/result/Result.html#orElseThrow(java.util.function.Function)
-[GET_FAILURE_OR_ELSE_THROW]: api/com/leakyabstractions/result/Result.html#getFailureOrElseThrow()
-[FILTER]: api/com/leakyabstractions/result/Result.html#filter(java.util.function.Predicate,java.util.function.Function)
-[MAP]: api/com/leakyabstractions/result/Result.html#map(java.util.function.Function,java.util.function.Function)
-[MAP_SUCCESS]: api/com/leakyabstractions/result/Result.html#mapSuccess(java.util.function.Function)
-[MAP_FAILURE]: api/com/leakyabstractions/result/Result.html#mapFailure(java.util.function.Function)
-[FLATMAP]: api/com/leakyabstractions/result/Result.html#flatMap(java.util.function.Function,java.util.function.Function)
-[FLATMAP_SUCCESS]: api/com/leakyabstractions/result/Result.html#flatMapSuccess(java.util.function.Function)
-[FLATMAP_FAILURE]: api/com/leakyabstractions/result/Result.html#flatMapFailure(java.util.function.Function)
+[NEW_SUCCESS]: https://javadoc.io/doc/com.leakyabstractions/result/{{ site.current_version }}/com/leakyabstractions/result/Results.html#success(S)
+[NEW_FAILURE]: https://javadoc.io/doc/com.leakyabstractions/result/{{ site.current_version }}/com/leakyabstractions/result/Results.html#failure(F)
+[OF_OPTIONAL]: https://javadoc.io/doc/com.leakyabstractions/result/{{ site.current_version }}/com/leakyabstractions/result/Results.html#ofOptional(java.util.Optional)
+[WRAP]: https://javadoc.io/doc/com.leakyabstractions/result/{{ site.current_version }}/com/leakyabstractions/result/Results.html#wrap(java.util.concurrent.Callable)
+[LAZY]: https://javadoc.io/doc/com.leakyabstractions/result/{{ site.current_version }}/com/leakyabstractions/result/Results.html#lazy(java.util.function.Supplier)
+[IS_SUCCESS]: https://javadoc.io/doc/com.leakyabstractions/result/{{ site.current_version }}/com/leakyabstractions/result/Result.html#isSuccess()
+[IS_FAILURE]: https://javadoc.io/doc/com.leakyabstractions/result/{{ site.current_version }}/com/leakyabstractions/result/Result.html#isFailure()
+[IF_SUCCESS_OR_ELSE]: https://javadoc.io/doc/com.leakyabstractions/result/{{ site.current_version }}/com/leakyabstractions/result/Result.html#ifSuccessOrElse(java.util.function.Consumer,java.util.function.Consumer)
+[IF_SUCCESS]: https://javadoc.io/doc/com.leakyabstractions/result/{{ site.current_version }}/com/leakyabstractions/result/Result.html#ifSuccess(java.util.function.Consumer)
+[IF_FAILURE]: https://javadoc.io/doc/com.leakyabstractions/result/{{ site.current_version }}/com/leakyabstractions/result/Result.html#ifFailure(java.util.function.Consumer)
+[OR_ELSE]: https://javadoc.io/doc/com.leakyabstractions/result/{{ site.current_version }}/com/leakyabstractions/result/Result.html#orElse(S)
+[OR_ELSE_MAP]: https://javadoc.io/doc/com.leakyabstractions/result/{{ site.current_version }}/com/leakyabstractions/result/Result.html#orElseMap(java.util.function.Function)
+[OR_ELSE_THROW]: https://javadoc.io/doc/com.leakyabstractions/result/{{ site.current_version }}/com/leakyabstractions/result/Result.html#orElseThrow()
+[OR_ELSE_THROW_WITH_MAPPER]: https://javadoc.io/doc/com.leakyabstractions/result/{{ site.current_version }}/com/leakyabstractions/result/Result.html#orElseThrow(java.util.function.Function)
+[GET_FAILURE_OR_ELSE_THROW]: https://javadoc.io/doc/com.leakyabstractions/result/{{ site.current_version }}/com/leakyabstractions/result/Result.html#getFailureOrElseThrow()
+[FILTER]: https://javadoc.io/doc/com.leakyabstractions/result/{{ site.current_version }}/com/leakyabstractions/result/Result.html#filter(java.util.function.Predicate,java.util.function.Function)
+[MAP]: https://javadoc.io/doc/com.leakyabstractions/result/{{ site.current_version }}/com/leakyabstractions/result/Result.html#map(java.util.function.Function,java.util.function.Function)
+[MAP_SUCCESS]: https://javadoc.io/doc/com.leakyabstractions/result/{{ site.current_version }}/com/leakyabstractions/result/Result.html#mapSuccess(java.util.function.Function)
+[MAP_FAILURE]: https://javadoc.io/doc/com.leakyabstractions/result/{{ site.current_version }}/com/leakyabstractions/result/Result.html#mapFailure(java.util.function.Function)
+[FLATMAP]: https://javadoc.io/doc/com.leakyabstractions/result/{{ site.current_version }}/com/leakyabstractions/result/Result.html#flatMap(java.util.function.Function,java.util.function.Function)
+[FLATMAP_SUCCESS]: https://javadoc.io/doc/com.leakyabstractions/result/{{ site.current_version }}/com/leakyabstractions/result/Result.html#flatMapSuccess(java.util.function.Function)
+[FLATMAP_FAILURE]: https://javadoc.io/doc/com.leakyabstractions/result/{{ site.current_version }}/com/leakyabstractions/result/Result.html#flatMapFailure(java.util.function.Function)

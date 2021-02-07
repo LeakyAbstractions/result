@@ -4,6 +4,8 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=LeakyAbstractions_result&metric=coverage)](https://sonarcloud.io/component_measures?id=LeakyAbstractions_result&metric=coverage&view=list)
 [![Maven Central](https://img.shields.io/maven-central/v/com.leakyabstractions/result?color=light-green&logo=java)](https://search.maven.org/artifact/com.leakyabstractions/result)
 [![Latest Release](https://img.shields.io/github/release/leakyabstractions/result.svg?logo=github)](https://github.com/leakyabstractions/result/releases/latest)
+[![Javadoc](https://img.shields.io/badge/javadoc-result-blue)](https://javadoc.io/doc/com.leakyabstractions/result)
+[![Javadoc](https://img.shields.io/badge/javadoc-result--assertj-blue)](https://javadoc.io/doc/com.leakyabstractions/result-assertj)
 
 # Result Library for Java
 
@@ -68,7 +70,7 @@ and further info about _Result_ features.
 
 ## Javadoc
 
-Here you can find the full [Result API documentation](https://dev.leakyabstractions.com/result/api/).
+Here you can find the full [Result API documentation](https://javadoc.io/doc/com.leakyabstractions/result/).
 
 
 ## Looking for Support?
