@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
  * @author Guillermo Calvo
  */
 @DisplayName("Results combineCollection")
-class Result_combineCollection_Test {
+class Results_combineCollection_Test {
 
     @Test
     void should_return_success_when_no_failures() {
