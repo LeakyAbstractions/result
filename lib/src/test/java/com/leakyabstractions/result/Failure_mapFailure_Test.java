@@ -21,9 +21,9 @@ class Failure_mapFailure_Test {
     void should_use_failure_mapping() {
         // Given
         final Result<Integer, Integer> failure = new Failure<>(123);
-        final UnaryOperator<Integer> failureMapper = f -> f + 198;
+        final UnaryOperator<Integer> mapper = f -> f + 198;
         // When
-        final Result<Integer, Integer> result = failure.mapFailure(failureMapper);
+        final Result<Integer, Integer> result = failure.mapFailure(mapper);
         // Then
         assertThat(result).isEqualTo(new Failure<>(321));
     }
@@ -32,9 +32,9 @@ class Failure_mapFailure_Test {
     void should_use_failure_mapping_even_if_value_is_null() {
         // Given
         final Result<Integer, Integer> failure = new Failure<>(123);
-        final Function<Integer, String> failureMapper = f -> "FAILURE";
+        final Function<Integer, String> mapper = f -> "FAILURE";
         // When
-        final Result<Integer, String> result = failure.mapFailure(failureMapper);
+        final Result<Integer, String> result = failure.mapFailure(mapper);
         // Then
         assertThat(result).isEqualTo(new Failure<>("FAILURE"));
     }

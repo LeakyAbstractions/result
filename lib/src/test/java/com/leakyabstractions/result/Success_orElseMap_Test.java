@@ -23,9 +23,9 @@ class Success_orElseMap_Test {
     void should_ignore_failure_mapper() {
         // Given
         final Result<String, Integer> success = new Success<>(SUCCESS);
-        final Function<Integer, String> failureMapper = f -> fail("Should not happen");
+        final Function<Integer, String> mapper = f -> fail("Should not happen");
         // When
-        final String value = success.orElseMap(failureMapper);
+        final String value = success.orElseMap(mapper);
         // Then
         assertThat(value).isSameAs(SUCCESS);
     }
@@ -34,9 +34,9 @@ class Success_orElseMap_Test {
     void should_ignore_failure_mapper_even_if_value_is_null() {
         // Given
         final Result<String, Integer> success = new Success<>(null);
-        final Function<Integer, String> failureMapper = f -> fail("Should not happen");
+        final Function<Integer, String> mapper = f -> fail("Should not happen");
         // When
-        final String value = success.orElseMap(failureMapper);
+        final String value = success.orElseMap(mapper);
         // Then
         assertThat(value).isNull();
     }

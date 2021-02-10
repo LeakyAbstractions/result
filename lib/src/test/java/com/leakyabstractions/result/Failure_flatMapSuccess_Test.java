@@ -21,9 +21,9 @@ class Failure_flatMapSuccess_Test {
     void should_return_equal_failure_no_matter_what() {
         // Given
         final Result<Integer, String> failure = new Failure<>("FAILURE");
-        final Function<Integer, Result<String, String>> successFlatMapper = s -> fail("Should not happen");
+        final Function<Integer, Result<String, String>> mapper = s -> fail("Should not happen");
         // When
-        final Result<String, String> result = failure.flatMapSuccess(successFlatMapper);
+        final Result<String, String> result = failure.flatMapSuccess(mapper);
         // Then
         assertThat(result).isEqualTo(failure);
     }

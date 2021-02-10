@@ -23,9 +23,9 @@ class Failure_filter_Test {
         // Given
         final Result<Integer, String> failure = new Failure<>("FAILURE");
         final Predicate<Integer> filter = s -> fail("Should not happen");
-        final Function<Integer, String> failureMapper = s -> fail("Should not happen");
+        final Function<Integer, String> mapper = s -> fail("Should not happen");
         // When
-        final Result<Integer, String> result = failure.filter(filter, failureMapper);
+        final Result<Integer, String> result = failure.filter(filter, mapper);
         // Then
         assertThat(result).isSameAs(failure);
     }

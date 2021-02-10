@@ -21,9 +21,9 @@ class Success_flatMapSuccess_Test {
         // Given
         final Result<Integer, String> success = new Success<>(123);
         final Result<String, String> another = new Failure<>("FAILURE");
-        final Function<Integer, Result<String, String>> successFlatMapper = s -> another;
+        final Function<Integer, Result<String, String>> mapper = s -> another;
         // When
-        final Result<String, String> result = success.flatMapSuccess(successFlatMapper);
+        final Result<String, String> result = success.flatMapSuccess(mapper);
         // Then
         assertThat(result).isSameAs(another);
     }
@@ -33,9 +33,9 @@ class Success_flatMapSuccess_Test {
         // Given
         final Result<Integer, Integer> success = new Success<>(123);
         final Result<String, Integer> another = new Success<>("SUCCESS");
-        final Function<Integer, Result<String, Integer>> successFlatMapper = s -> another;
+        final Function<Integer, Result<String, Integer>> mapper = s -> another;
         // When
-        final Result<String, Integer> result = success.flatMapSuccess(successFlatMapper);
+        final Result<String, Integer> result = success.flatMapSuccess(mapper);
         // Then
         assertThat(result).isSameAs(another);
     }

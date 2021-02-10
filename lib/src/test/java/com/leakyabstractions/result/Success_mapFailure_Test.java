@@ -21,9 +21,9 @@ class Success_mapFailure_Test {
     void should_ignore_failure_mapping() {
         // Given
         final Result<String, Integer> success = new Success<>("SUCCESS");
-        final Function<Integer, String> failureMapper = f -> fail("Should not happen");
+        final Function<Integer, String> mapper = f -> fail("Should not happen");
         // When
-        final Result<String, String> result = success.mapFailure(failureMapper);
+        final Result<String, String> result = success.mapFailure(mapper);
         // Then
         assertThat(result).isSameAs(success);
     }

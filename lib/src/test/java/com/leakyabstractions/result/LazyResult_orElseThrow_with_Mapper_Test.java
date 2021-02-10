@@ -28,9 +28,9 @@ class LazyResult_orElseThrow_with_Mapper_Test {
         // Given
         final Supplier<Result<Integer, String>> supplier = () -> new Failure<>(FAILURE);
         final Result<Integer, String> lazy = new LazyResult<>(supplier);
-        final Function<String, RuntimeException> failureMapper = RuntimeException::new;
+        final Function<String, RuntimeException> mapper = RuntimeException::new;
         // When
-        final ThrowingCallable callable = () -> lazy.orElseThrow(failureMapper);
+        final ThrowingCallable callable = () -> lazy.orElseThrow(mapper);
         // Then
         assertThatThrownBy(callable)
                 .isInstanceOf(RuntimeException.class)
@@ -42,9 +42,9 @@ class LazyResult_orElseThrow_with_Mapper_Test {
         // Given
         final Supplier<Result<String, String>> supplier = () -> new Success<>(SUCCESS);
         final Result<String, String> lazy = new LazyResult<>(supplier);
-        final Function<String, RuntimeException> failureMapper = f -> fail("Should not happen");
+        final Function<String, RuntimeException> mapper = f -> fail("Should not happen");
         // When
-        final String value = lazy.orElseThrow(failureMapper);
+        final String value = lazy.orElseThrow(mapper);
         // Then
         assertThat(value).isSameAs(SUCCESS);
     }
@@ -54,9 +54,9 @@ class LazyResult_orElseThrow_with_Mapper_Test {
         // Given
         final Supplier<Result<String, Integer>> supplier = () -> new Success<>(null);
         final Result<String, Integer> lazy = new LazyResult<>(supplier);
-        final Function<Integer, NullPointerException> failureMapper = f -> new NullPointerException();
+        final Function<Integer, NullPointerException> mapper = f -> new NullPointerException();
         // When
-        final String value = lazy.orElseThrow(failureMapper);
+        final String value = lazy.orElseThrow(mapper);
         // Then
         assertThat(value).isNull();
     }

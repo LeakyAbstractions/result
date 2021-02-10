@@ -1,6 +1,8 @@
 
 package com.leakyabstractions.result;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -38,9 +40,8 @@ final class Failure<S, F> implements Result<S, F> {
     }
 
     @Override
-    public S orElseMap(Function<? super F, ? extends S> failureMapper) {
-        Objects.requireNonNull(failureMapper);
-        return failureMapper.apply(this.value);
+    public S orElseMap(Function<? super F, ? extends S> mapper) {
+        return requireNonNull(mapper).apply(this.value);
     }
 
     @Override
@@ -49,9 +50,8 @@ final class Failure<S, F> implements Result<S, F> {
     }
 
     @Override
-    public <E extends Throwable> S orElseThrow(Function<? super F, E> failureMapper) throws E {
-        Objects.requireNonNull(failureMapper);
-        throw failureMapper.apply(this.value);
+    public <E extends Throwable> S orElseThrow(Function<? super F, E> mapper) throws E {
+        throw requireNonNull(mapper).apply(this.value);
     }
 
     @Override
@@ -66,20 +66,18 @@ final class Failure<S, F> implements Result<S, F> {
 
     @Override
     public Result<S, F> ifSuccessOrElse(Consumer<? super S> successAction, Consumer<? super F> failureAction) {
-        Objects.requireNonNull(failureAction);
-        failureAction.accept(this.value);
+        requireNonNull(failureAction).accept(this.value);
         return this;
     }
 
     @Override
     public Result<S, F> ifFailure(Consumer<? super F> failureAction) {
-        Objects.requireNonNull(failureAction);
-        failureAction.accept(this.value);
+        requireNonNull(failureAction).accept(this.value);
         return this;
     }
 
     @Override
-    public Result<S, F> filter(Predicate<? super S> predicate, Function<? super S, ? extends F> failureMapper) {
+    public Result<S, F> filter(Predicate<? super S> predicate, Function<? super S, ? extends F> mapper) {
         return this;
     }
 
@@ -87,40 +85,36 @@ final class Failure<S, F> implements Result<S, F> {
     public <S2, F2> Result<S2, F2> map(
             Function<? super S, S2> successMapper,
             Function<? super F, F2> failureMapper) {
-        Objects.requireNonNull(failureMapper);
-        return new Failure<>(failureMapper.apply(this.value));
+        return new Failure<>(requireNonNull(failureMapper).apply(this.value));
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public <S2> Result<S2, F> mapSuccess(Function<? super S, S2> successMapper) {
+    public <S2> Result<S2, F> mapSuccess(Function<? super S, S2> mapper) {
         return (Result<S2, F>) this;
     }
 
     @Override
-    public <F2> Result<S, F2> mapFailure(Function<? super F, F2> failureMapper) {
-        Objects.requireNonNull(failureMapper);
-        return new Failure<>(failureMapper.apply(this.value));
+    public <F2> Result<S, F2> mapFailure(Function<? super F, F2> mapper) {
+        return new Failure<>(requireNonNull(mapper).apply(this.value));
     }
 
     @Override
     public <S2, F2> Result<S2, F2> flatMap(
-            Function<? super S, Result<S2, F2>> successFlatMapper,
-            Function<? super F, Result<S2, F2>> failureFlatMapper) {
-        Objects.requireNonNull(failureFlatMapper);
-        return failureFlatMapper.apply(this.value);
+            Function<? super S, Result<S2, F2>> successMapper,
+            Function<? super F, Result<S2, F2>> failureMapper) {
+        return requireNonNull(failureMapper).apply(this.value);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public <S2> Result<S2, F> flatMapSuccess(Function<? super S, Result<S2, F>> successFlatMapper) {
+    public <S2> Result<S2, F> flatMapSuccess(Function<? super S, Result<S2, F>> mapper) {
         return (Result<S2, F>) this;
     }
 
     @Override
-    public <F2> Result<S, F2> flatMapFailure(Function<? super F, Result<S, F2>> failureFlatMapper) {
-        Objects.requireNonNull(failureFlatMapper);
-        return failureFlatMapper.apply(this.value);
+    public <F2> Result<S, F2> flatMapFailure(Function<? super F, Result<S, F2>> mapper) {
+        return requireNonNull(mapper).apply(this.value);
     }
 
     @Override

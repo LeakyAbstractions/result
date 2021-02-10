@@ -1,6 +1,8 @@
 
 package com.leakyabstractions.result;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -22,7 +24,7 @@ final class LazyResult<S, F> implements Result<S, F> {
     private Result<S, F> backingResult;
 
     LazyResult(Supplier<Result<S, F>> supplier) {
-        this.supplier = Objects.requireNonNull(supplier);
+        this.supplier = requireNonNull(supplier);
     }
 
     @Override
@@ -41,8 +43,8 @@ final class LazyResult<S, F> implements Result<S, F> {
     }
 
     @Override
-    public S orElseMap(Function<? super F, ? extends S> failureMapper) {
-        return this.getBackingResult().orElseMap(failureMapper);
+    public S orElseMap(Function<? super F, ? extends S> mapper) {
+        return this.getBackingResult().orElseMap(mapper);
     }
 
     @Override
@@ -51,8 +53,8 @@ final class LazyResult<S, F> implements Result<S, F> {
     }
 
     @Override
-    public <E extends Throwable> S orElseThrow(Function<? super F, E> failureMapper) throws E {
-        return this.getBackingResult().orElseThrow(failureMapper);
+    public <E extends Throwable> S orElseThrow(Function<? super F, E> mapper) throws E {
+        return this.getBackingResult().orElseThrow(mapper);
     }
 
     @Override
@@ -79,8 +81,8 @@ final class LazyResult<S, F> implements Result<S, F> {
     }
 
     @Override
-    public Result<S, F> filter(Predicate<? super S> predicate, Function<? super S, ? extends F> failureMapper) {
-        return lazily(this.isLazy, () -> this.getBackingResult().filter(predicate, failureMapper));
+    public Result<S, F> filter(Predicate<? super S> predicate, Function<? super S, ? extends F> mapper) {
+        return lazily(this.isLazy, () -> this.getBackingResult().filter(predicate, mapper));
     }
 
     @Override
@@ -89,30 +91,30 @@ final class LazyResult<S, F> implements Result<S, F> {
     }
 
     @Override
-    public <S2> Result<S2, F> mapSuccess(Function<? super S, S2> successMapper) {
-        return lazily(this.isLazy, () -> this.getBackingResult().mapSuccess(successMapper));
+    public <S2> Result<S2, F> mapSuccess(Function<? super S, S2> mapper) {
+        return lazily(this.isLazy, () -> this.getBackingResult().mapSuccess(mapper));
     }
 
     @Override
-    public <F2> Result<S, F2> mapFailure(Function<? super F, F2> failureMapper) {
-        return lazily(this.isLazy, () -> this.getBackingResult().mapFailure(failureMapper));
+    public <F2> Result<S, F2> mapFailure(Function<? super F, F2> mapper) {
+        return lazily(this.isLazy, () -> this.getBackingResult().mapFailure(mapper));
     }
 
     @Override
     public <S2, F2> Result<S2, F2> flatMap(
-            Function<? super S, Result<S2, F2>> successFlatMapper,
-            Function<? super F, Result<S2, F2>> failureFlatMapper) {
-        return lazily(this.isLazy, () -> this.getBackingResult().flatMap(successFlatMapper, failureFlatMapper));
+            Function<? super S, Result<S2, F2>> successMapper,
+            Function<? super F, Result<S2, F2>> failureMapper) {
+        return lazily(this.isLazy, () -> this.getBackingResult().flatMap(successMapper, failureMapper));
     }
 
     @Override
-    public <S2> Result<S2, F> flatMapSuccess(Function<? super S, Result<S2, F>> successFlatMapper) {
-        return lazily(this.isLazy, () -> this.getBackingResult().flatMapSuccess(successFlatMapper));
+    public <S2> Result<S2, F> flatMapSuccess(Function<? super S, Result<S2, F>> mapper) {
+        return lazily(this.isLazy, () -> this.getBackingResult().flatMapSuccess(mapper));
     }
 
     @Override
-    public <F2> Result<S, F2> flatMapFailure(Function<? super F, Result<S, F2>> failureFlatMapper) {
-        return lazily(this.isLazy, () -> this.getBackingResult().flatMapFailure(failureFlatMapper));
+    public <F2> Result<S, F2> flatMapFailure(Function<? super F, Result<S, F2>> mapper) {
+        return lazily(this.isLazy, () -> this.getBackingResult().flatMapFailure(mapper));
     }
 
     @Override
@@ -144,7 +146,7 @@ final class LazyResult<S, F> implements Result<S, F> {
 
     private void supply(Boolean ignore) {
         this.isLazy = false;
-        this.backingResult = Objects.requireNonNull(this.supplier.get());
+        this.backingResult = requireNonNull(this.supplier.get());
     }
 
     private static <S2, F2> Result<S2, F2> lazily(boolean lazily, Supplier<Result<S2, F2>> supplier) {

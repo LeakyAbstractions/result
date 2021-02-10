@@ -21,11 +21,11 @@ class Failure_flatMap_Test {
     void should_return_new_success_when_failure_function_returns_success() {
         // Given
         final Result<Integer, Integer> failure = new Failure<>(123);
-        final Function<Integer, Result<String, String>> successFlatMapper = s -> fail("Should not happen");
+        final Function<Integer, Result<String, String>> successMapper = s -> fail("Should not happen");
         final Result<String, String> another = new Success<>("SUCCESS");
-        final Function<Integer, Result<String, String>> failureFlatMapper = f -> another;
+        final Function<Integer, Result<String, String>> failureMapper = f -> another;
         // When
-        final Result<String, String> result = failure.flatMap(successFlatMapper, failureFlatMapper);
+        final Result<String, String> result = failure.flatMap(successMapper, failureMapper);
         // Then
         assertThat(result).isSameAs(another);
     }
@@ -34,11 +34,11 @@ class Failure_flatMap_Test {
     void should_return_new_failure_when_failure_function_returns_failure() {
         // Given
         final Result<Integer, Integer> failure = new Failure<>(123);
-        final Function<Integer, Result<String, String>> successFlatMapper = s -> fail("Should not happen");
+        final Function<Integer, Result<String, String>> successMapper = s -> fail("Should not happen");
         final Result<String, String> another = new Failure<>("FAILURE");
-        final Function<Integer, Result<String, String>> failureFlatMapper = f -> another;
+        final Function<Integer, Result<String, String>> failureMapper = f -> another;
         // When
-        final Result<String, String> result = failure.flatMap(successFlatMapper, failureFlatMapper);
+        final Result<String, String> result = failure.flatMap(successMapper, failureMapper);
         // Then
         assertThat(result).isSameAs(another);
     }

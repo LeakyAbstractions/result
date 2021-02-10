@@ -27,9 +27,9 @@ class LazyResult_mapFailure_Test {
         // Given
         final Supplier<Result<String, String>> supplier = () -> new Failure<>(FAILURE);
         final LazyResult<String, String> lazy = new LazyResult<>(supplier);
-        final Function<String, Integer> failureMapper = f -> fail("Should not happen");
+        final Function<String, Integer> mapper = f -> fail("Should not happen");
         // When
-        final Result<String, Integer> result = lazy.mapFailure(failureMapper);
+        final Result<String, Integer> result = lazy.mapFailure(mapper);
         // Then
         assertThat(result).isInstanceOf(LazyResult.class);
     }
@@ -39,9 +39,9 @@ class LazyResult_mapFailure_Test {
         // Given
         final Supplier<Result<String, String>> supplier = () -> new Failure<>(FAILURE);
         final LazyResult<String, String> lazy = new LazyResult<>(supplier);
-        final Function<String, String> failureMapper = f -> ANOTHER;
+        final Function<String, String> mapper = f -> ANOTHER;
         // When
-        final String value = lazy.mapFailure(failureMapper).getFailureOrElseThrow();
+        final String value = lazy.mapFailure(mapper).getFailureOrElseThrow();
         // Then
         assertThat(value).isSameAs(ANOTHER);
     }
@@ -51,9 +51,9 @@ class LazyResult_mapFailure_Test {
         // Given
         final Supplier<Result<String, String>> supplier = () -> new Success<>(SUCCESS);
         final LazyResult<String, String> lazy = new LazyResult<>(supplier);
-        final Function<String, String> failureMapper = f -> fail("Should not happen");
+        final Function<String, String> mapper = f -> fail("Should not happen");
         // When
-        final String value = lazy.mapFailure(failureMapper).orElseThrow();
+        final String value = lazy.mapFailure(mapper).orElseThrow();
         // Then
         assertThat(value).isSameAs(SUCCESS);
     }
@@ -63,11 +63,11 @@ class LazyResult_mapFailure_Test {
         // Given
         final Supplier<Result<String, Integer>> supplier = () -> new Failure<>(123);
         final LazyResult<String, Integer> lazy = new LazyResult<>(supplier);
-        final Function<Integer, String> failureMapper = f -> FAILURE;
+        final Function<Integer, String> mapper = f -> FAILURE;
         final Failure<Object, String> expected = new Failure<>(FAILURE);
         // When
         final Integer value = lazy.getFailureOrElseThrow();
-        final Result<String, String> result = lazy.mapFailure(failureMapper);
+        final Result<String, String> result = lazy.mapFailure(mapper);
         // Then
         assertThat(value).isEqualTo(123);
         assertThat(result).isEqualTo(expected);
