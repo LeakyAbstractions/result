@@ -33,7 +33,7 @@ class Results_lazy_with_Consumer_Test {
         // Given
         final Consumer<String> consumer = s -> {};
         // When
-        LazyConsumer<String> result = Results.lazy(consumer);
+        Consumer<String> result = Results.lazy(consumer);
         // Then
         assertThat(result).isInstanceOf(LazyConsumer.class);
     }

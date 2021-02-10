@@ -1,6 +1,7 @@
 
 package com.leakyabstractions.result;
 
+import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
@@ -25,6 +26,16 @@ import java.util.function.Consumer;
  * @see Results#lazy(Consumer)
  */
 @FunctionalInterface
-public interface LazyConsumer<T> extends Consumer<T> {
+interface LazyConsumer<T> extends Consumer<T> {
 
+    /**
+     * Creates a new lazy consumer based on a regular one.
+     * 
+     * @param <T> the type of the input to the action
+     * @param consumer the regular consumer that may be eventually performed
+     * @return the new lazy consumer
+     */
+    static <T> LazyConsumer<T> of(Consumer<T> consumer) {
+        return Objects.requireNonNull(consumer)::accept;
+    }
 }

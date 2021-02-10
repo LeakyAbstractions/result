@@ -257,8 +257,7 @@ public class Results {
      * <li>{@link Result#getFailureOrElseThrow()}</li>
      * </ul>
      * <p>
-     * Finally, conditional actions can be performed lazily if they are {@link LazyConsumer} objects; otherwise they
-     * will be performed immediately:
+     * Finally, conditional actions will be performed immediately unless they are {@link lazy(Consumer) lazy} too:
      * <ul>
      * <li>{@link Result#ifSuccess(Consumer)}</li>
      * <li>{@link Result#ifSuccessOrElse(Consumer, Consumer)}</li>
@@ -291,9 +290,8 @@ public class Results {
      * @param <T> the type of the input to the action
      * @param consumer the regular consumer that may be eventually performed
      * @return the new lazy consumer
-     * @see LazyConsumer
      */
-    public static <T> LazyConsumer<T> lazy(Consumer<T> consumer) {
-        return Objects.requireNonNull(consumer)::accept;
+    public static <T> Consumer<T> lazy(Consumer<T> consumer) {
+        return LazyConsumer.of(consumer);
     }
 }
