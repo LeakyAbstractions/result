@@ -19,18 +19,19 @@ If you like `Optional` but feel that it sometimes falls too short, you'll love `
 
 ## Result Library in a Nutshell
 
-Before _Result_, we would wrap `someMethod` invocation inside a `try` block so that errors can be handled inside a
-`catch` block.
+Before _Result_, we would wrap exception-throwing `foobar` method invocation inside a `try` block so that errors can be
+handled inside a `catch` block.
 
 ```java
 
-    int length = 0;
+    int length;
     try {
-        String result = this.someMethod();
+        final String result = foobar();
         this.commit(result);
-        length = result.length()
+        length = result.length();
     } catch(SomeException problem) {
         this.rollback(problem);
+        length = 0;
     }
     return length;
 
@@ -42,22 +43,24 @@ logic shouldn't be used for normal program flow.
 _Result_ makes us deal with expected, non-exceptional error situations explicitly as a way of enforcing good programming
 practices.
 
-Let's now look at how the above code could be refactored with _Result_:
+Let's now look at how the above code could be refactored if method `foobar` returned a _Result_ object instead of
+throwing an exception:
 
 ```java
 
-    Result<String, SomeFailure> result = this.someMethod();
+    final Result<String, SomeFailure> result = foobar();
     result.ifSuccessOrElse(this::commit, this::rollback);
-    return result.mapSuccess(String::length);
+    final Result<Integer, SomeFailure> resultLength = result.mapSuccess(String::length);
+    return resultLength.orElse(0);
 
 ```
 
-In the above example, we use only three lines of code to replace the nine that worked in the first example. But we can
+In the above example, we use only four lines of code to replace the ten that worked in the first example. But we can
 make it even shorter by chaining methods in typical functional programming style:
 
 ```java
 
-    return this.someMethod().ifSuccessOrElse(this::commit, this::rollback).mapSuccess(String::length);
+    return foobar().ifSuccessOrElse(this::commit, this::rollback).mapSuccess(String::length).orElse(0);
 
 ```
 
