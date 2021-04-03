@@ -5,9 +5,9 @@ javadoc {
         header "${project.artifactName} ${rootProject.version}"
         author true
         if (JavaVersion.current() <= JavaVersion.VERSION_1_8) {
-            links 'https://docs.oracle.com/javase/8/docs/api/'
+            linksOffline 'https://docs.oracle.com/javase/8/docs/api/', rootProject.file('common/javadoc/jdk8').toString()
         } else {
-            links 'https://docs.oracle.com/en/java/javase/15/docs/api/'
+            linksOffline 'https://docs.oracle.com/en/java/javase/15/docs/api/', rootProject.file('common/javadoc/jdk15').toString()
             addBooleanOption('html5', true)
         }
     }
