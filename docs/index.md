@@ -9,18 +9,14 @@ If you like `Optional` but feel that it sometimes falls too short, you'll love `
 
 ## Adding Result to Your Build
 
-The library has no external dependencies and it is very lightweight. Adding it to your build should be very easy.
+The library requires JDK 1.8 or higher. Other than that, it has no external dependencies and it is very lightweight.
+Adding it to your build should be very easy.
 
 Artifact coordinates:
 
 - Group ID: `com.leakyabstractions`
 - Artifact ID: `result`
 - Version: `{{ site.current_version }}`
-
-Additionally, if you require compatibility with older JDKs you may use these alternate versions:
-
-- `{{ site.current_version }}-jdk8`
-- `{{ site.current_version }}-jdk11`
 
 To add a dependency on _Result_ using [**Maven**](https://maven.apache.org/), use the following:
 
@@ -35,32 +31,12 @@ To add a dependency on _Result_ using [**Maven**](https://maven.apache.org/), us
 </dependencies>
 ```
 
-And make sure [**Maven Central repository**](https://search.maven.org/) is in your repository list:
-
-```xml
-<repositories>
-    <repository>
-        <id>central</id>
-        <name>Maven Central Repository</name>
-        <url>https://repo.maven.apache.org/maven2</url>
-    </repository>
-</repositories>
-```
-
 To add the dependency using [**Gradle**](https://gradle.org/), if you are building an application that will use _Result_
 internally:
 
 ```gradle
 dependencies {
     implementation 'com.leakyabstractions:result:{{ site.current_version }}'
-}
-```
-
-And make sure **Maven Central repository** is in your repository list:
-
-```gradle
-repositories {
-    mavenCentral()
 }
 ```
 
@@ -86,7 +62,7 @@ To create a successful result, we simply need to use static method [`Results.suc
 @Test
 void should_be_success() {
     // When
-    Result<Integer, ?> result = Results.success(123);
+    final Result<Integer, ?> result = Results.success(123);
     // Then
     assertThat(result.isSuccess()).isTrue();
 }
@@ -95,29 +71,27 @@ void should_be_success() {
 Note that we can use methods [`isSuccess()`][IS_SUCCESS]  or [`isFailure()`][IS_FAILURE] to check if the result was
 successful or not.
 
-On the other hand, if we want to create a failed result, we can use static method
-[`Results.failure()`][NEW_FAILURE]:
+On the other hand, if we want to create a failed result, we can use static method [`Results.failure()`][NEW_FAILURE]:
 
 ```java
 @Test
 void should_not_be_success() {
     // When
-    Result<?, String> result = Results.failure("The operation failed");
+    final Result<?, String> result = Results.failure("The operation failed");
     // Then
     assertThat(result.isSuccess()).isFalse();
 }
 ```
 
-We can also use static method [`Results.ofOptional()`][OF_OPTIONAL] to create results that depend on an optional
-value:
+We can also use static method [`Results.ofOptional()`][OF_OPTIONAL] to create results that depend on an optional value:
 
 ```java
 @Test
 void should_be_failure() {
     // Given
-    Optional<String> optional = Optional.empty();
+    final Optional<String> optional = Optional.empty();
     // When
-    Result<String, Void> result = Results.ofOptional(optional);
+    final Result<String, Void> result = Results.ofOptional(optional);
     // Then
     assertThat(result.isFailure()).isTrue();
 }
@@ -130,9 +104,9 @@ And sometimes it might come in handy to encapsulate actual thrown exceptions ins
 @Test
 void should_be_failure_too() {
     // Given
-    Callable<String> callable = () -> { throw new RuntimeException("Whoops!") };
+    final Callable<String> callable = () -> { throw new RuntimeException("Whoops!") };
     // When
-    Result<String, Exception> result = Results.wrap(callable);
+    final Result<String, Exception> result = Results.wrap(callable);
     // Then
     assertThat(result.isFailure()).isTrue();
 }
@@ -183,53 +157,44 @@ as long as possible. For example, when we actually try to determine if the opera
 
 ## Conditional Actions
 
-The `if...` family of methods enable us to run some code on the wrapped success/failure value. Before _Result_, we
-would do:
+The `if...` family of methods enable us to run some code on the wrapped success/failure value. Before _Result_, we would
+wrap exception-throwing `foobar` method invocation inside a `try` block so that errors can be handled inside a `catch`
+block:
 
 ```java
-String result = null;
 try {
-    result = this.someMethod();
+    final String result = foobar();
     this.commit(result);
 } catch(SomeException problem) {
     this.rollback(problem);
 }
-return result != null;
 ```
 
-This code wraps `someMethod` invocation inside a `try` block so that errors can be handled inside the `catch` block.
-This approach is lengthy, and that's not the only problem -- it's also slow. Conventional wisdom says that exceptional
-logic shouldn't be used for normal program flow.
-
-_Result_ makes us deal with expected, non-exceptional error situations explicitly as a way of enforcing good programming
-practices.
-
-Let's now look at how the above code could be refactored with _Result_:
+Let's now look at how the above code could be refactored if method `foobar` returned a _Result_ object instead of
+throwing an exception:
 
 ```java
-Result<String, SomeFailure> result = this.someMethod();
+final Result<String, SomeFailure> result = foobar();
 result.ifSuccessOrElse(this::commit, this::rollback);
-return result.isSuccess();
 ```
 
-The first action passed to [`ifSuccessOrElse()`][IF_SUCCESS_OR_ELSE] will be performed if `someMethod` succeeded;
+The first action passed to [`ifSuccessOrElse()`][IF_SUCCESS_OR_ELSE] will be performed if `foobar` succeeded;
 otherwise the second one will.
 
-The above example not only shorter but also faster. We can make it even shorter by chaining methods in typical
+The above example is not only shorter but also faster. We can make it even shorter by chaining methods in typical
 functional programming style:
 
 ```java
-return this.someMethod().ifSuccessOrElse(this::commit, this::rollback).isSuccess();
+foobar().ifSuccessOrElse(this::commit, this::rollback);
 ```
 
 There are other methods [`ifSuccess()`][IF_SUCCESS] and [`ifFailure()`][IF_FAILURE] to handle either one of the success/
 failure cases only:
 
 ```java
-return this.someMethod(123)
+foobar(123)
     .ifSuccess(this::commit) // commits only if the result is success
-    .ifFailure(this::rollback) // rolbacks only if the result is failure
-    .isSuccess();
+    .ifFailure(this::rollback); // rolls back only if the result is failure
 ```
 
 
@@ -239,16 +204,16 @@ The [`Optional::orElse`](https://docs.oracle.com/en/java/javase/14/docs/api/java
 method is used to retrieve the value wrapped inside an `Optional` instance, or a _default value_ in case the optional is
 empty.
 
-Similarly you can use [`orElse()`][OR_ELSE] to obtain the success value held by a _Result_ object; or a _default success
-value_ in case the result is failed.
+Similarly, you can use [`orElse()`][OR_ELSE] to obtain the success value held by a _Result_ object; or a _default
+success value_ in case the result is failed.
 
 ```java
 @Test
 void should_return_the_success_value() {
     // Given
-    Result<String, Integer> result = success("HELLO");
+    final Result<String, Integer> result = success("HELLO");
     // When
-    String greeting = result.orElse("HI");
+    final String greeting = result.orElse("HI");
     // Then
     assertThat(greeting).isEqualTo("HELLO");
 }
@@ -256,9 +221,9 @@ void should_return_the_success_value() {
 @Test
 void should_return_the_default_value() {
     // Given
-    Result<String, Integer> result = failure(1024);
+    final Result<String, Integer> result = failure(1024);
     // When
-    String greeting = result.orElse("HI");
+    final String greeting = result.orElse("HI");
     // Then
     assertThat(greeting).isEqualTo("HI");
 }
@@ -272,9 +237,9 @@ value:
 @Test
 void should_map_the_failure_value() {
     // Given
-    Result<String, Boolean> result = failure(false);
+    final Result<String, Boolean> result = failure(false);
     // When
-    String greeting = result.orElseMap(s -> s ? "HI" : "HOWDY");
+    final String greeting = result.orElseMap(s -> s ? "HI" : "HOWDY");
     // Then
     assertThat(text).isEqualTo("HOWDY");
 }
@@ -292,9 +257,9 @@ will be thrown.
 @Test
 void should_throw_exception() {
     // Given
-    Result<Integer, String> result = failure("Could not compute result");
+    final Result<Integer, String> result = failure("Could not compute result");
     // When
-    ThrowingCallable callable = () -> result.orElseThrow();
+    final ThrowingCallable callable = () -> result.orElseThrow();
     // Then
     assertThatThrownBy(callable).isInstanceOf(NoSuchElementException.class);
 }
@@ -302,24 +267,24 @@ void should_throw_exception() {
 @Test
 void should_return_success_value() {
     // Given
-    Result<Integer, String> result = success(0);
+    final Result<Integer, String> result = success(0);
     // When
-    Integer number = result.orElseThrow(IllegalArgumentException::new);
+    final Integer number = result.orElseThrow(IllegalArgumentException::new);
     // Then
     assertThat(number).isZero();
 }
 ```
 
-Method [`getFailureOrElseThrow()`][GET_FAILURE_OR_ELSE_THROW] is the counterpart of `orElseThrow`; it can only return a
-value if the result is failure:
+Method [`getFailureOrElseThrow()`][GET_FAILURE_OR_ELSE_THROW] is the counterpart of `orElseThrow`; it will return the
+failure value unless the result is successful:
 
 ```java
 @Test
 void should_return_failure_value() {
     // Given
-    Result<Integer, String> result = failure("NETWORK PROBLEM");
+    final Result<Integer, String> result = failure("NETWORK PROBLEM");
     // When
-    String error = result.getFailureOrElseThrow();
+    final String error = result.getFailureOrElseThrow();
     // Then
     assertThat(error).isEqualTo("NETWORK PROBLEM");
 }
@@ -327,9 +292,9 @@ void should_return_failure_value() {
 @Test
 void should_throw_exception() {
     // Given
-    Result<Integer, String> result = success(0);
+    final Result<Integer, String> result = success(0);
     // When
-    ThrowingCallable callable = () -> result.getFailureOrElseThrow();
+    final ThrowingCallable callable = () -> result.getFailureOrElseThrow();
     // Then
     assertThatThrownBy(callable).isInstanceOf(NoSuchElementException.class);
 }
@@ -341,7 +306,8 @@ void should_throw_exception() {
 We can run an inline test on our wrapped success value with the [`filter()`][FILTER] method. It takes a predicate and a
 mapping function as arguments and returns a _Result_ object:
 
-- If result is failure or the wrapped success value passes testing by the predicate then the _Result_ is returned as-is.
+- If it is a failed result, or it is a successful result whose success value passes testing by the predicate then the
+  _Result_ is returned as-is.
 - If the predicate returns `false` then the mapping function will be invoked with the success value and the returned
   failure value will be wrapped in a new failed result.
 
@@ -349,10 +315,10 @@ mapping function as arguments and returns a _Result_ object:
 @Test
 void should_pass_test() {
     // Given
-    Result<Integer, String> result = success(-1);
-    Predicate<Integer> isPositive = i -> i >= 0;
+    final Result<Integer, String> result = success(-1);
+    final Predicate<Integer> isPositive = i -> i >= 0;
     // When
-    Result<Integer, String> filtered = result.filter(isPositive, i -> "NEGATIVE NUMBER");
+    final Result<Integer, String> filtered = result.filter(isPositive, i -> "Negative number");
     // Then
     assertThat(filtered.isFailure()).isTrue();
 }
@@ -365,24 +331,23 @@ The `filter` method is normally used to reject wrapped success values based on a
 
 In the previous section, we looked at how to reject or accept a success value based on a filter.
 
-We can use a similar syntax to transform the _Result_ value with the `map...` family of methods:
+We can also transform success/failure values held by _Result_ objects with the `map...` family of methods:
 
 ```java
 @Test
 void should_return_string_length() {
     // Given
-    Result<String, Integer> result = success("ABCD");
+    final Result<String, Integer> result = success("ABCD");
     // When
-    Result<Integer, String> mapped = result.mapSuccess(String::length);
+    final Result<Integer, String> mapped = result.mapSuccess(String::length);
     // Then
     assertThat(mapped.orElseThrow()).isEqualTo(4);
 }
 ```
 
-In this example, we wrap a string inside a _Result_ object and use its [`mapSuccess()`][MAP_SUCCESS] method to perform
-an action on the contained string. The action we perform is to retrieve the length of the string.
-
-The `map` method returns the result of the computation wrapped inside _Result_. We then have to call an appropriate
+In this example, we wrap a string inside a _Result_ object and use its [`mapSuccess()`][MAP_SUCCESS] method to
+manipulate it (here we calculate its length). Note that we can specify the action as a method reference, or a a lambda.
+In any case, the result of this action gets wrapped inside a new _Result_ object. And then we call the appropriate
 method on the returned result to retrieve its value.
 
 There is another [`map()`][MAP] method to transform either success/failure value at once:
@@ -391,9 +356,9 @@ There is another [`map()`][MAP] method to transform either success/failure value
 @Test
 void should_return_upper_case() {
     // Given
-    Result<String, String> result = success("Hello World!");
+    final Result<String, String> result = success("Hello World!");
     // When
-    Result<String, String> mapped = result
+    final Result<String, String> mapped = result
         .map(String::toUpperCase, String::toLowerCase);
     // Then
     assertThat(mapped.orElseThrow()).isEqualTo("HELLO WORLD!");
@@ -402,9 +367,9 @@ void should_return_upper_case() {
 @Test
 void should_return_lower_case() {
     // Given
-    Result<String, String> result = failure("Hello World!");
+    final Result<String, String> result = failure("Hello World!");
     // When
-    Result<String, String> mapped = result
+    final Result<String, String> mapped = result
         .map(String::toUpperCase, String::toLowerCase);
     // Then
     assertThat(mapped.getFailure()).isEqualTo("hello world!");
@@ -417,9 +382,9 @@ And the [`mapFailure()`][MAP_FAILURE] method allows us to transform failure valu
 @Test
 void should_return_is_empty() {
     // Given
-    Result<Integer, String> result = failure("");
+    final Result<Integer, String> result = failure("");
     // When
-    Result<Integer, Boolean> mapped = result.mapFailure(String::isEmpty);
+    final Result<Integer, Boolean> mapped = result.mapFailure(String::isEmpty);
     // Then
     assertThat(mapped.getFailure()).isTrue();
 }
@@ -457,12 +422,12 @@ class User {
 }
 ```
 
-Now suposse we have a method `openFile` which checks if a given file exists and returns a result containingvthe file
+Now suposse we have a method `openFile` which checks if a given file exists and returns a result containing the file
 object or a `Problem` object explaining why the file cannot be retrieved:
 
 ```java
 Result<File, Problem> openFile(String path) {
-    File file = new File(path);
+    final File file = new File(path);
     return file.exists() ? success(file) : failure(new FileProblem("File does not exist"));
 }
 ```
@@ -474,9 +439,9 @@ use [`flatMapSuccess`][FLATMAP_SUCCESS] to fluently transform one result into an
 @Test
 void should_contain_file() {
     // Given
-    User user = new User("Rachel", true);
+    final User user = new User("Rachel", true);
     // When
-    Result<File, Problem> result = user.getCustomConfigPath()
+    final Result<File, Problem> result = user.getCustomConfigPath()
         .flatMapSuccess(this::openFile);
     // Then
     assertThat(result.orElseThrow()).isAbsolute();
@@ -485,9 +450,9 @@ void should_contain_file() {
 @Test
 void should_contain_user_problem() {
     // Given
-    User user = new User("Monica", false);
+    final User user = new User("Monica", false);
     // When
-    Result<File, Problem> result = user.getCustomConfigPath()
+    final Result<File, Problem> result = user.getCustomConfigPath()
         .flatMapSuccess(this::openFile);
     // Then
     assertThat(result.getFailure()).isInstanceOf(UserProblem.class);
@@ -496,9 +461,9 @@ void should_contain_user_problem() {
 @Test
 void should_contain_file_problem() {
     // Given
-    User user = new User("../../wrong//path/", true);
+    final User user = new User("../../wrong//path/", true);
     // When
-    Result<File, Problem> result = user.getCustomConfigPath()
+    final Result<File, Problem> result = user.getCustomConfigPath()
         .flatMapSuccess(this::openFile);
     // Then
     assertThat(result.getFailure()).isInstanceOf(FileProblem.class);
@@ -511,9 +476,9 @@ There is another [`flatMap`][FLATMAP] method to transform either success/failure
 @Test
 void should_contain_false() {
     // Given
-    User user = new User("Phoebe", false);
+    final User user = new User("Phoebe", false);
     // When
-    Result<File, Boolean> result = user.getCustomConfigPath()
+    final Result<File, Boolean> result = user.getCustomConfigPath()
         .flatMap(this::openFile, Objects::isNull);
     // Then
     assertThat(result.getFailure()).isFalse();
@@ -526,9 +491,9 @@ And the [`flatMapFailure()`][FLATMAP_FAILURE] method allows us to transform fail
 @Test
 void should_contain_true() {
     // Given
-    User user = new User("Joey", false);
+    final User user = new User("Joey", false);
     // When
-    Result<String, Boolean> result = user.getCustomConfigPath()
+    final Result<String, Boolean> result = user.getCustomConfigPath()
         .flatMapFailure(Objects::nonNull);
     // Then
     assertThat(result.getFailure()).isTrue();
@@ -567,9 +532,9 @@ import static com.leakyabstractions.result.assertj.ResultAssertions.assertThat;
 @Test
 public void should_pass() {
     // Given
-    int number = someMethodReturningInt();
+    final int number = someMethodReturningInt();
     // When
-    Result<String, Integer> result = someMethodReturningResult(number);
+    final Result<String, Integer> result = someMethodReturningResult(number);
     // Then
     assertThat(number).isZero();
     assertThat(result).hasSuccess("OK");
@@ -586,14 +551,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Test
 public void should_pass_too() {
     // Given
-    int number = anotherMethodReturningInt();
+    final int number = anotherMethodReturningInt();
     // When
-    Result<String, Integer> result = anotherMethodReturningResult(number);
+    final Result<String, Integer> result = anotherMethodReturningResult(number);
     // Then
     assertThat(number).isOne();
     assertThatResult(result).hasFailure(1);
 }
 ```
+
+
+## Releases
+
+This library adheres to [Pragmatic Versioning](https://pragver.github.io/).
+
+Artifacts are available in [Maven Central](https://search.maven.org/artifact/com.leakyabstractions/result).
 
 
 ## Javadoc

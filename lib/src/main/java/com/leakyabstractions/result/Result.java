@@ -6,43 +6,45 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
- * Represents the result of an operation that may have succeeded or failed.
+ * Represents either the success or failure of an operation, including an associated value in each case.
  * <p>
- * {@code Result} is a value-based class that describes one of these two mutually-exclusive fulfillment states:
+ * On the one hand, a result object conveys one of these two mutually-exclusive states:
  * <ul>
- * <li><strong>Success</strong>: the operation completed entirely and may have produced a success value</li>
- * <li><strong>Failure</strong>: the operation could not go through and may have produced a failure value</li>
+ * <li><strong>Success</strong>: the operation completed entirely.</li>
+ * <li><strong>Failure</strong>: the operation could not get through.</li>
  * </ul>
- * On the one hand, a result object conveys fulfillment state. On the other hand, it also holds a value produced by the
- * operation. It may be {@code null} and its meaning totally depends on the semantics defined by the operation:
+ * On the other hand, it also holds a possibly-{@code null} value whose meaning totally depends on the semantics defined
+ * by the operation:
  * <ul>
- * <li>If the fulfillment state is <strong>success</strong>, {@code isSuccess()} will return {@code true} and
- * {@code getSuccess()} will return the <em>success</em> value.</li>
- * <li>If the fulfillment state is <strong>failure</strong>, {@code isFailure()} will return {@code true} and
- * {@code getFailure()} will return the <em>failure</em> value.</li>
+ * <li>A <em>successful</em> result wraps a value of type {@code S}.</li>
+ * <li>A <em>failed</em> result wraps a value of type {@code F}.</li>
  * </ul>
  * <p>
- * Additional methods that depend on fulfillment state are provided, such as {@link #orElse(java.lang.Object) orElse()}
- * (return an <em>alternative success value</em> if the operation failed) and
- * {@link #ifSuccess(java.util.function.Consumer) ifSuccess()} (execute a block of code if the operation succeeded).
+ * Result state can be determined via {@link isSuccess} or {@link isFailure}. Additional methods to unwrap the included
+ * value are provided, such as {@link orElse orElse} (return an <em>alternative success value</em> if the operation
+ * failed) and {@link ifSuccess ifSuccess} (execute a block of code if the operation succeeded).
  *
- * @apiNote A variable whose type is {@code Result} should never itself be {@code null}; it should always point to a
- *          {@code Result} instance.
- * @implNote Instances of classes that implement {@code Result}:
+ * @apiNote {@code Result} is primarily intended for use as a method return type whenever failure is expected and
+ *          recoverable, and where using {@code null} is likely to cause errors. A variable whose type is {@code Result}
+ *          should never itself be {@code null}; it should always point to a {@code Result} instance.
+ * @implSpec This is a
+ *           <a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/lang/doc-files/ValueBased.html">
+ *           value-based</a> type. Instances of classes that implement {@code Result}:
  *           <ul>
- *           <li>are {@code final} and immutable (though may contain references to mutable objects);</li>
- *           <li>have implementations of {@code equals}, {@code hashCode}, and {@code toString} which are computed
+ *           <li>MUST be {@code final} and immutable (though MAY contain references to mutable objects);</li>
+ *           <li>MUST have implementations of {@code equals}, {@code hashCode}, and {@code toString} which are computed
  *           solely from the instance's state and not from its identity or the state of any other object or
  *           variable;</li>
- *           <li>make no use of identity-sensitive operations such as reference equality ({@code ==}) between instances,
- *           identity hash code of instances, or synchronization on an instances's intrinsic lock;</li>
- *           <li>are considered equal solely based on {@code equals()}, not based on reference equality
+ *           <li>MUST NOT make no use of identity-sensitive operations such as reference equality ({@code ==}) between
+ *           instances, identity hash code of instances, or synchronization on an instances's intrinsic lock;</li>
+ *           <li>MUST be considered equal solely based on {@code equals()}, not based on reference equality
  *           ({@code ==});</li>
- *           <li>do not have accessible constructors, but are instead instantiated through factory methods (such as the
- *           ones provided by {@link Results}) which make no commitment as to the identity of returned instances;</li>
- *           <li>are <em>freely substitutable</em> when equal, meaning that interchanging any two instances {@code x}
- *           and {@code y} that are equal according to {@code equals()} in any computation or method invocation should
- *           produce no visible change in behavior.</li>
+ *           <li>MUST NOT have accessible constructors, but SHOULD be instead instantiated through factory methods (such
+ *           as the ones provided by {@link Results}) which make no commitment as to the identity of returned
+ *           instances;</li>
+ *           <li>MUST be <em>freely substitutable</em> when equal, meaning that interchanging any two instances
+ *           {@code x} and {@code y} that are equal according to {@code equals()} in any computation or method
+ *           invocation SHOULD produce no visible change in behavior.</li>
  *           </ul>
  * @author Guillermo Calvo
  * @see Results
@@ -52,231 +54,232 @@ import java.util.function.Predicate;
 public interface Result<S, F> {
 
     /**
-     * Return {@code true} if this is a successful result; otherwise return {@code false}.
+     * If this is a successful result, returns {@code true}; otherwise {@code false}.
      *
-     * @return {@code true} if this is a successful result; otherwise {@code false}
-     * @see Result#isFailure()
+     * @return {@code true} if successful; otherwise {@code false}
+     * @see isFailure isFailure
      */
     boolean isSuccess();
 
     /**
-     * Return {@code true} if this is a failed result; otherwise return {@code false}.
+     * If this is a failed result, returns {@code true}; otherwise {@code false}.
      *
-     * @return {@code true} if this is a failed result; otherwise {@code false}
-     * @see Result#isSuccess()
+     * @return {@code true} if failed; otherwise {@code false}
+     * @see isSuccess isSuccess
      */
     boolean isFailure();
 
     /**
-     * Return the success value if this is a successful result; otherwise return {@code other}.
+     * If this is a successful result, returns its success value; otherwise returns {@code other}.
      *
-     * @param other the value to be returned if this is a failed result, may be {@code null}
-     * @return the success value if this is a successful result; otherwise {@code other}
-     * @see Result#isSuccess()
+     * @param other the possibly-{@code null} alternative success value
+     * @return this result's success value if successful; otherwise {@code other}
+     * @see orElseMap orElseMap
      */
     S orElse(S other);
 
     /**
-     * Return the success value if this is a successful result; otherwise return a value to be created by the provided
+     * If this is a successful result, returns its success value; otherwise returns the value produced by the given
      * mapping function.
      * <p>
-     * If this is a failed result, the <em>failure</em> value will be applied to the provided mapping {@link Function}
-     * to produce an alternative <em>success</em> value.
+     * The mapping function will be applied to this result's failure value to produce an alternative success value.
      *
-     * @param failureMapper a mapping function which will produce the value to be returned if this is a failed result
-     * @return the success value if this is a successful result; otherwise a value to be created by the provided mapping
-     *         function
-     * @throws NullPointerException if this is a failed result and {@code failureMapper} is {@code null}
-     * @see Result#isSuccess()
+     * @param mapper the mapping function that produces the possibly-{@code null} alternative success value
+     * @return this result's success value if successful; otherwise the value produced by the mapping function
+     * @throws NullPointerException if this is a failed result and {@code mapper} is {@code null}
+     * @see orElse orElse
      */
-    S orElseMap(Function<? super F, ? extends S> failureMapper);
+    S orElseMap(Function<? super F, ? extends S> mapper);
 
     /**
-     * Return the success value if this is a successful result; otherwise throws {@code NoSuchElementException}.
+     * If this is a successful result, returns its success value; otherwise throws
+     * {@link java.util.NoSuchElementException}.
      *
-     * @return the success value if this is a successful result, may be {@code null}
+     * @return this result's success value
      * @throws java.util.NoSuchElementException if this is a failed result
-     * @see Result#isSuccess()
+     * @see getFailureOrElseThrow getFailureOrElseThrow
+     * @see orElseThrow(Function) orElseThrow(Function)
      */
     S orElseThrow();
 
     /**
-     * Return the success value if this is a successful result; otherwise throw an exception to be created by the
-     * provided mapping function.
+     * If this is a successful result, returns its success value; otherwise throws an exception produced by the given
+     * mapping function.
      * <p>
-     * If this is a failed result, the <em>failure</em> value will be applied to the provided mapping {@link Function}
-     * to produce an exception.
+     * The mapping function will be applied to this result's failure value to produce an exception.
      *
      * @param <E> Type of the exception to be thrown
-     * @param failureMapper a mapping function which will produce the exception to be thrown if this is a failed result
-     * @return the success value if this is a successful result
-     * @throws E if the operation failed
-     * @throws NullPointerException if this is a failed result and {@code failureMapper} is {@code null}
-     * @see Result#isSuccess()
+     * @param mapper the mapping function that produces an exception to be thrown
+     * @return this result's success value
+     * @throws NullPointerException if this is a failed result and {@code mapper} is {@code null}
+     * @throws E if this is a failed result
+     * @see orElseThrow orElseThrow
      */
-    <E extends Throwable> S orElseThrow(Function<? super F, E> failureMapper) throws E;
+    <E extends Throwable> S orElseThrow(Function<? super F, E> mapper) throws E;
 
     /**
-     * Return the failure value if this is a failed result; otherwise throws {@code NoSuchElementException}.
+     * If this is a failed result, returns its failure value; otherwise throws {@link java.util.NoSuchElementException}.
      *
-     * @return the failure value if this is a failed result, may be {@code null}
+     * @return this result's failure value
      * @throws java.util.NoSuchElementException if this is a successful result
-     * @see Result#isFailure()
+     * @see orElseThrow orElseThrow
      */
     F getFailureOrElseThrow();
 
     /**
-     * Perform the given action with the success value if this is a successful result; otherwise do nothing.
+     * If this is a successful result, performs the given action with its success value; otherwise does nothing.
      *
-     * @param successAction the action to be performed if this is a successful result
+     * @param successAction the action to be applied to this result's success value
      * @throws NullPointerException if this is a successful result and {@code successAction} is {@code null}
      * @return this result
+     * @see ifFailure ifFailure
+     * @see ifSuccessOrElse ifSuccessOrElse
      */
     Result<S, F> ifSuccess(Consumer<? super S> successAction);
 
     /**
-     * Perform the given action with the success value if this is a successful result; otherwise perform the given
-     * failure-based action.
+     * If this is a successful result, performs the given success action; otherwise performs the given failure action.
      *
-     * @param successAction the action to be performed if this is a successful result
-     * @param failureAction the action to be performed if this is a failed result
-     * @throws NullPointerException if this is a successful result and {@code successAction}; or if this is a failed
-     *             result and {@code failureAction} is {@code null}
+     * @param successAction the action to be applied to this result's success value
+     * @param failureAction the action to be applied to this result's failure value
      * @return this result
+     * @throws NullPointerException if this is a successful result and {@code successAction} is {@code null}; or if it
+     *             is failed and {@code failureAction} is {@code null}
+     * @see ifFailure ifFailure
+     * @see ifSuccess ifSuccess
      */
     Result<S, F> ifSuccessOrElse(Consumer<? super S> successAction, Consumer<? super F> failureAction);
 
     /**
-     * Perform the given action with the failure value if this is a failed result; otherwise do nothing.
+     * If this is a failed result, performs the given action with its failure value; otherwise does nothing.
      *
-     * @param failureAction the action to be performed if this is a failed result
-     * @throws NullPointerException if this is a failed result and {@code failureAction} is {@code null}
+     * @param failureAction the action to be applied to this result's failure value
      * @return this result
+     * @throws NullPointerException if this is a failed result and {@code failureAction} is {@code null}
+     * @see ifSuccess ifSuccess
+     * @see ifSuccessOrElse ifSuccessOrElse
      */
     Result<S, F> ifFailure(Consumer<? super F> failureAction);
 
     /**
-     * Return a new failed result if this is a successful result whose value does not match the provided predicate;
-     * otherwise return this result.
+     * If this is a successful result whose value does not match the given predicate, returns a new failed result with a
+     * value produced by the given mapping function; otherwise returns this result.
      * <p>
-     * If this is a successful result whose value does not match the provided {@link Predicate}, the <em>success</em>
-     * value will be applied to the provided mapping {@link Function} to produce a <em>failure</em> value to be held by
-     * the new failed {@code Result}.
+     * The mapping function will be applied to this result's success value to produce the failure value.
      *
-     * @param predicate a predicate to apply to the success value if this is a successful result
-     * @param failureMapper a mapping function which will produce the value to be held by a new failed result
-     * @throws NullPointerException if this is a successful result whose value does not match the provided predicate and
-     *             {@code failureAction} is {@code null}
-     * @return a new failed result if this is a successful result whose value does not match the provided predicate;
-     *         otherwise this result
+     * @param predicate the predicate to apply to this result's success value
+     * @param mapper the mapping function that produces the possibly-{@code null} failure value
+     * @return a new failed result with the value produced by {@code mapper} if this is a successful result whose value
+     *         does not match the given predicate; otherwise this result
+     * @throws NullPointerException if this is a successful result and {@code predicate} is {@code null}, or if its
+     *             success value does not match the predicate and {@code failureAction} is {@code null}
      */
-    Result<S, F> filter(Predicate<? super S> predicate, Function<? super S, ? extends F> failureMapper);
+    Result<S, F> filter(Predicate<? super S> predicate, Function<? super S, ? extends F> mapper);
 
     /**
-     * Apply the appropriate mapping {@link Function} to the success or failure value and return a new {@code Result}
-     * with the produced value.
+     * Returns a new result with the value produced by the appropriate mapping function.
      * <p>
-     * Depending on the fulfillment state, the value will be applied to either one of the provided mapping functions to
-     * produce a new value. Then the new {@code Result} will be created with the same fulfillment state and the produced
-     * value. The types of the new success/failure values may be different from this result's.
+     * Depending on this result's state, one of the two given functions will be applied to its success or failure value
+     * to produce a new, possibly-{@code null} value. The types of the new <em>success/failure</em> values may be
+     * different from this result's.
      *
-     * @param <S2> the type of the new success value
-     * @param <F2> the type of the new failure value
-     * @param successMapper a mapping {@code Function} to apply to the success value if this is a successful result
-     * @param failureMapper a mapping {@code Function} to apply to the failure value if this is a failed result
+     * @param <S2> the type of the value returned by {@code successMapper}
+     * @param <F2> the type of the value returned by {@code failureMapper}
+     * @param successMapper the mapping function that produces a success value
+     * @param failureMapper the mapping function that produces a failure value
+     * @return a new result with a value produced by either {@code successMapper} or {@code failureMapper}
      * @throws NullPointerException if this is a successful result and {@code successMapper} is {@code null}; or if this
      *             is a failed result and {@code failureMapper} is {@code null}
-     * @return a new {@code Result} whose value depends on this result's value
+     * @see mapFailure mapFailure
+     * @see mapSuccess mapSuccess
      */
     <S2, F2> Result<S2, F2> map(Function<? super S, S2> successMapper, Function<? super F, F2> failureMapper);
 
     /**
-     * Apply the provided mapping {@link Function} to the success value if this is a successful result and return a new
-     * successful {@code Result} with the produced value; otherwise return a failed result with the same
-     * <em>failure</em> value.
+     * If this is a successful result, returns a new successful result with the value produced by the given mapping
+     * function; otherwise returns a failed result with this result's failure value.
      * <p>
-     * If this is a successful result, the success value will be applied to the provided mapping {@code Function} to
-     * produce a new value. Then the new successful {@code Result} will be created with the produced value. The type of
-     * the new success value may be different from this result's.
+     * The mapping function will be applied to this result's success value to produce the new, possibly-{@code null}
+     * success value. The type of the new success value may be different from this result's.
      *
-     * @param <S2> the type of the new success value
-     * @param successMapper a mapping {@code Function} to apply to the success value if this is a successful result
-     * @throws NullPointerException if this is a successful result and {@code successMapper} is {@code null}
-     * @return a new successful result with a new <em>success</em> value if this is a successful result; otherwise a
-     *         failed result with the same <em>failure</em> value
+     * @param <S2> the type of the value returned by {@code mapper}
+     * @param mapper the mapping function that produces the new success value
+     * @return a new successful result with the value produced by {@code mapper} if this is a successful result;
+     *         otherwise a failed result with this result's failure value
+     * @throws NullPointerException if this is a successful result and {@code mapper} is {@code null}
+     * @see map map
+     * @see mapFailure mapFailure
      */
-    <S2> Result<S2, F> mapSuccess(Function<? super S, S2> successMapper);
+    <S2> Result<S2, F> mapSuccess(Function<? super S, S2> mapper);
 
     /**
-     * Apply the provided mapping {@link Function} to the failure value if this is a failed result and return a new
-     * failed {@code Result} with the produced value; otherwise return a successful result with the same
-     * <em>success</em> value.
+     * If this is a failed result, returns a new failed result with the value produced by the given mapping function;
+     * otherwise returns a successful result with this result's success value.
      * <p>
-     * If this is a failed result, the failure value will be applied to the provided mapping {@code Function} to produce
-     * a new value. Then the new failed {@code Result} will be created with the produced value. The type of the new
-     * failure value may be different from this result's.
+     * The mapping function will be applied to this result's failure value to produce the new, possibly-{@code null}
+     * failure value. The type of the new failure value may be different from this result's.
      *
-     * @param <F2> the type of the new failure value
-     * @param failureMapper a mapping {@code Function} to apply to the failure value if this is a failed result
-     * @throws NullPointerException if this is a failed result and {@code failureMapper} is {@code null}
-     * @return a new failed result with a new <em>failure</em> value if this is a failed result; otherwise a successful
-     *         result with the same <em>success</em> value
+     * @param <F2> the type of the value returned by {@code mapper}
+     * @param mapper the mapping function that produces the new failure value
+     * @return a new failed result with the value produced by {@code mapper} if this is a failed result; otherwise a
+     *         successful result with this result's success value
+     * @throws NullPointerException if this is a failed result and {@code mapper} is {@code null}
+     * @see map map
+     * @see mapSuccess mapSuccess
      */
-    <F2> Result<S, F2> mapFailure(Function<? super F, F2> failureMapper);
+    <F2> Result<S, F2> mapFailure(Function<? super F, F2> mapper);
 
     /**
-     * Apply the appropriate {@code Result}-bearing mapping {@link Function} to the success or failure value and return
-     * the produced result.
+     * Returns a new result produced by the appropriate {@code Result}-bearing mapping function.
      * <p>
-     * Depending on the fulfillment state, the value will be applied to either one of the provided mapping functions to
-     * produce a new {@code Result}. The fulfillment state and the types of the new success/failure values may be
-     * different from this result's.
+     * Depending on this result's state, one of the two given functions will be applied to its success or failure value
+     * to produce a new result. State and types may be different from this result's.
      *
-     * @param <S2> the type of the new success value
-     * @param <F2> the type of the new failure value
-     * @param successFlatMapper a {@code Function} to apply to the success value if this is a successful result; it must
-     *            produce a new {@code Result}
-     * @param failureFlatMapper a {@code Function} to apply to the failure value if this is a failed result; it must
-     *            produce a new {@code Result}
-     * @throws NullPointerException if this is a successful result and {@code successFlatMapper} is {@code null}; or if
-     *             this is a failed result and {@code failureFlatMapper} is {@code null}
-     * @return the result of applying a {@code Result}-bearing mapping function to this result's value
+     * @param <S2> the success type of the result returned by the given functions
+     * @param <F2> the failure type of the result returned by the given functions
+     * @param successMapper the mapping function that produces a new result if this is a successful result
+     * @param failureMapper the mapping function that produces a new result if this is a failed result
+     * @return the result produced by either {@code successMapper} or {@code failureMapper}
+     * @throws NullPointerException if this is a successful result and {@code successMapper} is {@code null}; or if this
+     *             is a failed result and {@code failureMapper} is {@code null}
+     * @see flatMapFailure flatMapFailure
+     * @see flatMapSuccess flatMapSuccess
      */
     <S2, F2> Result<S2, F2> flatMap(
-            Function<? super S, Result<S2, F2>> successFlatMapper,
-            Function<? super F, Result<S2, F2>> failureFlatMapper);
+            Function<? super S, Result<S2, F2>> successMapper,
+            Function<? super F, Result<S2, F2>> failureMapper);
 
     /**
-     * Apply the provided {@code Result}-bearing mapping {@link Function} to the success value and return the produced
-     * result if this is a successful result; otherwise return a failed result with the same <em>failure</em> value.
+     * If this is a successful result, returns a new result produced by the given, {@code Result}-bearing mapping
+     * function; otherwise returns a failed result with this result's failure value.
      * <p>
-     * If this is a successful result, the success value will be applied to the provided mapping {@code Function} to
-     * produce a new {@code Result}. The fulfillment state and the type of the new success value may be different from
-     * this result's.
+     * The mapping function will be applied to this result's success value to produce a new result. State and success
+     * type may be different from this result's.
      *
-     * @param <S2> the type of the new success value
-     * @param successFlatMapper a {@code Function} to apply to the success value if this is a successful result; it must
-     *            produce a new {@code Result}
-     * @throws NullPointerException if this is a successful result and {@code successFlatMapper} is {@code null}
-     * @return the result of applying a {@code Result}-bearing mapping function the success value if this is a
-     *         successful result; otherwise a failed result with the same <em>failure</em> value.
+     * @param <S2> the success type of the result returned by {@code mapper}
+     * @param mapper the mapping function that produces a new result
+     * @return the result produced by {@code mapper} if this is a successful result; otherwise a failed result with this
+     *         result's failure value.
+     * @throws NullPointerException if this is a successful result and {@code mapper} is {@code null}
+     * @see flatMap flatMap
+     * @see flatMapFailure flatMapFailure
      */
-    <S2> Result<S2, F> flatMapSuccess(Function<? super S, Result<S2, F>> successFlatMapper);
+    <S2> Result<S2, F> flatMapSuccess(Function<? super S, Result<S2, F>> mapper);
 
     /**
-     * Apply the provided {@code Result}-bearing mapping {@link Function} to the failure value and return the produced
-     * result if this is a failed result; otherwise return a successful result with the same <em>success</em> value.
+     * If this is a failed result, returns a new result produced by the given, {@code Result}-bearing mapping function;
+     * otherwise returns a successful result with this result's success value.
      * <p>
-     * If this is a failed result, the failure value will be applied to the provided mapping {@code Function} to produce
-     * a new {@code Result}. The fulfillment state and the type of the new failure value may be different from this
-     * result's.
+     * The mapping function will be applied to this result's failure value to produce a new result. State and failure
+     * type may be different from this result's.
      *
-     * @param <F2> the type of the new failure value
-     * @param failureFlatMapper a {@code Function} to apply to the failure value if this is a failed result; it must
-     *            produce a new {@code Result}
-     * @throws NullPointerException if this is a failed result and {@code failureFlatMapper} is {@code null}
-     * @return the result of applying a {@code Result}-bearing mapping function to the failure value if this is a failed
-     *         result; otherwise a successful result with the same <em>failure</em> value.
+     * @param <F2> the failure type of the result returned by {@code mapper}
+     * @param mapper the mapping function that produces a new result
+     * @return the result produced by {@code mapper} if this is a failed result; otherwise a successful result with this
+     *         result's success value.
+     * @throws NullPointerException if this is a failed result and {@code mapper} is {@code null}
+     * @see flatMap flatMap
+     * @see flatMapSuccess flatMapSuccess
      */
-    <F2> Result<S, F2> flatMapFailure(Function<? super F, Result<S, F2>> failureFlatMapper);
+    <F2> Result<S, F2> flatMapFailure(Function<? super F, Result<S, F2>> mapper);
 }

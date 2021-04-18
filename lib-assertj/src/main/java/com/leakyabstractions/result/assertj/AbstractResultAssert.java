@@ -47,24 +47,20 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * <p>
      * Assertions will pass:
      *
-     * <pre>
-     * <code class='java'>
-     * assertThat(DefaultResult.success("yay")).isSuccess();
-     * assertThat(DefaultResult.success(null)).isSuccess();
-     * assertThat(DefaultResult.success(1234)).isSuccess();
-     * assertThat(DefaultResult.success(false)).isSuccess();
-     * </code>
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.success("yay")).isSuccess();
+     * assertThat(Results.success(null)).isSuccess();
+     * }
      * </pre>
      *
      * Assertions will fail:
      *
-     * <pre>
-     * <code class='java'>
-     * assertThat(DefaultResult.failure("nay")).isSuccess();
-     * assertThat(DefaultResult.failure(null)).isSuccess();
-     * assertThat(DefaultResult.failure(1234)).isSuccess();
-     * assertThat(DefaultResult.failure(false)).isSuccess();
-     * </code>
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.failure("nay")).isSuccess();
+     * assertThat(Results.failure(null)).isSuccess();
+     * }
      * </pre>
      *
      * @return this assertion object.
@@ -79,22 +75,20 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * <p>
      * Assertions will pass:
      *
-     * <pre>
-     * <code class='java'>
-     * assertThat(DefaultResult.success("yay")).hasSuccess("yay");
-     * assertThat(DefaultResult.success(1234)).hasSuccess(1234);
-     * </code>
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.success("yay")).hasSuccess("yay");
+     * assertThat(Results.success(1234)).hasSuccess(1234);
+     * }
      * </pre>
      *
      * Assertions will fail:
      *
-     * <pre>
-     * <code class='java'>
-     * assertThat(DefaultResult.success("yay")).hasSuccess("nay");
-     * assertThat(DefaultResult.success(null)).hasSuccess("null");
-     * assertThat(DefaultResult.success(1234)).hasSuccess(4321);
-     * assertThat(DefaultResult.failure("yay")).hasSuccess("yay");
-     * </code>
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.success("yay")).hasSuccess("nay");
+     * assertThat(Results.failure("yay")).hasSuccess("yay");
+     * }
      * </pre>
      *
      * @param expectedValue the expected success value inside the {@link Result}; can't be {@code null}.
@@ -117,32 +111,32 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * Verifies that the actual {@link Result} is a successful result containing the instance given as an argument (i.e.
      * it must be the same instance).
      * <p>
+     * Given:
+     *
+     * <pre class="row-color">
+     * {@code
+     *     static {
+     *         final String FOOBAR = "foobar";
+     *     }
+     * }
+     * </pre>
+     *
      * Assertions will pass:
      *
-     * <pre>
-     * <code class='java'>
-     * String foobar = "foobar";
-     * assertThat(DefaultResult.success(foobar)).hasSuccessSameAs(foobar);
-     * assertThat(DefaultResult.success(10)).hasSuccessSameAs(10);
-     * </code>
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.success(FOOBAR)).hasSuccessSameAs(FOOBAR);
+     * assertThat(Results.success(10)).hasSuccessSameAs(10);
+     * }
      * </pre>
      *
      * Assertions will fail:
      *
-     * <pre>
-     * <code class='java'>
-     * // not equal:
-     * assertThat(DefaultResult.success("yay")).hasSuccessSameAs("nay");
-     * assertThat(DefaultResult.success(1234)).hasSuccessSameAs(4321);
-     *
-     * // equal but not successful:
-     * String foo = "FOO";
-     * assertThat(DefaultResult.failure(foo)).hasSuccessSameAs(foo);
-     *
-     * // equal but not the same:
-     * assertThat(DefaultResult.success(new String("bar"))).hasSuccessSameAs(new String("bar"));
-     * assertThat(DefaultResult.success(new Integer(1234))).hasSuccessSameAs(new Integer(1234));
-     * </code>
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.success("yay")).hasSuccessSameAs("nay");
+     * assertThat(Results.failure(FOOBAR)).hasSuccessSameAs(FOOBAR);
+     * }
      * </pre>
      *
      * @param expectedValue the expected success value inside the {@link Result}; can't be {@code null}.
@@ -159,37 +153,37 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
 
     /**
      * Verifies that the actual {@link Result} is a successful result and invokes the given {@link Consumer} with the
-     * success value (may be {@code null}) for further assertions.
+     * possibly-{@code null} success value for further assertions.
      * <p>
      * Should be used as a way of deeper asserting on the containing object, as further requirement(s) for the value.
      * <p>
      * Assertions will pass:
      *
-     * <pre>
-     * <code class='java'>
+     * <pre class="row-color">
+     * {@code
      * // one requirement
-     * assertThat(DefaultResult.success(10)).hasSuccessSatisfying(s -&gt; { assertThat(s).isGreaterThan(9); });
-     * assertThat(DefaultResult.success(null)).hasSuccessSatisfying(s -&gt; { assertThat(s).isNull(); });
+     * assertThat(Results.success(10)).hasSuccessSatisfying(s -> { assertThat(s).isGreaterThan(9); });
+     * assertThat(Results.success(null)).hasSuccessSatisfying(s -> { assertThat(s).isNull(); });
      *
      * // multiple requirements
-     * assertThat(DefaultResult.success("hello")).hasSuccessSatisfying(s -&gt; {
+     * assertThat(Results.success("hello")).hasSuccessSatisfying(s -> {
      *   assertThat(s).isEqualTo("hello");
      *   assertThat(s).startsWith("h");
      *   assertThat(s).endsWith("o");
      * });
-     * </code>
+     * }
      * </pre>
      *
      * Assertions will fail:
      *
-     * <pre>
-     * <code class='java'>
-     * assertThat(DefaultResult.success("hello")).hasSuccessSatisfying(s -&gt; assertThat(s).isEqualTo("hello"); });
-     * assertThat(DefaultResult.failure("hello")).hasSuccessSatisfying(o -&gt; {});
-     * </code>
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.success("yay")).hasSuccessSatisfying(s -> assertThat(s).isEqualTo("nay"));
+     * assertThat(Results.failure("yay")).hasSuccessSatisfying(o -> {});
+     * }
      * </pre>
      *
-     * @param requirement to further assert on the success value held by the {@link Result}; can't be {@code null}.
+     * @param requirement to further assert on the success value held by the {@link Result}
      * @return this assertion object.
      */
     public SELF hasSuccessSatisfying(Consumer<S> requirement) {
@@ -199,32 +193,37 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
     }
 
     /**
-     * Verifies that the actual {@link Result} is a successful result whose success value (may be {@code null})
+     * Verifies that the actual {@link Result} is a successful result whose possibly-{@code null} success value
      * satisfies the given {@link Condition}.
      * <p>
-     * Assertions will pass:
+     * Given:
      *
-     * <pre>
-     * <code class='java'>
-     * Condition&lt;Integer&gt; isNegative = new Condition&lt;&gt;(i -&gt; i &lt; 0, "a negative number");
-     * Condition&lt;Object&gt; isNull = new Condition&lt;&gt;(o -&gt; o == null, "a null reference");
-     * assertThat(DefaultResult.success(-1)).hasSuccessSatisfying(isNegative);
-     * assertThat(DefaultResult.success(null)).hasSuccessSatisfying(isNull);
-     * </code>
+     * <pre class="row-color">
+     * {@code
+     *     static {
+     *         final Condition<Integer> IS_NEGATIVE = new Condition<>(i -> i < 0, "a negative number");
+     *     }
+     * }
+     * </pre>
+     *
+     * Assertion will pass:
+     *
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.success(-1)).hasSuccessSatisfying(IS_NEGATIVE);
+     * }
      * </pre>
      *
      * Assertions will fail:
      *
-     * <pre>
-     * <code class='java'>
-     * assertThat(DefaultResult.success(1234)).hasSuccessSatisfying(isNegative);
-     * assertThat(DefaultResult.failure(-123)).hasSuccessSatisfying(isNegative);
-     * assertThat(DefaultResult.success("hello")).hasSuccessSatisfying(isNull);
-     * assertThat(DefaultResult.failure(null)).hasSuccessSatisfying(isNull);
-     * </code>
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.success(1234)).hasSuccessSatisfying(IS_NEGATIVE);
+     * assertThat(Results.failure(-123)).hasSuccessSatisfying(IS_NEGATIVE);
+     * }
      * </pre>
      *
-     * @param condition the given condition; can't be {@code null}.
+     * @param condition the given condition
      * @return this assertion object.
      */
     public SELF hasSuccessSatisfying(Condition<? super S> condition) {
@@ -239,25 +238,25 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * <p>
      * Assertions will pass:
      *
-     * <pre>
-     * <code class='java'>
-     * assertThat(DefaultResult.success("hello"))
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.success("hello"))
      *         .hasSuccessInstanceOf(String.class)
      *         .hasSuccessInstanceOf(Object.class);
-     * assertThat(DefaultResult.success(1234)).hasSuccessInstanceOf(Integer.class);
-     * </code>
+     * assertThat(Results.success(1234)).hasSuccessInstanceOf(Integer.class);
+     * }
      * </pre>
      *
      * Assertions will fail:
      *
-     * <pre>
-     * <code class='java'>
-     * assertThat(DefaultResult.success("hello")).hasSuccessInstanceOf(Integer.class);
-     * assertThat(DefaultResult.failure("hello")).hasSuccessInstanceOf(String.class);
-     * </code>
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.success("hello")).hasSuccessInstanceOf(Integer.class);
+     * assertThat(Results.failure("hello")).hasSuccessInstanceOf(String.class);
+     * }
      * </pre>
      *
-     * @param clazz the expected class of the success value inside the {@link Result}; can't be {@code null}.
+     * @param clazz the expected class of the success value inside the {@link Result}
      * @return this assertion object.
      */
     public SELF hasSuccessInstanceOf(Class<?> clazz) {
@@ -275,24 +274,20 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * <p>
      * Assertions will pass:
      *
-     * <pre>
-     * <code class='java'>
-     * Foo foo = new Foobar("Hello", "world");
-     *
-     * assertThat(DefaultResult.success(foo)).hasSuccessThat().hasNoNullFieldsOrProperties();
-     * assertThat(DefaultResult.success(null)).hasSuccessThat().isNull();
-     * </code>
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.success(0)).hasSuccessThat().isZero();
+     * assertThat(Results.success(100)).hasSuccessThat().isGreaterThan(10);
+     * }
      * </pre>
      *
      * Assertions will fail:
      *
-     * <pre>
-     * <code class='java'>
-     * Foo bar = new Foobar("Hello", null);
-     *
-     * assertThat(DefaultResult.success(bar)).hasSuccessThat().hasNoNullFieldsOrProperties();
-     * assertThat(DefaultResult.success(null)).hasSuccessThat().isNotNull();
-     * </code>
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.failure(0)).hasSuccessThat().isZero();
+     * assertThat(Results.success(1)).hasSuccessThat().isGreaterThan(10);
+     * }
      * </pre>
      *
      * @return a new {@link ObjectAssert} for assertions chaining on the success value.
@@ -316,25 +311,24 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * <p>
      * Assertions will pass:
      *
-     * <pre>
-     * <code class='java'>
-     * assertThat(DefaultResult.success(0)).hasSuccessThat(as(InstanceOfAssertFactories.INTEGER)).isZero();
-     * assertThat(DefaultResult.success("hello")).hasSuccessThat(as(InstanceOfAssertFactories.STRING)).startsWith("h");
-     * </code>
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.success(0)).hasSuccessThat(as(InstanceOfAssertFactories.INTEGER)).isZero();
+     * assertThat(Results.success("hello")).hasSuccessThat(as(InstanceOfAssertFactories.STRING)).startsWith("h");
+     * }
      * </pre>
      *
      * Assertions will fail:
      *
-     * <pre>
-     * <code class='java'>
-     * assertThat(DefaultResult.success("hello")).hasSuccessThat(as(InstanceOfAssertFactories.INTEGER)).isZero();
-     * assertThat(DefaultResult.failure("hello")).hasSuccessThat(as(InstanceOfAssertFactories.STRING)).startsWith("h");
-     * </code>
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.success("hello")).hasSuccessThat(as(InstanceOfAssertFactories.INTEGER)).isZero();
+     * assertThat(Results.failure("hello")).hasSuccessThat(as(InstanceOfAssertFactories.STRING)).startsWith("h");
+     * }
      * </pre>
      *
      * @param <T> the type of the resulting {@code Assert}
-     * @param assertFactory the factory which verifies the type and creates the new {@code Assert}; can't be
-     *            {@code null}.
+     * @param assertFactory the factory which verifies the type and creates the new {@code Assert}
      * @return a new narrowed {@link ObjectAssertProxy} instance for assertions chaining on the success value
      */
     @CheckReturnValue
@@ -351,24 +345,20 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * <p>
      * Assertions will pass:
      *
-     * <pre>
-     * <code class='java'>
-     * assertThat(DefaultResult.failure("yay")).isFailure();
-     * assertThat(DefaultResult.failure(null)).isFailure();
-     * assertThat(DefaultResult.failure(1234)).isFailure();
-     * assertThat(DefaultResult.failure(false)).isFailure();
-     * </code>
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.failure("yay")).isFailure();
+     * assertThat(Results.failure(null)).isFailure();
+     * }
      * </pre>
      *
      * Assertions will fail:
      *
-     * <pre>
-     * <code class='java'>
-     * assertThat(DefaultResult.success("nay")).isFailure();
-     * assertThat(DefaultResult.success(null)).isFailure();
-     * assertThat(DefaultResult.success(1234)).isFailure();
-     * assertThat(DefaultResult.success(false)).isFailure();
-     * </code>
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.success("nay")).isFailure();
+     * assertThat(Results.success(null)).isFailure();
+     * }
      * </pre>
      *
      * @return this assertion object.
@@ -383,22 +373,20 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * <p>
      * Assertions will pass:
      *
-     * <pre>
-     * <code class='java'>
-     * assertThat(DefaultResult.failure("yay")).hasFailure("yay");
-     * assertThat(DefaultResult.failure(1234)).hasFailure(1234);
-     * </code>
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.failure("yay")).hasFailure("yay");
+     * assertThat(Results.failure(1234)).hasFailure(1234);
+     * }
      * </pre>
      *
      * Assertions will fail:
      *
-     * <pre>
-     * <code class='java'>
-     * assertThat(DefaultResult.failure("yay")).hasFailure("nay");
-     * assertThat(DefaultResult.failure(null)).hasFailure("null");
-     * assertThat(DefaultResult.failure(1234)).hasFailure(4321);
-     * assertThat(DefaultResult.success("yay")).hasFailure("yay");
-     * </code>
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.failure("yay")).hasFailure("nay");
+     * assertThat(Results.success("yay")).hasFailure("yay");
+     * }
      * </pre>
      *
      * @param expectedValue the expected failure value inside the {@link Result}; can't be {@code null}.
@@ -421,32 +409,33 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * Verifies that the actual {@link Result} is a failed result containing the instance given as an argument (i.e. it
      * must be the same instance).
      * <p>
+     * Given:
+     *
+     * <pre class="row-color">
+     * {@code
+     *     static {
+     *         final String FOOBAR = "foobar";
+     *     }
+     * }
+     * </pre>
+     *
      * Assertions will pass:
      *
-     * <pre>
-     * <code class='java'>
-     * String foobar = "foobar";
-     * assertThat(DefaultResult.failure(foobar)).hasFailureSameAs(foobar);
-     * assertThat(DefaultResult.failure(10)).hasFailureSameAs(10);
-     * </code>
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.failure(FOOBAR)).hasFailureSameAs(FOOBAR);
+     * assertThat(Results.failure(10)).hasFailureSameAs(10);
+     * }
      * </pre>
      *
      * Assertions will fail:
      *
-     * <pre>
-     * <code class='java'>
+     * <pre class="row-color">
+     * {@code
      * // not equal:
-     * assertThat(DefaultResult.failure("yay")).hasFailureSameAs("nay");
-     * assertThat(DefaultResult.failure(1234)).hasFailureSameAs(4321);
-     *
-     * // equal but not failed:
-     * String foo = "FOO";
-     * assertThat(DefaultResult.success(foo)).hasFailureSameAs(foo);
-     *
-     * // equal but not the same:
-     * assertThat(DefaultResult.failure(new String("bar"))).hasFailureSameAs(new String("bar"));
-     * assertThat(DefaultResult.failure(new Integer(1234))).hasFailureSameAs(new Integer(1234));
-     * </code>
+     * assertThat(Results.failure("yay")).hasFailureSameAs("nay");
+     * assertThat(Results.success(FOOBAR)).hasFailureSameAs(FOOBAR);
+     * }
      * </pre>
      *
      * @param expectedValue the expected failure value inside the {@link Result}; can't be {@code null}.
@@ -463,37 +452,37 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
 
     /**
      * Verifies that the actual {@link Result} is a failed result and invokes the given {@link Consumer} with the
-     * failure value (may be {@code null}) for further assertions.
+     * possibly-{@code null} failure value for further assertions.
      * <p>
      * Should be used as a way of deeper asserting on the containing object, as further requirement(s) for the value.
      * <p>
      * Assertions will pass:
      *
-     * <pre>
-     * <code class='java'>
+     * <pre class="row-color">
+     * {@code
      * // one requirement
-     * assertThat(DefaultResult.failure(10)).hasFailureSatisfying(s -&gt; { assertThat(s).isGreaterThan(9); });
-     * assertThat(DefaultResult.failure(null)).hasFailureSatisfying(s -&gt; { assertThat(s).isNull(); });
+     * assertThat(Results.failure(10)).hasFailureSatisfying(s -> { assertThat(s).isGreaterThan(9); });
+     * assertThat(Results.failure(null)).hasFailureSatisfying(s -> { assertThat(s).isNull(); });
      *
      * // multiple requirements
-     * assertThat(DefaultResult.failure("hello")).hasFailureSatisfying(s -&gt; {
+     * assertThat(Results.failure("hello")).hasFailureSatisfying(s -> {
      *   assertThat(s).isEqualTo("hello");
      *   assertThat(s).startsWith("h");
      *   assertThat(s).endsWith("o");
      * });
-     * </code>
+     * }
      * </pre>
      *
      * Assertions will fail:
      *
-     * <pre>
-     * <code class='java'>
-     * assertThat(DefaultResult.success("hello")).hasSuccessSatisfying(s -&gt; assertThat(s).isEqualTo("hello"); });
-     * assertThat(DefaultResult.failure("hello")).hasSuccessSatisfying(o -&gt; {});
-     * </code>
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.success("hello")).hasSuccessSatisfying(s -> assertThat(s).isEqualTo("hello"));
+     * assertThat(Results.failure("hello")).hasSuccessSatisfying(o -> {});
+     * }
      * </pre>
      *
-     * @param requirement to further assert on the failure value held by the {@link Result}; can't be {@code null}.
+     * @param requirement to further assert on the failure value held by the {@link Result}
      * @return this assertion object.
      */
     public SELF hasFailureSatisfying(Consumer<F> requirement) {
@@ -503,32 +492,37 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
     }
 
     /**
-     * Verifies that the actual {@link Result} is a failed result whose failure value (may be {@code null}) satisfies
+     * Verifies that the actual {@link Result} is a failed result whose possibly-{@code null} failure value satisfies
      * the given {@link Condition}.
      * <p>
-     * Assertions will pass:
+     * Given:
      *
-     * <pre>
-     * <code class='java'>
-     * Condition&lt;Integer&gt; isNegative = new Condition&lt;&gt;(i -&gt; i &lt; 0, "a negative number");
-     * Condition&lt;Object&gt; isNull = new Condition&lt;&gt;(o -&gt; o == null, "a null reference");
-     * assertThat(DefaultResult.failure(-1)).hasFailureSatisfying(isNegative);
-     * assertThat(DefaultResult.failure(null)).hasFailureSatisfying(isNull);
-     * </code>
+     * <pre class="row-color">
+     * {@code
+     *     static {
+     *         final Condition<Integer> IS_NEGATIVE = new Condition<>(i -> i < 0, "a negative number");
+     *     }
+     * }
+     * </pre>
+     *
+     * Assertion will pass:
+     *
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.failure(-1)).hasFailureSatisfying(IS_NEGATIVE);
+     * }
      * </pre>
      *
      * Assertions will fail:
      *
-     * <pre>
-     * <code class='java'>
-     * assertThat(DefaultResult.failure(1234)).hasFailureSatisfying(isNegative);
-     * assertThat(DefaultResult.success(-123)).hasFailureSatisfying(isNegative);
-     * assertThat(DefaultResult.failure("hello")).hasFailureSatisfying(isNull);
-     * assertThat(DefaultResult.success(null)).hasFailureSatisfying(isNull);
-     * </code>
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.failure(1234)).hasFailureSatisfying(IS_NEGATIVE);
+     * assertThat(Results.success(-123)).hasFailureSatisfying(IS_NEGATIVE);
+     * }
      * </pre>
      *
-     * @param condition the given condition; can't be {@code null}.
+     * @param condition the given condition
      * @return this assertion object.
      */
     public SELF hasFailureSatisfying(Condition<? super F> condition) {
@@ -543,25 +537,25 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * <p>
      * Assertions will pass:
      *
-     * <pre>
-     * <code class='java'>
-     * assertThat(DefaultResult.failure("hello"))
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.failure("hello"))
      *         .hasFailureInstanceOf(String.class)
      *         .hasFailureInstanceOf(Object.class);
-     * assertThat(DefaultResult.failure(123)).hasSuccessInstanceOf(Integer.class);
-     * </code>
+     * assertThat(Results.failure(123)).hasSuccessInstanceOf(Integer.class);
+     * }
      * </pre>
      *
      * Assertions will fail:
      *
-     * <pre>
-     * <code class='java'>
-     * assertThat(DefaultResult.failure("hello")).hasFailureInstanceOf(Integer.class);
-     * assertThat(DefaultResult.failure("hello")).hasFailureInstanceOf(String.class);
-     * </code>
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.failure("hello")).hasFailureInstanceOf(Integer.class);
+     * assertThat(Results.success("hello")).hasFailureInstanceOf(String.class);
+     * }
      * </pre>
      *
-     * @param clazz the expected class of the failure value inside the {@link Result}; can't be {@code null}.
+     * @param clazz the expected class of the failure value inside the {@link Result}
      * @return this assertion object.
      */
     public SELF hasFailureInstanceOf(Class<?> clazz) {
@@ -579,24 +573,20 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * <p>
      * Assertions will pass:
      *
-     * <pre>
-     * <code class='java'>
-     * Foo foo = new Foobar("Hello", "world");
-     *
-     * assertThat(DefaultResult.failure(foo)).hasFailureThat().hasNoNullFieldsOrProperties();
-     * assertThat(DefaultResult.failure(null)).hasFailureThat().isNull();
-     * </code>
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.failure(10)).hasFailureThat().isZero();
+     * assertThat(Results.failure(100)).hasFailureThat().isGreaterThan(10);
+     * }
      * </pre>
      *
      * Assertions will fail:
      *
-     * <pre>
-     * <code class='java'>
-     * Foo bar = new Foobar("Hello", null);
-     *
-     * assertThat(DefaultResult.failure(bar)).hasFailureThat().hasNoNullFieldsOrProperties();
-     * assertThat(DefaultResult.success(null)).hasFailureThat().isNotNull();
-     * </code>
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.success(0)).hasFailureThat().isZero();
+     * assertThat(Results.failure(1)).hasFailureThat().isGreaterThan(10);
+     * }
      * </pre>
      *
      * @return a new {@link ObjectAssert} for assertions chaining on the success value.
@@ -620,25 +610,24 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * <p>
      * Assertions will pass:
      *
-     * <pre>
-     * <code class='java'>
-     * assertThat(failure(0)).hasFailureThat(as(InstanceOfAssertFactories.INTEGER)).isZero();
-     * assertThat(DefaultResult.failure("hello")).hasFailureThat(as(InstanceOfAssertFactories.STRING)).startsWith("h");
-     * </code>
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.failure(0)).hasFailureThat(as(InstanceOfAssertFactories.INTEGER)).isZero();
+     * assertThat(Results.failure("hello")).hasFailureThat(as(InstanceOfAssertFactories.STRING)).startsWith("h");
+     * }
      * </pre>
      *
      * Assertions will fail:
      *
-     * <pre>
-     * <code class='java'>
-     * assertThat(failure("hello")).hasFailureThat(as(InstanceOfAssertFactories.INTEGER)).isZero();
-     * assertThat(DefaultResult.success("hello")).hasFailureThat(as(InstanceOfAssertFactories.STRING)).startsWith("h");
-     * </code>
+     * <pre class="row-color">
+     * {@code
+     * assertThat(Results.failure("hello")).hasFailureThat(as(InstanceOfAssertFactories.INTEGER)).isZero();
+     * assertThat(Results.success("hello")).hasFailureThat(as(InstanceOfAssertFactories.STRING)).startsWith("h");
+     * }
      * </pre>
      *
      * @param <T> the type of the resulting {@code Assert}
-     * @param assertFactory the factory which verifies the type and creates the new {@code Assert}; can't be
-     *            {@code null}.
+     * @param assertFactory the factory which verifies the type and creates the new {@code Assert}
      * @return a new narrowed {@link ObjectAssertProxy} instance for assertions chaining on the success value
      */
     @CheckReturnValue
