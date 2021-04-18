@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Success#hashCode()}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("Success hashCode")

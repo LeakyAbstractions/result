@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link LazyResult#toString()}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("LazyResult toString")

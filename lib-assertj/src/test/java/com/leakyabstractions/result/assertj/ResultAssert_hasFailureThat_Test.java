@@ -20,7 +20,7 @@ import com.leakyabstractions.result.assertj.AssertionsUtil.NavigationMethodBaseT
 
 /**
  * Tests for {@link ResultAssert#hasFailureThat()}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("ResultAssert hasFailureThat")

@@ -19,7 +19,7 @@ import com.leakyabstractions.result.Result;
 
 /**
  * Tests for {@link ResultAssert#hasFailureInstanceOf(Class)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("ResultAssert hasFailureInstanceOf")

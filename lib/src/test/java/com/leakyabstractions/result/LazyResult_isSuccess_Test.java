@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link LazyResult#isSuccess()}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("LazyResult isSuccess")

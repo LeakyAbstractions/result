@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Failure#ifSuccess(Consumer)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("Failure ifSuccess")

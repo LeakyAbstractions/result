@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Results#combine(Result...)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("Results combineVarArgs")

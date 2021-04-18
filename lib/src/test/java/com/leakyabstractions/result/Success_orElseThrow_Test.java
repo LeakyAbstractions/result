@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Success#orElseThrow()}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("Success orElseThrow")

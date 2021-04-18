@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Success#flatMap(Function, Function)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("Success flatMap")

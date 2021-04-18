@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Results#ofNullable(Object, Supplier)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("Results ofNullable with supplier")

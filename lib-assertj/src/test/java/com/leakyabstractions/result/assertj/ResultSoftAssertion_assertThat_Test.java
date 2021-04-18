@@ -15,7 +15,7 @@ import com.leakyabstractions.result.Result;
 
 /**
  * Tests for {@link ResultSoftAssertion#assertThat()}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("ResultSoftAssertion assertThat")

@@ -21,7 +21,7 @@ import com.leakyabstractions.result.Result;
 
 /**
  * Tests for {@link ResultAssert#hasFailureSatisfying(Consumer)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("ResultAssert hasFailureSatisfying(Consumer)")

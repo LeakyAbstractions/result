@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Success#filter(Predicate, Function)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("Success filter")

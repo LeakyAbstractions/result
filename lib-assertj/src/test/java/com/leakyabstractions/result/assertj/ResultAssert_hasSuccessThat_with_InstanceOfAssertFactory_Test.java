@@ -27,7 +27,7 @@ import com.leakyabstractions.result.assertj.AssertionsUtil.NavigationMethodBaseT
 
 /**
  * Tests for {@link ResultAssert#hasSuccessThat(InstanceOfAssertFactory)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("ResultAssert hasSuccessThat(InstanceOfAssertFactory)")

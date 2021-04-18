@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link LazyResult#orElseThrow(Function)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("LazyResult orElseThrow with mapper")

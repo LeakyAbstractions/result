@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 /**
  * This class consists exclusively of static methods that operate on or return {@link Result} instances.
- * 
+ *
  * @author Guillermo Calvo
  */
 public class Results {
@@ -25,7 +25,7 @@ public class Results {
 
     /**
      * Create a new successful result with a given value.
-     * 
+     *
      * @param <S> the type of the success value
      * @param <F> the type of the failure value
      * @param success the value to be contained; may be {@code null}
@@ -37,7 +37,7 @@ public class Results {
 
     /**
      * Create a new failed result with a given value.
-     * 
+     *
      * @param <S> the type of the success value
      * @param <F> the type of the failure value
      * @param failure the value to be contained; may be {@code null}
@@ -52,7 +52,7 @@ public class Results {
      * <p>
      * If the given value is not {@code null} then a new successful result containing the value will be created;
      * otherwise a new failed result will be created.
-     * 
+     *
      * @param <S> the type of the success value
      * @param value the value to be contained; may be {@code null}
      * @return the new result
@@ -66,7 +66,7 @@ public class Results {
      * <p>
      * If the given value is not {@code null} then a new successful result containing the value will be created;
      * otherwise a new failed result containing the value produced by the {@link Supplier} will be created.
-     * 
+     *
      * @param <S> the type of the success value
      * @param <F> the type of the failure value
      * @param value the value to be contained if not {@code null}
@@ -86,7 +86,7 @@ public class Results {
      * <p>
      * If the given optional is not empty then a new successful result containing the value will be created; otherwise a
      * new failed result will be created.
-     * 
+     *
      * @param <S> the type of the success value
      * @param value the optional whose value is to be contained; may be empty
      * @return the new result
@@ -103,7 +103,7 @@ public class Results {
      * <p>
      * If the given optional is not empty then a new successful result containing the value will be created; otherwise a
      * new failed result containing the value produced by the {@link Supplier} will be created.
-     * 
+     *
      * @param <S> the type of the success value
      * @param <F> the type of the failure value
      * @param value the value to be contained if not {@code null}
@@ -123,7 +123,7 @@ public class Results {
      * <p>
      * If the given {@code Callable} completes then a new successful result containing the produced value will be
      * created; otherwise a new failed result containing the thrown exception will be created.
-     * 
+     *
      * @param <S> the type of the success value
      * @param callable the {@code Callable} to produce the success value, may throw an exception
      * @return the new result
@@ -142,7 +142,7 @@ public class Results {
      * <p>
      * If the given {code Callable} completes then a new successful result containing the produced value will be
      * created; otherwise a new failed result containing the thrown exception will be created.
-     * 
+     *
      * @param <S> the type of the success value
      * @param <F> the type of the failure value
      * @param callable the {code Callable} to produce the success value, may throw an exception
@@ -165,7 +165,7 @@ public class Results {
      * <p>
      * If there's any failed result inside the collection then a new failed result containing a stream of failure values
      * will be created; otherwise a new successful result containing a stream of success values will be created.
-     * 
+     *
      * @param <S> the type of the success value
      * @param <F> the type of the failure value
      * @param results a {@link Collection} of {@link Result} objects, may be empty.
@@ -184,7 +184,7 @@ public class Results {
      * <p>
      * If there's any failed result inside the variable list then a new failed result containing a stream of failure
      * values will be created; otherwise a new successful result containing a stream of success values will be created.
-     * 
+     *
      * @param <S> the type of the success value
      * @param <F> the type of the failure value
      * @param results a variable list of {@link Result} objects, may be empty.
@@ -203,7 +203,7 @@ public class Results {
     /**
      * Return an {@link Optional} object with the success value if the given result is successful and the success value
      * is not {@code null}; otherwise return an empty {@code Optional}.
-     * 
+     *
      * @param <S> the type of the success value
      * @param result the result whose success value is to be
      * @return an {@code Optional} object with the success value if the given result is successful and the success value
@@ -216,7 +216,7 @@ public class Results {
     /**
      * Return an {@link Optional} object with the failure value if the given result is failed and the failure value is
      * not {@code null}; otherwise return an empty {@code Optional}.
-     * 
+     *
      * @param <F> the type of the failure value
      * @param result the result whose failure value is to be
      * @return an {@code Optional} object with the failure value if the given result is failed and the failure value is
@@ -269,7 +269,7 @@ public class Results {
      * <p>
      * The supplier is guaranteed to be invoked at most once. It must return a non-null result object; if it throws an
      * exception or returns {@code null} then the behavior of the lazy result will be undefined.
-     * 
+     *
      * @param <S> the type of the success value
      * @param <F> the type of the failure value
      * @param supplier the function that will eventually supply the actual result
@@ -286,7 +286,7 @@ public class Results {
      * Lazy consumers are intended to be passed as parameters to {@link Result#ifSuccess(Consumer)},
      * {@link Result#ifSuccessOrElse(Consumer, Consumer)} and {@link Result#ifFailure(Consumer)} when the action only
      * needs to be performed if the lazy result eventually retrieves an actual result from its supplier.
-     * 
+     *
      * @param <T> the type of the input to the action
      * @param consumer the regular consumer that may be eventually performed
      * @return the new lazy consumer

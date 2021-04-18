@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link LazyResult#hashCode()}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("LazyResult hashCode")

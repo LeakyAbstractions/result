@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 
 /**
  * Lazy implementation of a {@link Result}.
- * 
+ *
  * @author Guillermo Calvo
  * @param <S> the type of the success value
  * @param <F> the type of the failure value

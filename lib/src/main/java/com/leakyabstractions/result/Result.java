@@ -25,7 +25,7 @@ import java.util.function.Predicate;
  * Additional methods that depend on fulfillment state are provided, such as {@link #orElse(java.lang.Object) orElse()}
  * (return an <em>alternative success value</em> if the operation failed) and
  * {@link #ifSuccess(java.util.function.Consumer) ifSuccess()} (execute a block of code if the operation succeeded).
- * 
+ *
  * @apiNote A variable whose type is {@code Result} should never itself be {@code null}; it should always point to a
  *          {@code Result} instance.
  * @implNote Instances of classes that implement {@code Result}:
@@ -106,7 +106,7 @@ public interface Result<S, F> {
      * <p>
      * If this is a failed result, the <em>failure</em> value will be applied to the provided mapping {@link Function}
      * to produce an exception.
-     * 
+     *
      * @param <E> Type of the exception to be thrown
      * @param failureMapper a mapping function which will produce the exception to be thrown if this is a failed result
      * @return the success value if this is a successful result
@@ -127,7 +127,7 @@ public interface Result<S, F> {
 
     /**
      * Perform the given action with the success value if this is a successful result; otherwise do nothing.
-     * 
+     *
      * @param successAction the action to be performed if this is a successful result
      * @throws NullPointerException if this is a successful result and {@code successAction} is {@code null}
      * @return this result
@@ -137,7 +137,7 @@ public interface Result<S, F> {
     /**
      * Perform the given action with the success value if this is a successful result; otherwise perform the given
      * failure-based action.
-     * 
+     *
      * @param successAction the action to be performed if this is a successful result
      * @param failureAction the action to be performed if this is a failed result
      * @throws NullPointerException if this is a successful result and {@code successAction}; or if this is a failed
@@ -148,7 +148,7 @@ public interface Result<S, F> {
 
     /**
      * Perform the given action with the failure value if this is a failed result; otherwise do nothing.
-     * 
+     *
      * @param failureAction the action to be performed if this is a failed result
      * @throws NullPointerException if this is a failed result and {@code failureAction} is {@code null}
      * @return this result
@@ -162,7 +162,7 @@ public interface Result<S, F> {
      * If this is a successful result whose value does not match the provided {@link Predicate}, the <em>success</em>
      * value will be applied to the provided mapping {@link Function} to produce a <em>failure</em> value to be held by
      * the new failed {@code Result}.
-     * 
+     *
      * @param predicate a predicate to apply to the success value if this is a successful result
      * @param failureMapper a mapping function which will produce the value to be held by a new failed result
      * @throws NullPointerException if this is a successful result whose value does not match the provided predicate and
@@ -179,7 +179,7 @@ public interface Result<S, F> {
      * Depending on the fulfillment state, the value will be applied to either one of the provided mapping functions to
      * produce a new value. Then the new {@code Result} will be created with the same fulfillment state and the produced
      * value. The types of the new success/failure values may be different from this result's.
-     * 
+     *
      * @param <S2> the type of the new success value
      * @param <F2> the type of the new failure value
      * @param successMapper a mapping {@code Function} to apply to the success value if this is a successful result
@@ -198,7 +198,7 @@ public interface Result<S, F> {
      * If this is a successful result, the success value will be applied to the provided mapping {@code Function} to
      * produce a new value. Then the new successful {@code Result} will be created with the produced value. The type of
      * the new success value may be different from this result's.
-     * 
+     *
      * @param <S2> the type of the new success value
      * @param successMapper a mapping {@code Function} to apply to the success value if this is a successful result
      * @throws NullPointerException if this is a successful result and {@code successMapper} is {@code null}
@@ -215,7 +215,7 @@ public interface Result<S, F> {
      * If this is a failed result, the failure value will be applied to the provided mapping {@code Function} to produce
      * a new value. Then the new failed {@code Result} will be created with the produced value. The type of the new
      * failure value may be different from this result's.
-     * 
+     *
      * @param <F2> the type of the new failure value
      * @param failureMapper a mapping {@code Function} to apply to the failure value if this is a failed result
      * @throws NullPointerException if this is a failed result and {@code failureMapper} is {@code null}
@@ -231,7 +231,7 @@ public interface Result<S, F> {
      * Depending on the fulfillment state, the value will be applied to either one of the provided mapping functions to
      * produce a new {@code Result}. The fulfillment state and the types of the new success/failure values may be
      * different from this result's.
-     * 
+     *
      * @param <S2> the type of the new success value
      * @param <F2> the type of the new failure value
      * @param successFlatMapper a {@code Function} to apply to the success value if this is a successful result; it must
@@ -253,7 +253,7 @@ public interface Result<S, F> {
      * If this is a successful result, the success value will be applied to the provided mapping {@code Function} to
      * produce a new {@code Result}. The fulfillment state and the type of the new success value may be different from
      * this result's.
-     * 
+     *
      * @param <S2> the type of the new success value
      * @param successFlatMapper a {@code Function} to apply to the success value if this is a successful result; it must
      *            produce a new {@code Result}
@@ -270,7 +270,7 @@ public interface Result<S, F> {
      * If this is a failed result, the failure value will be applied to the provided mapping {@code Function} to produce
      * a new {@code Result}. The fulfillment state and the type of the new failure value may be different from this
      * result's.
-     * 
+     *
      * @param <F2> the type of the new failure value
      * @param failureFlatMapper a {@code Function} to apply to the failure value if this is a failed result; it must
      *            produce a new {@code Result}

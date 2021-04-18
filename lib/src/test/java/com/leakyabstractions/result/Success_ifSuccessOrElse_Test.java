@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Success#ifSuccessOrElse(Consumer, Consumer)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("Success ifSuccessOrElse")

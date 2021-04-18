@@ -46,7 +46,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * Verifies that the actual {@link Result} is successful.
      * <p>
      * Assertions will pass:
-     * 
+     *
      * <pre>
      * <code class='java'>
      * assertThat(DefaultResult.success("yay")).isSuccess();
@@ -57,7 +57,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * </pre>
      *
      * Assertions will fail:
-     * 
+     *
      * <pre>
      * <code class='java'>
      * assertThat(DefaultResult.failure("nay")).isSuccess();
@@ -78,7 +78,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * Verifies that the actual {@link Result} is a successful result containing the given value.
      * <p>
      * Assertions will pass:
-     * 
+     *
      * <pre>
      * <code class='java'>
      * assertThat(DefaultResult.success("yay")).hasSuccess("yay");
@@ -87,7 +87,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * </pre>
      *
      * Assertions will fail:
-     * 
+     *
      * <pre>
      * <code class='java'>
      * assertThat(DefaultResult.success("yay")).hasSuccess("nay");
@@ -138,7 +138,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * // equal but not successful:
      * String foo = "FOO";
      * assertThat(DefaultResult.failure(foo)).hasSuccessSameAs(foo);
-     * 
+     *
      * // equal but not the same:
      * assertThat(DefaultResult.success(new String("bar"))).hasSuccessSameAs(new String("bar"));
      * assertThat(DefaultResult.success(new Integer(1234))).hasSuccessSameAs(new Integer(1234));
@@ -164,7 +164,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * Should be used as a way of deeper asserting on the containing object, as further requirement(s) for the value.
      * <p>
      * Assertions will pass:
-     * 
+     *
      * <pre>
      * <code class='java'>
      * // one requirement
@@ -181,7 +181,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * </pre>
      *
      * Assertions will fail:
-     * 
+     *
      * <pre>
      * <code class='java'>
      * assertThat(DefaultResult.success("hello")).hasSuccessSatisfying(s -&gt; assertThat(s).isEqualTo("hello"); });
@@ -203,7 +203,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * satisfies the given {@link Condition}.
      * <p>
      * Assertions will pass:
-     * 
+     *
      * <pre>
      * <code class='java'>
      * Condition&lt;Integer&gt; isNegative = new Condition&lt;&gt;(i -&gt; i &lt; 0, "a negative number");
@@ -214,7 +214,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * </pre>
      *
      * Assertions will fail:
-     * 
+     *
      * <pre>
      * <code class='java'>
      * assertThat(DefaultResult.success(1234)).hasSuccessSatisfying(isNegative);
@@ -274,11 +274,11 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * chaining (object) assertions on its value.
      * <p>
      * Assertions will pass:
-     * 
+     *
      * <pre>
      * <code class='java'>
      * Foo foo = new Foobar("Hello", "world");
-     * 
+     *
      * assertThat(DefaultResult.success(foo)).hasSuccessThat().hasNoNullFieldsOrProperties();
      * assertThat(DefaultResult.success(null)).hasSuccessThat().isNull();
      * </code>
@@ -289,7 +289,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * <pre>
      * <code class='java'>
      * Foo bar = new Foobar("Hello", null);
-     * 
+     *
      * assertThat(DefaultResult.success(bar)).hasSuccessThat().hasNoNullFieldsOrProperties();
      * assertThat(DefaultResult.success(null)).hasSuccessThat().isNotNull();
      * </code>
@@ -315,7 +315,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * assertion more readable.
      * <p>
      * Assertions will pass:
-     * 
+     *
      * <pre>
      * <code class='java'>
      * assertThat(DefaultResult.success(0)).hasSuccessThat(as(InstanceOfAssertFactories.INTEGER)).isZero();
@@ -350,7 +350,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * Verifies that the actual {@link Result} is failed.
      * <p>
      * Assertions will pass:
-     * 
+     *
      * <pre>
      * <code class='java'>
      * assertThat(DefaultResult.failure("yay")).isFailure();
@@ -361,7 +361,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * </pre>
      *
      * Assertions will fail:
-     * 
+     *
      * <pre>
      * <code class='java'>
      * assertThat(DefaultResult.success("nay")).isFailure();
@@ -382,7 +382,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * Verifies that the actual {@link Result} is a failed result containing the given value.
      * <p>
      * Assertions will pass:
-     * 
+     *
      * <pre>
      * <code class='java'>
      * assertThat(DefaultResult.failure("yay")).hasFailure("yay");
@@ -391,7 +391,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * </pre>
      *
      * Assertions will fail:
-     * 
+     *
      * <pre>
      * <code class='java'>
      * assertThat(DefaultResult.failure("yay")).hasFailure("nay");
@@ -442,7 +442,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * // equal but not failed:
      * String foo = "FOO";
      * assertThat(DefaultResult.success(foo)).hasFailureSameAs(foo);
-     * 
+     *
      * // equal but not the same:
      * assertThat(DefaultResult.failure(new String("bar"))).hasFailureSameAs(new String("bar"));
      * assertThat(DefaultResult.failure(new Integer(1234))).hasFailureSameAs(new Integer(1234));
@@ -468,7 +468,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * Should be used as a way of deeper asserting on the containing object, as further requirement(s) for the value.
      * <p>
      * Assertions will pass:
-     * 
+     *
      * <pre>
      * <code class='java'>
      * // one requirement
@@ -485,7 +485,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * </pre>
      *
      * Assertions will fail:
-     * 
+     *
      * <pre>
      * <code class='java'>
      * assertThat(DefaultResult.success("hello")).hasSuccessSatisfying(s -&gt; assertThat(s).isEqualTo("hello"); });
@@ -507,7 +507,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * the given {@link Condition}.
      * <p>
      * Assertions will pass:
-     * 
+     *
      * <pre>
      * <code class='java'>
      * Condition&lt;Integer&gt; isNegative = new Condition&lt;&gt;(i -&gt; i &lt; 0, "a negative number");
@@ -518,7 +518,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * </pre>
      *
      * Assertions will fail:
-     * 
+     *
      * <pre>
      * <code class='java'>
      * assertThat(DefaultResult.failure(1234)).hasFailureSatisfying(isNegative);
@@ -578,11 +578,11 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * (object) assertions on its value.
      * <p>
      * Assertions will pass:
-     * 
+     *
      * <pre>
      * <code class='java'>
      * Foo foo = new Foobar("Hello", "world");
-     * 
+     *
      * assertThat(DefaultResult.failure(foo)).hasFailureThat().hasNoNullFieldsOrProperties();
      * assertThat(DefaultResult.failure(null)).hasFailureThat().isNull();
      * </code>
@@ -593,7 +593,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * <pre>
      * <code class='java'>
      * Foo bar = new Foobar("Hello", null);
-     * 
+     *
      * assertThat(DefaultResult.failure(bar)).hasFailureThat().hasNoNullFieldsOrProperties();
      * assertThat(DefaultResult.success(null)).hasFailureThat().isNotNull();
      * </code>
@@ -619,7 +619,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * assertion more readable.
      * <p>
      * Assertions will pass:
-     * 
+     *
      * <pre>
      * <code class='java'>
      * assertThat(failure(0)).hasFailureThat(as(InstanceOfAssertFactories.INTEGER)).isZero();

@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link LazyResult#ifSuccessOrElse(Consumer, Consumer)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("LazyResult ifSuccessOrElse")

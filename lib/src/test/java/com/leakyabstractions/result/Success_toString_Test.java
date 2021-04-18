@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Success#toString()}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("Success toString")

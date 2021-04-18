@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Results#wrap(Callable)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("Results wrap")

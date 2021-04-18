@@ -30,7 +30,7 @@ interface LazyConsumer<T> extends Consumer<T> {
 
     /**
      * Creates a new lazy consumer based on a regular one.
-     * 
+     *
      * @param <T> the type of the input to the action
      * @param consumer the regular consumer that may be eventually performed
      * @return the new lazy consumer

@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Results#lazy(Consumer)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("Results lazy with consumer")

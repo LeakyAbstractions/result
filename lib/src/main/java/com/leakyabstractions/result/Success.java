@@ -11,7 +11,7 @@ import java.util.function.Predicate;
 
 /**
  * Default implementation of a successful {@link Result}.
- * 
+ *
  * @author Guillermo Calvo
  * @param <S> the type of the success value
  * @param <F> the type of the failure value

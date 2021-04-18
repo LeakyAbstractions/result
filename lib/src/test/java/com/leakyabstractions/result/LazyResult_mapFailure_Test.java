@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link LazyResult#mapFailure(Function)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("LazyResult mapFailure")
