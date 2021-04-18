@@ -9,7 +9,7 @@ plugins {
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 apply from: rootProject.file('common/compile.gradle')
