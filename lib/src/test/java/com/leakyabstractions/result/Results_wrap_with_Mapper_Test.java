@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Results#wrap(Callable, Function)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("Results wrap with mapper")

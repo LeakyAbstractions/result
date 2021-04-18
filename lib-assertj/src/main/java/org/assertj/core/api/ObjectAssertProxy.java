@@ -3,7 +3,7 @@ package org.assertj.core.api;
 
 /**
  * Proxy to access package-protected methods in {@code org.assertj.core.api}.
- * 
+ *
  * @author Guillermo Calvo
  */
 public interface ObjectAssertProxy {
@@ -13,7 +13,7 @@ public interface ObjectAssertProxy {
      * <p>
      * Invokes {@link Assertions#assertThatObject(Object)} and then
      * {@link ObjectAssert#withAssertionState(AbstractAssert)}.
-     * 
+     *
      * @param <T> the generic type of the assert.
      * @param state the assertion state.
      * @param actual the actual value.

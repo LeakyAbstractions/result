@@ -21,7 +21,7 @@ import com.leakyabstractions.result.assertj.AssertionsUtil.TestCondition;
 
 /**
  * Tests for {@link ResultAssert#hasSuccessSatisfying(Condition)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("ResultAssert hasSuccessSatisfying(Condition)")

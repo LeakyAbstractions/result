@@ -9,7 +9,7 @@ plugins {
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 apply from: rootProject.file('common/compile.gradle')
@@ -22,5 +22,14 @@ apply from: rootProject.file('common/publish.gradle')
 
 dependencies {
     api project(":lib")
-    api 'org.assertj:assertj-core:3.18.1'
+    api 'org.assertj:assertj-core:3.19.0'
+}
+
+javadoc {
+    options {
+        linksOffline 'https://javadoc.io/doc/com.leakyabstractions/result/latest/',
+                rootProject.file('common/javadoc/result').toString()
+        linksOffline 'https://javadoc.io/doc/org.assertj/assertj-core/latest/',
+                rootProject.file('common/javadoc/assertj-core').toString()
+    }
 }

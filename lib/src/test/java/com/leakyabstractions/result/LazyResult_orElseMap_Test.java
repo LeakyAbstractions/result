@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link LazyResult#orElseMap(Function)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("LazyResult orElseMap")
@@ -25,9 +25,9 @@ class LazyResult_orElseMap_Test {
         // Given
         final Supplier<Result<Integer, String>> supplier = () -> new Failure<>("FAILURE");
         final Result<Integer, String> lazy = new LazyResult<>(supplier);
-        final Function<String, Integer> failureMapper = f -> 321;
+        final Function<String, Integer> mapper = f -> 321;
         // When
-        final Integer value = lazy.orElseMap(failureMapper);
+        final Integer value = lazy.orElseMap(mapper);
         // Then
         assertThat(value).isEqualTo(321);
     }
@@ -37,9 +37,9 @@ class LazyResult_orElseMap_Test {
         // Given
         final Supplier<Result<String, Integer>> supplier = () -> new Success<>(SUCCESS);
         final Result<String, Integer> lazy = new LazyResult<>(supplier);
-        final Function<Integer, String> failureMapper = f -> fail("Should not happen");
+        final Function<Integer, String> mapper = f -> fail("Should not happen");
         // When
-        final String value = lazy.orElseMap(failureMapper);
+        final String value = lazy.orElseMap(mapper);
         // Then
         assertThat(value).isSameAs(SUCCESS);
     }
@@ -49,9 +49,9 @@ class LazyResult_orElseMap_Test {
         // Given
         final Supplier<Result<String, Integer>> supplier = () -> new Success<>(null);
         final Result<String, Integer> success = new LazyResult<>(supplier);
-        final Function<Integer, String> failureMapper = f -> fail("Should not happen");
+        final Function<Integer, String> mapper = f -> fail("Should not happen");
         // When
-        final String value = success.orElseMap(failureMapper);
+        final String value = success.orElseMap(mapper);
         // Then
         assertThat(value).isNull();
     }

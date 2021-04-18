@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Results#ofOptional(Optional, Supplier)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("Results ofOptional with supplier")

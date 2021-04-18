@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link LazyResult#flatMapFailure(Function)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("LazyResult flatMapFailure")
@@ -26,9 +26,9 @@ class LazyResult_flatMapFailure_Test {
         // Given
         final Supplier<Result<String, String>> supplier = () -> fail("Should not happen");
         final LazyResult<String, String> lazy = new LazyResult<>(supplier);
-        final Function<String, Result<String, String>> failureFlatMapper = s -> fail("Should not happen");
+        final Function<String, Result<String, String>> mapper = s -> fail("Should not happen");
         // When
-        final Result<String, String> result = lazy.flatMapFailure(failureFlatMapper);
+        final Result<String, String> result = lazy.flatMapFailure(mapper);
         // Then
         assertThat(result).isInstanceOf(LazyResult.class);
     }
@@ -38,9 +38,9 @@ class LazyResult_flatMapFailure_Test {
         // Given
         final Supplier<Result<String, String>> supplier = () -> new Failure<>(FAILURE);
         final LazyResult<String, String> lazy = new LazyResult<>(supplier);
-        final Function<String, Result<String, String>> failureFlatMapper = s -> new Success<>(SUCCESS);
+        final Function<String, Result<String, String>> mapper = s -> new Success<>(SUCCESS);
         // When
-        final String value = lazy.flatMapFailure(failureFlatMapper).orElseThrow();
+        final String value = lazy.flatMapFailure(mapper).orElseThrow();
         // Then
         assertThat(value).isSameAs(SUCCESS);
     }
@@ -51,10 +51,10 @@ class LazyResult_flatMapFailure_Test {
         final Supplier<Result<String, String>> supplier = () -> new Failure<>(FAILURE);
         final LazyResult<String, String> lazy = new LazyResult<>(supplier);
         final Result<String, String> another = new Failure<>("ANOTHER");
-        final Function<String, Result<String, String>> failureFlatMapper = s -> another;
+        final Function<String, Result<String, String>> mapper = s -> another;
         // When
         final String value = lazy.getFailureOrElseThrow();
-        final Result<String, String> result = lazy.flatMapFailure(failureFlatMapper);
+        final Result<String, String> result = lazy.flatMapFailure(mapper);
         // Then
         assertThat(value).isSameAs(FAILURE);
         assertThat(result).isSameAs(another);

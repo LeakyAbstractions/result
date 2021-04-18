@@ -17,7 +17,7 @@ import com.leakyabstractions.result.Result;
 
 /**
  * Tests for {@link ResultAssert#isSuccess()}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("ResultAssert isSuccess")

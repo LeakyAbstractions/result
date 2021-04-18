@@ -3,9 +3,13 @@ javadoc {
     options {
         title project.artifactName
         header "${project.artifactName} ${rootProject.version}"
-        links 'https://docs.oracle.com/en/java/javase/14/docs/api/'
         author true
-        addBooleanOption('html5', true)
+        if (JavaVersion.current() <= JavaVersion.VERSION_1_8) {
+            linksOffline 'https://docs.oracle.com/javase/8/docs/api/', rootProject.file('common/javadoc/jdk8').toString()
+        } else {
+            linksOffline 'https://docs.oracle.com/en/java/javase/15/docs/api/', rootProject.file('common/javadoc/jdk15').toString()
+            addBooleanOption('html5', true)
+        }
     }
     configure(options) {
         tags(

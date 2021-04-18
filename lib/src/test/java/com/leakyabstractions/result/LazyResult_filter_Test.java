@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link LazyResult#filter(Predicate, Function)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("LazyResult filter")

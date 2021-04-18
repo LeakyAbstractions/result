@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Success#orElse(Object)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("Success orElse")

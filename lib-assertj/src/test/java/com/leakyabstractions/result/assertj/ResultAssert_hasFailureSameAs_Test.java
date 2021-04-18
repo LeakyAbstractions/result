@@ -19,7 +19,7 @@ import com.leakyabstractions.result.Result;
 
 /**
  * Tests for {@link ResultAssert#hasFailureSameAs(Object)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("ResultAssert hasFailureSameAs")

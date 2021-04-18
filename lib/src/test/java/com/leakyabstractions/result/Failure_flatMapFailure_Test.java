@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Failure#flatMapFailure(Function)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("Failure flatMapFailure")
@@ -21,9 +21,9 @@ class Failure_flatMapFailure_Test {
         // Given
         final Result<Integer, Integer> failure = new Failure<>(123);
         final Result<Integer, String> another = new Failure<>("FAILURE");
-        final Function<Integer, Result<Integer, String>> failureFlatMapper = f -> another;
+        final Function<Integer, Result<Integer, String>> mapper = f -> another;
         // When
-        final Result<Integer, String> result = failure.flatMapFailure(failureFlatMapper);
+        final Result<Integer, String> result = failure.flatMapFailure(mapper);
         // Then
         assertThat(result).isSameAs(another);
     }
@@ -33,9 +33,9 @@ class Failure_flatMapFailure_Test {
         // Given
         final Result<String, Integer> failure = new Failure<>(123);
         final Result<String, Integer> another = new Success<>("SUCCESS");
-        final Function<Integer, Result<String, Integer>> failureFlatMapper = f -> another;
+        final Function<Integer, Result<String, Integer>> mapper = f -> another;
         // When
-        final Result<String, Integer> result = failure.flatMapFailure(failureFlatMapper);
+        final Result<String, Integer> result = failure.flatMapFailure(mapper);
         // Then
         assertThat(result).isSameAs(another);
     }

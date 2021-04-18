@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link LazyResult#orElseThrow()}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("LazyResult orElseThrow")

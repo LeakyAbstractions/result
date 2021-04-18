@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Failure#orElseMap(Function)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("Failure orElseMap")

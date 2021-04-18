@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Failure#orElseThrow(Function)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("Failure orElseThrow with mapper")
@@ -23,9 +23,9 @@ class Failure_orElseThrow_with_Mapper_Test {
     void should_throw_exception() {
         // Given
         final Result<Integer, String> failure = new Failure<>(FAILURE);
-        final Function<String, RuntimeException> failureMapper = RuntimeException::new;
+        final Function<String, RuntimeException> mapper = RuntimeException::new;
         // When
-        final ThrowingCallable callable = () -> failure.orElseThrow(failureMapper);
+        final ThrowingCallable callable = () -> failure.orElseThrow(mapper);
         // Then
         assertThatThrownBy(callable)
                 .isInstanceOf(RuntimeException.class)

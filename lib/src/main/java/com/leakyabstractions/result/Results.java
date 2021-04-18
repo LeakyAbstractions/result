@@ -14,8 +14,9 @@ import java.util.stream.Stream;
 
 /**
  * This class consists exclusively of static methods that operate on or return {@link Result} instances.
- * 
+ *
  * @author Guillermo Calvo
+ * @see com.leakyabstractions.result
  */
 public class Results {
 
@@ -24,11 +25,11 @@ public class Results {
     }
 
     /**
-     * Create a new successful result with a given value.
-     * 
-     * @param <S> the type of the success value
-     * @param <F> the type of the failure value
-     * @param success the value to be contained; may be {@code null}
+     * Creates a new successful result with a given value.
+     *
+     * @param <S> the success type of the result
+     * @param <F> the failure type of the result
+     * @param success the possibly-{@code null} success value
      * @return the new successful result
      */
     public static <S, F> Result<S, F> success(S success) {
@@ -36,11 +37,11 @@ public class Results {
     }
 
     /**
-     * Create a new failed result with a given value.
-     * 
-     * @param <S> the type of the success value
-     * @param <F> the type of the failure value
-     * @param failure the value to be contained; may be {@code null}
+     * Creates a new failed result with a given value.
+     *
+     * @param <S> the success type of the result
+     * @param <F> the failure type of the result
+     * @param failure the possibly-{@code null} failure value
      * @return the new failed result
      */
     public static <S, F> Result<S, F> failure(F failure) {
@@ -48,13 +49,11 @@ public class Results {
     }
 
     /**
-     * Create a new result based on a possibly {@code null} value.
-     * <p>
-     * If the given value is not {@code null} then a new successful result containing the value will be created;
-     * otherwise a new failed result will be created.
-     * 
-     * @param <S> the type of the success value
-     * @param value the value to be contained; may be {@code null}
+     * If the given {@code value} is not {@code null}, returns a new successful result with it; otherwise returns a new
+     * failed result.
+     *
+     * @param <S> the success type of the result
+     * @param value the value to check if {@code null}
      * @return the new result
      */
     public static <S> Result<S, Void> ofNullable(S value) {
@@ -62,15 +61,13 @@ public class Results {
     }
 
     /**
-     * Create a new result based on a possibly {@code null} value and a function that supplies failure values.
-     * <p>
-     * If the given value is not {@code null} then a new successful result containing the value will be created;
-     * otherwise a new failed result containing the value produced by the {@link Supplier} will be created.
-     * 
-     * @param <S> the type of the success value
-     * @param <F> the type of the failure value
-     * @param value the value to be contained if not {@code null}
-     * @param failureSupplier a {@link Supplier} that will generate the failure value if {@code value} is {@code null}
+     * If the given {@code value} is not {@code null}, returns a new successful result with it; otherwise returns a new
+     * failed result with a value produced by the given supplier function.
+     *
+     * @param <S> the success type of the result
+     * @param <F> the failure type of the result
+     * @param value the value to check if {@code null}
+     * @param failureSupplier the supplier function that produces a failure value
      * @return the new result
      */
     public static <S, F> Result<S, F> ofNullable(S value, Supplier<? extends F> failureSupplier) {
@@ -82,32 +79,28 @@ public class Results {
     }
 
     /**
-     * Create a new result based on a possibly empty {@link Optional}.
-     * <p>
-     * If the given optional is not empty then a new successful result containing the value will be created; otherwise a
-     * new failed result will be created.
-     * 
-     * @param <S> the type of the success value
-     * @param value the optional whose value is to be contained; may be empty
+     * If the given {@code optional} is not empty, returns a new successful result with its value; otherwise returns a
+     * new failed result.
+     *
+     * @param <S> the success type of the result
+     * @param optional the optional to check if empty
      * @return the new result
      */
-    public static <S> Result<S, Void> ofOptional(Optional<S> value) {
-        if (value.isPresent()) {
-            return new Success<>(value.get());
+    public static <S> Result<S, Void> ofOptional(Optional<S> optional) {
+        if (optional.isPresent()) {
+            return new Success<>(optional.get());
         }
         return new Failure<>(null);
     }
 
     /**
-     * Create a new result based on a possibly empty {@link Optional} and a function that supplies failure values.
-     * <p>
-     * If the given optional is not empty then a new successful result containing the value will be created; otherwise a
-     * new failed result containing the value produced by the {@link Supplier} will be created.
-     * 
-     * @param <S> the type of the success value
-     * @param <F> the type of the failure value
-     * @param value the value to be contained if not {@code null}
-     * @param failureSupplier a {@link Supplier} that will generate the failure value if {@code value} is empty
+     * If the given {@code optional} is not empty, returns a new successful result with its value; otherwise returns a
+     * new failed result with a value produced by the given supplier function.
+     *
+     * @param <S> the success type of the result
+     * @param <F> the failure type of the result
+     * @param value the optional to check if empty
+     * @param failureSupplier the supplier function that produces a failure value
      * @return the new result
      */
     public static <S, F> Result<S, F> ofOptional(Optional<S> value, Supplier<? extends F> failureSupplier) {
@@ -119,13 +112,11 @@ public class Results {
     }
 
     /**
-     * Create a new result based on a {@link Callable}.
-     * <p>
-     * If the given {@code Callable} completes then a new successful result containing the produced value will be
-     * created; otherwise a new failed result containing the thrown exception will be created.
-     * 
-     * @param <S> the type of the success value
-     * @param callable the {@code Callable} to produce the success value, may throw an exception
+     * If the given {@code callable} produces a value, return a new successful result with it; otherwise returns a new
+     * failed result with the exception thrown by {@code callable}.
+     *
+     * @param <S> the success type of the result
+     * @param callable the task that produces a success value, or throws an exception if unable to do so
      * @return the new result
      */
     public static <S> Result<S, Exception> wrap(Callable<S> callable) {
@@ -138,16 +129,16 @@ public class Results {
     }
 
     /**
-     * Create a new result based on a {@link Callable} and a mapping function that generates failure values.
+     * If the given {@code callable} produces a value, return a new successful result with it; otherwise returns a new
+     * failed result with a value produced by the given mapping function.
      * <p>
-     * If the given {code Callable} completes then a new successful result containing the produced value will be
-     * created; otherwise a new failed result containing the thrown exception will be created.
-     * 
-     * @param <S> the type of the success value
-     * @param <F> the type of the failure value
-     * @param callable the {code Callable} to produce the success value, may throw an exception
-     * @param exceptionMapper a mapping {@link Function} that will generate the failure value if the {@code Callable}
-     *            throws an exception
+     * The mapping function will be applied to the exception thrown by {@code callable} to produce the
+     * possibly-{@code null} failure value.
+     *
+     * @param <S> the success type of the result
+     * @param <F> the failure type of the result
+     * @param callable the task that produces a success value, or throws an exception if unable to do so
+     * @param exceptionMapper the mapping function that produces a failure value
      * @return the new result
      */
     public static <S, F> Result<S, F> wrap(Callable<S> callable, Function<? super Exception, F> exceptionMapper) {
@@ -161,14 +152,14 @@ public class Results {
     }
 
     /**
-     * Create a new result based on a {@link Collection} of {@link Result} objects.
+     * Combine a collection of results into a new one.
      * <p>
-     * If there's any failed result inside the collection then a new failed result containing a stream of failure values
-     * will be created; otherwise a new successful result containing a stream of success values will be created.
-     * 
-     * @param <S> the type of the success value
-     * @param <F> the type of the failure value
-     * @param results a {@link Collection} of {@link Result} objects, may be empty.
+     * If there's any failed results inside the collection, then a new failed result containing a stream of failure
+     * values will be created; otherwise a new successful result containing a stream of success values will be created.
+     *
+     * @param <S> the success type of the result
+     * @param <F> the failure type of the result
+     * @param results a possibly-empty {@link Collection collection} of results
      * @return the new result
      */
     public static <S, F> Result<Stream<S>, Stream<F>> combine(Collection<Result<S, F>> results) {
@@ -180,14 +171,14 @@ public class Results {
     }
 
     /**
-     * Create a new result based on a variable list of {@link Result} objects.
+     * Combine a variable list of results into a new one.
      * <p>
-     * If there's any failed result inside the variable list then a new failed result containing a stream of failure
+     * If there's any failed results inside the variable list, then a new failed result containing a stream of failure
      * values will be created; otherwise a new successful result containing a stream of success values will be created.
-     * 
-     * @param <S> the type of the success value
-     * @param <F> the type of the failure value
-     * @param results a variable list of {@link Result} objects, may be empty.
+     *
+     * @param <S> the success type of the result
+     * @param <F> the failure type of the result
+     * @param results a variable list of results
      * @return the new result
      */
     @SafeVarargs
@@ -201,81 +192,80 @@ public class Results {
     }
 
     /**
-     * Return an {@link Optional} object with the success value if the given result is successful and the success value
-     * is not {@code null}; otherwise return an empty {@code Optional}.
-     * 
-     * @param <S> the type of the success value
-     * @param result the result whose success value is to be
-     * @return an {@code Optional} object with the success value if the given result is successful and the success value
-     *         is not {@code null}; otherwise an empty {@code Optional}
+     * If the given result is successful and its success value is not {@code null}, returns an optional with it;
+     * otherwise returns an empty optional.
+     *
+     * @param <S> the type of the optional value
+     * @param result the result to check if successful
+     * @return an optional containing the success value if the given result is successful and the success value is not
+     *         {@code null}; otherwise an empty optional
      */
     public static <S> Optional<S> toOptional(Result<S, ?> result) {
         return result.isSuccess() ? Optional.ofNullable(result.orElseThrow()) : Optional.empty();
     }
 
     /**
-     * Return an {@link Optional} object with the failure value if the given result is failed and the failure value is
-     * not {@code null}; otherwise return an empty {@code Optional}.
-     * 
-     * @param <F> the type of the failure value
-     * @param result the result whose failure value is to be
-     * @return an {@code Optional} object with the failure value if the given result is failed and the failure value is
-     *         not {@code null}; otherwise an empty {@code Optional}
+     * If the given result is failed and its failure value is not {@code null}, returns an optional with it; otherwise
+     * returns an empty optional.
+     *
+     * @param <F> the type of the optional value
+     * @param result the result to check if failed
+     * @return an optional containing the failure value if the given result is failed and the failure value is not
+     *         {@code null}; otherwise an empty optional
      */
     public static <F> Optional<F> toOptionalFailure(Result<?, F> result) {
         return result.isFailure() ? Optional.ofNullable(result.getFailureOrElseThrow()) : Optional.empty();
     }
 
     /**
-     * Create a new lazy result based on the given result supplier.
+     * Creates a new lazy result based on the given result supplier.
      * <p>
      * Lazy results can be manipulated just like any other result; they will try to defer the invocation of the given
      * supplier as long as possible. The purpose is to encapsulate an expensive operation that may be omitted if there's
      * no actual need to examine the result.
      * <p>
-     * These results can be lazily <em>filtered</em> and <em>transformed</em> without actually performing the expensive
+     * Lazy results can be <em>filtered</em> and <em>transformed</em> without actually performing the expensive
      * operation:
      * <ul>
-     * <li>{@link Result#filter(java.util.function.Predicate, Function)}</li>
-     * <li>{@link Result#map(Function, Function)}</li>
-     * <li>{@link Result#mapSuccess(Function)}</li>
-     * <li>{@link Result#mapFailure(Function)}</li>
-     * <li>{@link Result#flatMap(Function, Function)}</li>
-     * <li>{@link Result#flatMapSuccess(Function)}</li>
-     * <li>{@link Result#flatMapFailure(Function)}</li>
+     * <li>{@link Result#filter filter}</li>
+     * <li>{@link Result#map map}</li>
+     * <li>{@link Result#mapSuccess mapSuccess}</li>
+     * <li>{@link Result#mapFailure mapFailure}</li>
+     * <li>{@link Result#flatMap flatMap}</li>
+     * <li>{@link Result#flatMapSuccess flatMapSuccess}</li>
+     * <li>{@link Result#flatMapFailure flatMapFailure}</li>
      * </ul>
      * <p>
      * On the other hand, the supplier will be invoked if any of these <em>terminal operations</em> is performed on a
      * lazy result:
      * <ul>
-     * <li>{@link Result#isSuccess()}</li>
-     * <li>{@link Result#isFailure()}</li>
-     * <li>{@link Result#orElse(Object)}</li>
-     * <li>{@link Result#orElseMap(Function)}</li>
-     * <li>{@link Result#orElseThrow()}</li>
-     * <li>{@link Result#orElseThrow(Function)}</li>
-     * <li>{@link Result#getFailureOrElseThrow()}</li>
+     * <li>{@link Result#isSuccess isSuccess}</li>
+     * <li>{@link Result#isFailure isFailure}</li>
+     * <li>{@link Result#orElse orElse}</li>
+     * <li>{@link Result#orElseMap orElseMap}</li>
+     * <li>{@link Result#orElseThrow() orElseThrow}</li>
+     * <li>{@link Result#orElseThrow(Function) orElseThrow(Function)}</li>
+     * <li>{@link Result#getFailureOrElseThrow getFailureOrElseThrow}</li>
      * </ul>
      * <p>
-     * Finally, conditional actions can be performed lazily if they are {@link LazyConsumer} objects; otherwise they
-     * will be performed immediately:
+     * Finally, conditional actions will be performed immediately unless they are {@link lazy(Consumer) lazy} too:
      * <ul>
-     * <li>{@link Result#ifSuccess(Consumer)}</li>
-     * <li>{@link Result#ifSuccessOrElse(Consumer, Consumer)}</li>
-     * <li>{@link Result#ifFailure(Consumer)}</li>
+     * <li>{@link Result#ifSuccess ifSuccess}</li>
+     * <li>{@link Result#ifSuccessOrElse ifSuccessOrElse}</li>
+     * <li>{@link Result#ifFailure ifFailure}</li>
      * </ul>
      * <p>
      * Once a lazy result retrieves the supplied result, all future operations will be performed immediately and the
-     * returned Result objects might not be lazy.
+     * returned Result objects should not be lazy.
      * <p>
      * The supplier is guaranteed to be invoked at most once. It must return a non-null result object; if it throws an
      * exception or returns {@code null} then the behavior of the lazy result will be undefined.
-     * 
-     * @param <S> the type of the success value
-     * @param <F> the type of the failure value
-     * @param supplier the function that will eventually supply the actual result
+     *
+     * @param <S> the success type of the result
+     * @param <F> the failure type of the result
+     * @param supplier the function that supplies the actual result
      * @return the new lazy result
-     * @see Results#lazy(Consumer)
+     * @see lazy(Consumer) lazy(Consumer)
      */
     public static <S, F> Result<S, F> lazy(Supplier<Result<S, F>> supplier) {
         return new LazyResult<>(supplier);
@@ -284,16 +274,22 @@ public class Results {
     /**
      * Creates a new lazy consumer based on a regular one.
      * <p>
-     * Lazy consumers are intended to be passed as parameters to {@link Result#ifSuccess(Consumer)},
-     * {@link Result#ifSuccessOrElse(Consumer, Consumer)} and {@link Result#ifFailure(Consumer)} when the action only
-     * needs to be performed if the lazy result eventually retrieves an actual result from its supplier.
-     * 
+     * Lazy consumers encapsulate actions that depend on success or failure and can be safely deferred or even
+     * completely ignored if a lazy result is never evaluated. They are intended to be passed as parameters to:
+     * <ul>
+     * <li>{@link Result#ifSuccess ifSuccess}</li>
+     * <li>{@link Result#ifSuccessOrElse ifSuccessOrElse}</li>
+     * <li>{@link Result#ifFailure ifFailure}</li>
+     * </ul>
+     * <p>
+     * These actions will execute immediately if passed to non-lazy results.
+     *
      * @param <T> the type of the input to the action
-     * @param consumer the regular consumer that may be eventually performed
+     * @param consumer the action to be applied to this result's success value
      * @return the new lazy consumer
-     * @see LazyConsumer
+     * @see lazy(Supplier) lazy(Supplier)
      */
-    public static <T> LazyConsumer<T> lazy(Consumer<T> consumer) {
-        return Objects.requireNonNull(consumer)::accept;
+    public static <T> Consumer<T> lazy(Consumer<T> consumer) {
+        return LazyConsumer.of(consumer);
     }
 }

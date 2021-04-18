@@ -21,7 +21,7 @@ import com.leakyabstractions.result.Result;
 
 /**
  * Tests for {@link ResultAssert#hasSuccessSatisfying(Consumer)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("ResultAssert hasSuccessSatisfying(Consumer)")
@@ -84,7 +84,6 @@ class ResultAssert_hasSuccessSatisfying_with_Consumer_Test {
         final ThrowingCallable callable = () -> assertThat(actual).hasSuccessSatisfying(consumer);
         // Then
         assertThatExceptionOfType(AssertionError.class).isThrownBy(callable)
-                .withMessage(
-                        format("%nExpecting:%n <\"something else\">%nto be equal to:%n <\"something\">%nbut was not."));
+                .withMessage(format("%nexpected: \"something\"%nbut was : \"something else\""));
     }
 }

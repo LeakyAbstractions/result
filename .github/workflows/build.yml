@@ -19,8 +19,12 @@ env:
 jobs:
   build:
 
-    name: Build
+    name: Build on JDK${{ matrix.jdk }}
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        jdk: [ 8, 11, 15 ]
 
     steps:
 
@@ -37,7 +41,7 @@ jobs:
     - name: Set up JDK
       uses: actions/setup-java@v1
       with:
-        java-version: 15
+        java-version: ${{ matrix.jdk }}
 
     # ================================
     # CACHE SONARCLOUD PACKAGES
@@ -86,6 +90,7 @@ jobs:
     # ANALYZE RESULT
     # ================================
     - name: Analyze Library RESULT
+      if: ${{ matrix.jdk == 15 }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_RESULT }}
@@ -95,6 +100,7 @@ jobs:
     # ANALYZE RESULT-ASSERTJ
     # ================================
     - name: Analyze Library RESULT-ASSERTJ
+      if: ${{ matrix.jdk == 15 }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_RESULT_ASSERTJ }}

@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link LazyResult#getFailureOrElseThrow()}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("LazyResult getFailureOrElseThrow")

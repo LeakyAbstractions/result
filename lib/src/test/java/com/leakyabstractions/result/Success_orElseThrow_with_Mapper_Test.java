@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Success#orElseThrow(Function)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("Success orElseThrow with mapper")
@@ -23,9 +23,9 @@ class Success_orElseThrow_with_Mapper_Test {
     void should_not_throw_exception() {
         // Given
         final Result<String, String> success = new Success<>(SUCCESS);
-        final Function<String, RuntimeException> failureMapper = f -> fail("Should not happen");
+        final Function<String, RuntimeException> mapper = f -> fail("Should not happen");
         // When
-        final String value = success.orElseThrow(failureMapper);
+        final String value = success.orElseThrow(mapper);
         // Then
         assertThat(value).isSameAs(SUCCESS);
     }
@@ -34,9 +34,9 @@ class Success_orElseThrow_with_Mapper_Test {
     void should_not_throw_exception_even_if_value_is_null() {
         // Given
         final Result<String, Integer> success = new Success<>(null);
-        final Function<Integer, NullPointerException> failureMapper = f -> fail("Should not happen");
+        final Function<Integer, NullPointerException> mapper = f -> fail("Should not happen");
         // When
-        final String value = success.orElseThrow(failureMapper);
+        final String value = success.orElseThrow(mapper);
         // Then
         assertThat(value).isNull();
     }

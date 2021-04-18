@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link LazyResult#flatMap(Function, Function)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("LazyResult flatMap")
@@ -26,10 +26,10 @@ class LazyResult_flatMap_Test {
         // Given
         final Supplier<Result<String, String>> supplier = () -> fail("Should not happen");
         final LazyResult<String, String> lazy = new LazyResult<>(supplier);
-        final Function<String, Result<String, String>> successFlatMapper = s -> fail("Should not happen");
-        final Function<String, Result<String, String>> failureFlatMapper = f -> fail("Should not happen");
+        final Function<String, Result<String, String>> successMapper = s -> fail("Should not happen");
+        final Function<String, Result<String, String>> failureMapper = f -> fail("Should not happen");
         // When
-        final Result<String, String> result = lazy.flatMap(successFlatMapper, failureFlatMapper);
+        final Result<String, String> result = lazy.flatMap(successMapper, failureMapper);
         // Then
         assertThat(result).isInstanceOf(LazyResult.class);
     }
@@ -39,10 +39,10 @@ class LazyResult_flatMap_Test {
         // Given
         final Supplier<Result<String, String>> supplier = () -> new Failure<>(FAILURE);
         final LazyResult<String, String> lazy = new LazyResult<>(supplier);
-        final Function<String, Result<String, String>> successFlatMapper = s -> fail("Should not happen");
-        final Function<String, Result<String, String>> failureFlatMapper = f -> new Success<>(SUCCESS);
+        final Function<String, Result<String, String>> successMapper = s -> fail("Should not happen");
+        final Function<String, Result<String, String>> failureMapper = f -> new Success<>(SUCCESS);
         // When
-        final String value = lazy.flatMap(successFlatMapper, failureFlatMapper).orElseThrow();
+        final String value = lazy.flatMap(successMapper, failureMapper).orElseThrow();
         // Then
         assertThat(value).isSameAs(SUCCESS);
     }
@@ -53,11 +53,11 @@ class LazyResult_flatMap_Test {
         final Supplier<Result<String, String>> supplier = () -> new Success<>(SUCCESS);
         final LazyResult<String, String> lazy = new LazyResult<>(supplier);
         final Result<String, String> another = new Success<>("ANOTHER");
-        final Function<String, Result<String, String>> successFlatMapper = s -> another;
-        final Function<String, Result<String, String>> failureFlatMapper = f -> fail("Should not happen");
+        final Function<String, Result<String, String>> successMapper = s -> another;
+        final Function<String, Result<String, String>> failureMapper = f -> fail("Should not happen");
         // When
         final String value = lazy.orElseThrow();
-        final Result<String, String> result = lazy.flatMap(successFlatMapper, failureFlatMapper);
+        final Result<String, String> result = lazy.flatMap(successMapper, failureMapper);
         // Then
         assertThat(value).isSameAs(SUCCESS);
         assertThat(result).isSameAs(another);

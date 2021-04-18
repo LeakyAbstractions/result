@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Failure#map(Function, Function)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("Failure map")

@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Results#lazy(Consumer)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("Results lazy with consumer")
@@ -33,7 +33,7 @@ class Results_lazy_with_Consumer_Test {
         // Given
         final Consumer<String> consumer = s -> {};
         // When
-        LazyConsumer<String> result = Results.lazy(consumer);
+        Consumer<String> result = Results.lazy(consumer);
         // Then
         assertThat(result).isInstanceOf(LazyConsumer.class);
     }

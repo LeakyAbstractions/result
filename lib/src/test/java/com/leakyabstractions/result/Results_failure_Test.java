@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Results#failure(Object)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("Results failure")

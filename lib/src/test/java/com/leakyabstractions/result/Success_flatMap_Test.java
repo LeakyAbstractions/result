@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Success#flatMap(Function, Function)}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("Success flatMap")
@@ -22,10 +22,10 @@ class Success_flatMap_Test {
         // Given
         final Result<Integer, Integer> success = new Success<>(123);
         final Result<String, String> another = new Success<>("SUCCESS");
-        final Function<Integer, Result<String, String>> successFlatMapper = s -> another;
-        final Function<Integer, Result<String, String>> failureFlatMapper = f -> fail("Should not happen");
+        final Function<Integer, Result<String, String>> successMapper = s -> another;
+        final Function<Integer, Result<String, String>> failureMapper = f -> fail("Should not happen");
         // When
-        final Result<String, String> result = success.flatMap(successFlatMapper, failureFlatMapper);
+        final Result<String, String> result = success.flatMap(successMapper, failureMapper);
         // Then
         assertThat(result).isSameAs(another);
     }
@@ -35,10 +35,10 @@ class Success_flatMap_Test {
         // Given
         final Result<Integer, Integer> success = new Success<>(123);
         final Result<String, String> another = new Failure<>("FAILURE");
-        final Function<Integer, Result<String, String>> successFlatMapper = s -> another;
-        final Function<Integer, Result<String, String>> failureFlatMapper = f -> fail("Should not happen");
+        final Function<Integer, Result<String, String>> successMapper = s -> another;
+        final Function<Integer, Result<String, String>> failureMapper = f -> fail("Should not happen");
         // When
-        final Result<String, String> result = success.flatMap(successFlatMapper, failureFlatMapper);
+        final Result<String, String> result = success.flatMap(successMapper, failureMapper);
         // Then
         assertThat(result).isSameAs(another);
     }

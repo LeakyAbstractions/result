@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Results#toOptional(Result))}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("Results toOptional")

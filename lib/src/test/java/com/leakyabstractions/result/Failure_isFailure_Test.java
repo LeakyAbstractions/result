@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Failure#isFailure()}.
- * 
+ *
  * @author Guillermo Calvo
  */
 @DisplayName("Failure isFailure")
