@@ -75,6 +75,12 @@ jobs:
       run: ./gradlew build --info
 
     # ================================
+    # JAVADOC
+    # ================================
+    - name: Javadoc
+      run: ./gradlew javadoc --info
+
+    # ================================
     # TEST
     # ================================
     - name: Test
