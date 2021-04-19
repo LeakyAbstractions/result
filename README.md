@@ -2,7 +2,7 @@
 [![Build Status](https://github.com/leakyabstractions/result/workflows/Build/badge.svg)](https://github.com/LeakyAbstractions/result/actions?query=workflow%3ABuild)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=LeakyAbstractions_result&metric=alert_status)](https://sonarcloud.io/dashboard?id=LeakyAbstractions_result)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=LeakyAbstractions_result&metric=coverage)](https://sonarcloud.io/component_measures?id=LeakyAbstractions_result&metric=coverage&view=list)
-[![Maven Central](https://img.shields.io/maven-central/v/com.leakyabstractions/result?color=light-green&logo=java)](https://search.maven.org/artifact/com.leakyabstractions/result)
+[![Maven Central](https://img.shields.io/endpoint?url=https://dev.leakyabstractions.com/result/badge.json&logo=java&label=maven-central&labelColor=555)](https://search.maven.org/artifact/com.leakyabstractions/result)
 [![Latest Release](https://img.shields.io/github/release/leakyabstractions/result.svg?logo=github)](https://github.com/leakyabstractions/result/releases/latest)
 [![Javadoc](https://img.shields.io/badge/javadoc-result-blue)](https://javadoc.io/doc/com.leakyabstractions/result)
 [![Javadoc](https://img.shields.io/badge/javadoc-result--assertj-blue)](https://javadoc.io/doc/com.leakyabstractions/result-assertj)
