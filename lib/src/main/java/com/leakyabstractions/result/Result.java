@@ -98,7 +98,7 @@ public interface Result<S, F> {
      * @return this result's success value
      * @throws java.util.NoSuchElementException if this is a failed result
      * @see getFailureOrElseThrow getFailureOrElseThrow
-     * @see orElseThrow(Function) orElseThrow(Function)
+     * @see #orElseThrow(Function) orElseThrow(Function)
      */
     S orElseThrow();
 
