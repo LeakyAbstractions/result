@@ -230,8 +230,8 @@ void should_return_the_default_value() {
 ```
 
 The [`orElseMap()`][OR_ELSE_MAP] method is similar to `orElse`. However, instead of taking a value to return if the
-_Result_ object is failed, it takes a mapping function, which is invoked with the failure value and returns the mapped
-value:
+_Result_ object is failed, it takes a mapping function, which would be applied to the failure value to produce an
+alternative success value:
 
 ```java
 @Test
@@ -308,8 +308,8 @@ mapping function as arguments and returns a _Result_ object:
 
 - If it is a failed result, or it is a successful result whose success value passes testing by the predicate then the
   _Result_ is returned as-is.
-- If the predicate returns `false` then the mapping function will be invoked with the success value and the returned
-  failure value will be wrapped in a new failed result.
+- If the predicate returns `false` then the mapping function will be applied to the success value to produce a failure
+  value that will be wrapped in a new failed result.
 
 ```java
 @Test
@@ -422,7 +422,7 @@ class User {
 }
 ```
 
-Now suposse we have a method `openFile` which checks if a given file exists and returns a result containing the file
+Now suppose we have a method `openFile` which checks if a given file exists and returns a result containing the file
 object or a `Problem` object explaining why the file cannot be retrieved:
 
 ```java
@@ -505,7 +505,7 @@ void should_contain_true() {
 
 You can use fluent assertions (based on [AssertJ](https://assertj.github.io/)) for Result objects in your unit tests.
 
-To add a dependency on Result using **Maven**, use the following:
+To add a dependency on Result assertions using **Maven**, use the following:
 
 ```xml
 <dependency>
@@ -570,7 +570,8 @@ Artifacts are available in [Maven Central](https://search.maven.org/artifact/com
 
 ## Javadoc
 
-Here's the full [Result API documentation](https://javadoc.io/doc/com.leakyabstractions/result/).
+Here's the full
+[Result API documentation](https://javadoc.io/doc/com.leakyabstractions/result/{{ site.current_version }}/).
 
 
 ## Looking for Support?
