@@ -248,7 +248,7 @@ public class Results {
      * <li>{@link Result#getFailureOrElseThrow getFailureOrElseThrow}</li>
      * </ul>
      * <p>
-     * Finally, conditional actions will be performed immediately unless they are {@link lazy(Consumer) lazy} too:
+     * Finally, conditional actions will be performed immediately unless they are {@link #lazy(Consumer) lazy} too:
      * <ul>
      * <li>{@link Result#ifSuccess ifSuccess}</li>
      * <li>{@link Result#ifSuccessOrElse ifSuccessOrElse}</li>
@@ -265,7 +265,7 @@ public class Results {
      * @param <F> the failure type of the result
      * @param supplier the function that supplies the actual result
      * @return the new lazy result
-     * @see lazy(Consumer) lazy(Consumer)
+     * @see #lazy(Consumer) lazy(Consumer)
      */
     public static <S, F> Result<S, F> lazy(Supplier<Result<S, F>> supplier) {
         return new LazyResult<>(supplier);
@@ -287,7 +287,7 @@ public class Results {
      * @param <T> the type of the input to the action
      * @param consumer the action to be applied to this result's success value
      * @return the new lazy consumer
-     * @see lazy(Supplier) lazy(Supplier)
+     * @see #lazy(Supplier) lazy(Supplier)
      */
     public static <T> Consumer<T> lazy(Consumer<T> consumer) {
         return LazyConsumer.of(consumer);
