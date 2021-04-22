@@ -71,7 +71,7 @@ final class Failure<S, F> implements Result<S, F> {
     }
 
     @Override
-    public Result<S, F> ifSuccess(Consumer<? super S> successAction) {
+    public Result<S, F> ifSuccess(Consumer<? super S> action) {
         return this;
     }
 
@@ -82,8 +82,8 @@ final class Failure<S, F> implements Result<S, F> {
     }
 
     @Override
-    public Result<S, F> ifFailure(Consumer<? super F> failureAction) {
-        requireNonNull(failureAction).accept(this.value);
+    public Result<S, F> ifFailure(Consumer<? super F> action) {
+        requireNonNull(action).accept(this.value);
         return this;
     }
 
@@ -93,9 +93,7 @@ final class Failure<S, F> implements Result<S, F> {
     }
 
     @Override
-    public <S2, F2> Result<S2, F2> map(
-            Function<? super S, S2> successMapper,
-            Function<? super F, F2> failureMapper) {
+    public <S2, F2> Result<S2, F2> map(Function<? super S, S2> successMapper, Function<? super F, F2> failureMapper) {
         return new Failure<>(requireNonNull(failureMapper).apply(this.value));
     }
 

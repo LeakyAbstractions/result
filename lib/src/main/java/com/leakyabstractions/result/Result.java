@@ -146,13 +146,13 @@ public interface Result<S, F> {
     /**
      * If this is a successful result, performs the given action with its success value; otherwise does nothing.
      *
-     * @param successAction the action to be applied to this result's success value
-     * @throws NullPointerException if this is a successful result and {@code successAction} is {@code null}
+     * @param action the action to be applied to this result's success value
+     * @throws NullPointerException if this is a successful result and {@code action} is {@code null}
      * @return this result
      * @see ifFailure ifFailure
      * @see ifSuccessOrElse ifSuccessOrElse
      */
-    Result<S, F> ifSuccess(Consumer<? super S> successAction);
+    Result<S, F> ifSuccess(Consumer<? super S> action);
 
     /**
      * If this is a successful result, performs the given success action; otherwise performs the given failure action.
@@ -170,13 +170,13 @@ public interface Result<S, F> {
     /**
      * If this is a failed result, performs the given action with its failure value; otherwise does nothing.
      *
-     * @param failureAction the action to be applied to this result's failure value
+     * @param action the action to be applied to this result's failure value
      * @return this result
-     * @throws NullPointerException if this is a failed result and {@code failureAction} is {@code null}
+     * @throws NullPointerException if this is a failed result and {@code action} is {@code null}
      * @see ifSuccess ifSuccess
      * @see ifSuccessOrElse ifSuccessOrElse
      */
-    Result<S, F> ifFailure(Consumer<? super F> failureAction);
+    Result<S, F> ifFailure(Consumer<? super F> action);
 
     /**
      * If this is a successful result whose value does not match the given predicate, returns a new failed result with a
