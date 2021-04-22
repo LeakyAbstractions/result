@@ -4,6 +4,7 @@ package com.leakyabstractions.result;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 /**
  * Represents either the success or failure of an operation, including an associated value in each case.
@@ -125,6 +126,22 @@ public interface Result<S, F> {
      * @see orElseThrow orElseThrow
      */
     F getFailureOrElseThrow();
+
+    /**
+     * If this is a successful result, returns a sequential stream containing only its success value; otherwise returns
+     * an empty stream.
+     *
+     * @return this result's success value as a stream if successful; otherwise an empty stream.
+     */
+    Stream<S> stream();
+
+    /**
+     * If this is a failed result, returns a sequential stream containing only its failure value; otherwise returns an
+     * empty stream.
+     *
+     * @return this result's failure value as a stream if failed; otherwise an empty stream.
+     */
+    Stream<F> streamFailure();
 
     /**
      * If this is a successful result, performs the given action with its success value; otherwise does nothing.
