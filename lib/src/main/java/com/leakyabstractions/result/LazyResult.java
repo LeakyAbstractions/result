@@ -9,6 +9,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 /**
  * Lazy implementation of a {@link Result}.
@@ -60,6 +61,16 @@ final class LazyResult<S, F> implements Result<S, F> {
     @Override
     public F getFailureOrElseThrow() {
         return this.getBackingResult().getFailureOrElseThrow();
+    }
+
+    @Override
+    public Stream<S> stream() {
+        return this.getBackingResult().stream();
+    }
+
+    @Override
+    public Stream<F> streamFailure() {
+        return this.getBackingResult().streamFailure();
     }
 
     @Override

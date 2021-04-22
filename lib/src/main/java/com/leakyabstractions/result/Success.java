@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 /**
  * Default implementation of a successful {@link Result}.
@@ -57,6 +58,16 @@ final class Success<S, F> implements Result<S, F> {
     @Override
     public F getFailureOrElseThrow() {
         throw new NoSuchElementException("Not a failed result");
+    }
+
+    @Override
+    public Stream<S> stream() {
+        return Stream.of(this.value);
+    }
+
+    @Override
+    public Stream<F> streamFailure() {
+        return Stream.empty();
     }
 
     @Override
