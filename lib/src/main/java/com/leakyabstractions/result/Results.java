@@ -152,46 +152,6 @@ public class Results {
     }
 
     /**
-     * Combine a collection of results into a new one.
-     * <p>
-     * If there's any failed results inside the collection, then a new failed result containing a stream of failure
-     * values will be created; otherwise a new successful result containing a stream of success values will be created.
-     *
-     * @param <S> the success type of the result
-     * @param <F> the failure type of the result
-     * @param results a possibly-empty {@link Collection collection} of results
-     * @return the new result
-     */
-    public static <S, F> Result<Stream<S>, Stream<F>> combine(Collection<Result<S, F>> results) {
-        Objects.requireNonNull(results);
-        if (results.stream().anyMatch(Result::isFailure)) {
-            return new Failure<>(results.stream().filter(Result::isFailure).map(Result::getFailureOrElseThrow));
-        }
-        return new Success<>(results.stream().filter(Result::isSuccess).map(Result::orElseThrow));
-    }
-
-    /**
-     * Combine a variable list of results into a new one.
-     * <p>
-     * If there's any failed results inside the variable list, then a new failed result containing a stream of failure
-     * values will be created; otherwise a new successful result containing a stream of success values will be created.
-     *
-     * @param <S> the success type of the result
-     * @param <F> the failure type of the result
-     * @param results a variable list of results
-     * @return the new result
-     */
-    @SafeVarargs
-    @SuppressWarnings("varargs")
-    public static <S, F> Result<Stream<S>, Stream<F>> combine(Result<? extends S, ? extends F>... results) {
-        Objects.requireNonNull(results);
-        if (stream(results).anyMatch(Result::isFailure)) {
-            return new Failure<>(stream(results).filter(Result::isFailure).map(Result::getFailureOrElseThrow));
-        }
-        return new Success<>(stream(results).filter(Result::isSuccess).map(Result::orElseThrow));
-    }
-
-    /**
      * If the given result is successful and its success value is not {@code null}, returns an optional with it;
      * otherwise returns an empty optional.
      *
