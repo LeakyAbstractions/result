@@ -23,12 +23,4 @@ class Success_hashCode_Test {
         // Then
         assertThat(success).hasSameHashCodeAs(SUCCESS);
     }
-
-    @Test
-    void should_return_zero_when_value_is_null() {
-        // Given
-        final Result<String, Integer> success = new Success<>(null);
-        // Then
-        assertThat(success).hasSameHashCodeAs(0);
-    }
 }

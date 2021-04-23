@@ -29,22 +29,12 @@ class Results_toOptionalFailure_Test {
     }
 
     @Test
-    void should_return_not_empty_optional_when_value_is_not_null() {
+    void should_return_not_empty_optional_when_result_is_failure() {
         // Given
         final Result<Integer, String> failure = new Failure<>(FAILURE);
         // When
         final Optional<String> toOptional = Results.toOptionalFailure(failure);
         // Then
         assertThat(toOptional).contains(FAILURE);
-    }
-
-    @Test
-    void should_return_empty_optional_when_value_is_null() {
-        // Given
-        final Result<Integer, String> failure = new Failure<>(null);
-        // When
-        final Optional<String> toOptional = Results.toOptionalFailure(failure);
-        // Then
-        assertThat(toOptional).isEmpty();
     }
 }

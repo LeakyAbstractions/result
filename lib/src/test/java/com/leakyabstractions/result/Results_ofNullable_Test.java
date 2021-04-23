@@ -18,13 +18,14 @@ import org.junit.jupiter.api.Test;
 class Results_ofNullable_Test {
 
     private static final String SUCCESS = "SUCCESS";
+    private static final String FAILURE = "FAILURE";
 
     @Test
     void should_return_success_when_not_null() {
         // Given
         final String nullable = SUCCESS;
         // When
-        final Result<String, Void> result = ofNullable(nullable);
+        final Result<String, Integer> result = ofNullable(nullable, 123);
         // Then
         assertThat(result).isEqualTo(success(SUCCESS));
     }
@@ -34,8 +35,8 @@ class Results_ofNullable_Test {
         // Given
         final Integer nullable = null;
         // When
-        final Result<Integer, Void> result = ofNullable(nullable);
+        final Result<Integer, String> result = ofNullable(nullable, FAILURE);
         // Then
-        assertThat(result).isEqualTo(failure(null));
+        assertThat(result).isEqualTo(failure(FAILURE));
     }
 }

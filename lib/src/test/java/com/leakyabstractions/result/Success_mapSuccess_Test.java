@@ -2,10 +2,12 @@
 package com.leakyabstractions.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
+import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -29,13 +31,13 @@ class Success_mapSuccess_Test {
     }
 
     @Test
-    void should_use_success_mapping_even_if_value_is_null() {
+    void should_throw_exception_when_mapper_returns_null() {
         // Given
-        final Result<Object, Integer> success = new Success<>(null);
-        final Function<Object, String> mapper = s -> "SUCCESS";
+        final Result<Integer, Integer> success = new Success<>(123);
+        final Function<Integer, String> mapper = s -> null;
         // When
-        final Result<String, Integer> result = success.mapSuccess(mapper);
+        final ThrowingCallable callable = () -> success.mapSuccess(mapper);
         // Then
-        assertThat(result).isEqualTo(new Success<>("SUCCESS"));
+        assertThatThrownBy(callable).isInstanceOf(NullPointerException.class);
     }
 }

@@ -43,16 +43,4 @@ class LazyResult_orElseMap_Test {
         // Then
         assertThat(value).isSameAs(SUCCESS);
     }
-
-    @Test
-    void should_ignore_failure_mapper_even_if_value_is_null() {
-        // Given
-        final Supplier<Result<String, Integer>> supplier = () -> new Success<>(null);
-        final Result<String, Integer> success = new LazyResult<>(supplier);
-        final Function<Integer, String> mapper = f -> fail("Should not happen");
-        // When
-        final String value = success.orElseMap(mapper);
-        // Then
-        assertThat(value).isNull();
-    }
 }

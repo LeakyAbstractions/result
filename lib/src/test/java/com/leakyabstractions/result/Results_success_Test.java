@@ -3,7 +3,7 @@ package com.leakyabstractions.result;
 
 import static com.leakyabstractions.result.Results.success;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.DisplayName;
@@ -26,10 +26,10 @@ class Results_success_Test {
     }
 
     @Test
-    void should_pass_even_if_null() {
+    void should_throw_exception_if_null() {
         // When
         final ThrowingCallable callable = () -> success(null);
         // Then
-        assertThatCode(callable).doesNotThrowAnyException();
+        assertThatThrownBy(callable).isInstanceOf(NullPointerException.class);
     }
 }

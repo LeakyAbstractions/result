@@ -25,14 +25,4 @@ class Failure_getFailureOrElseThrow_Test {
         // Then
         assertThat(value).isSameAs(FAILURE);
     }
-
-    @Test
-    void should_not_throw_exception_even_if_value_is_null() {
-        // Given
-        final Result<Integer, String> failure = new Failure<>(null);
-        // When
-        final String value = failure.getFailureOrElseThrow();
-        // Then
-        assertThat(value).isNull();
-    }
 }

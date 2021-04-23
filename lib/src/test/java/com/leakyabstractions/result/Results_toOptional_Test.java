@@ -29,22 +29,12 @@ class Results_toOptional_Test {
     }
 
     @Test
-    void should_return_not_empty_optional_when_value_is_not_null() {
+    void should_return_not_empty_optional_when_result_is_success() {
         // Given
         final Result<String, Integer> success = new Success<>(SUCCESS);
         // When
         final Optional<String> toOptional = Results.toOptional(success);
         // Then
         assertThat(toOptional).contains(SUCCESS);
-    }
-
-    @Test
-    void should_return_empty_optional_when_value_is_null() {
-        // Given
-        final Result<String, Integer> success = new Success<>(null);
-        // When
-        final Optional<String> toOptional = Results.toOptional(success);
-        // Then
-        assertThat(toOptional).isEmpty();
     }
 }

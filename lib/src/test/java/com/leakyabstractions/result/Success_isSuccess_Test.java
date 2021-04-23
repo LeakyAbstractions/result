@@ -23,14 +23,4 @@ class Success_isSuccess_Test {
         // Then
         assertThat(isSuccess).isTrue();
     }
-
-    @Test
-    void should_return_true_even_if_value_is_null() {
-        // Given
-        final Result<String, Integer> success = new Success<>(null);
-        // When
-        final boolean isSuccess = success.isSuccess();
-        // Then
-        assertThat(isSuccess).isTrue();
-    }
 }

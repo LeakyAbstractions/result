@@ -29,15 +29,4 @@ class Success_orElseMap_Test {
         // Then
         assertThat(value).isSameAs(SUCCESS);
     }
-
-    @Test
-    void should_ignore_failure_mapper_even_if_value_is_null() {
-        // Given
-        final Result<String, Integer> success = new Success<>(null);
-        final Function<Integer, String> mapper = f -> fail("Should not happen");
-        // When
-        final String value = success.orElseMap(mapper);
-        // Then
-        assertThat(value).isNull();
-    }
 }

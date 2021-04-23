@@ -21,12 +21,4 @@ class Success_toString_Test {
         // Then
         assertThat(success).hasToString("success[SUCCESS]");
     }
-
-    @Test
-    void should_return_expected_string_when_value_is_null() {
-        // Given
-        final Result<String, Integer> success = new Success<>(null);
-        // Then
-        assertThat(success).hasToString("success[null]");
-    }
 }

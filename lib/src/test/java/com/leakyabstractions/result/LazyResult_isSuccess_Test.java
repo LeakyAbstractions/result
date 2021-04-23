@@ -28,17 +28,6 @@ class LazyResult_isSuccess_Test {
     }
 
     @Test
-    void should_return_true_even_if_value_is_null() {
-        // Given
-        final Supplier<Result<String, Integer>> supplier = () -> new Success<>(null);
-        final Result<String, Integer> lazy = new LazyResult<>(supplier);
-        // When
-        final boolean isSuccess = lazy.isSuccess();
-        // Then
-        assertThat(isSuccess).isTrue();
-    }
-
-    @Test
     void should_return_false() {
         // Given
         final Supplier<Result<Integer, String>> supplier = () -> new Failure<>("FAILURE");

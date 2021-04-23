@@ -25,14 +25,4 @@ class Success_orElse_Test {
         // Then
         assertThat(value).isSameAs(SUCCESS);
     }
-
-    @Test
-    void should_ignore_other_even_if_value_is_null() {
-        // Given
-        final Result<String, Integer> success = new Success<>(null);
-        // When
-        final String value = success.orElse("ANOTHER");
-        // Then
-        assertThat(value).isNull();
-    }
 }

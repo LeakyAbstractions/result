@@ -29,15 +29,4 @@ class Success_orElseThrow_with_Mapper_Test {
         // Then
         assertThat(value).isSameAs(SUCCESS);
     }
-
-    @Test
-    void should_not_throw_exception_even_if_value_is_null() {
-        // Given
-        final Result<String, Integer> success = new Success<>(null);
-        final Function<Integer, NullPointerException> mapper = f -> fail("Should not happen");
-        // When
-        final String value = success.orElseThrow(mapper);
-        // Then
-        assertThat(value).isNull();
-    }
 }

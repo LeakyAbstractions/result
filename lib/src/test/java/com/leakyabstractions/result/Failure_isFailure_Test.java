@@ -23,14 +23,4 @@ class Failure_isFailure_Test {
         // Then
         assertThat(isFailure).isTrue();
     }
-
-    @Test
-    void should_return_true_even_if_value_is_null() {
-        // Given
-        final Result<Integer, String> failure = new Failure<>(null);
-        // When
-        final boolean isFailure = failure.isFailure();
-        // Then
-        assertThat(isFailure).isTrue();
-    }
 }

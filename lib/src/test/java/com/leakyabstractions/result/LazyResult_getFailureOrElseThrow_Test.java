@@ -42,15 +42,4 @@ class LazyResult_getFailureOrElseThrow_Test {
         // Then
         assertThat(value).isSameAs(FAILURE);
     }
-
-    @Test
-    void should_not_throw_exception_even_if_value_is_null() {
-        // Given
-        final Supplier<Result<Integer, String>> supplier = () -> new Failure<>(null);
-        final Result<Integer, String> lazy = new LazyResult<>(supplier);
-        // When
-        final String value = lazy.getFailureOrElseThrow();
-        // Then
-        assertThat(value).isNull();
-    }
 }
