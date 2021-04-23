@@ -16,6 +16,39 @@ failed, instead of throwing exceptions.
 
 If you like `Optional` but feel that it sometimes falls too short, you'll love `Result`.
 
+The best way to think of _Result_ is as a super-powered version of _Optional_. The only difference is that whereas
+_Optional_ may contain a successful value or express the absence of a value, _Result_ contains either a successful value
+or a failure value that explains what went wrong.
+
+<details>
+ <summary><code>Result</code> objects have methods equivalent to those in <code>Optional</code>, plus a few more to
+ handle failure values.</summary>
+
+| Optional                | Result                  |
+|-------------------------|-------------------------|
+| `isPresent`             | `isSuccess`             |
+| `isEmpty`               | `isFailure`             |
+| `get`                   |                         |
+| `orElse`                | `orElse`                |
+| `orElseGet`             | `orElseMap`             |
+| `orElseThrow`           | `orElseThrow`           |
+| `orElseThrow(Supplier)` | `orElseThrow(Function)` |
+|                         | `getFailureOrElseThrow` |
+| `stream`                | `stream`                |
+|                         | `streamFailure`         |
+| `ifPresent`             | `ifSuccess`             |
+|                         | `ifFailure`             |
+| `ifPresentOrElse`       | `ifSuccessOrElse`       |
+| `filter`                | `filter`                |
+| `map`                   | `mapSuccess`            |
+|                         | `mapFailure`            |
+|                         | `map`                   |
+| `flatMap`               | `flatMapSuccess`        |
+| `or`                    | `flatMapFailure`        |
+|                         | `flatMap`               |
+
+</details>
+
 
 ## Result Library in a Nutshell
 

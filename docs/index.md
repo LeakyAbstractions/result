@@ -6,6 +6,39 @@ failed, instead of throwing exceptions.
 
 If you like `Optional` but feel that it sometimes falls too short, you'll love `Result`.
 
+The best way to think of _Result_ is as a super-powered version of _Optional_. The only difference is that whereas
+_Optional_ may contain a successful value or express the absence of a value, _Result_ contains either a successful value
+or a failure value that explains what went wrong.
+
+<details>
+ <summary><code>Result</code> objects have methods equivalent to those in <code>Optional</code>, plus a few more to
+ to handle failure values.</summary>
+
+| Optional                | Result                  |
+|-------------------------|-------------------------|
+| `isPresent`             | `isSuccess`             |
+| `isEmpty`               | `isFailure`             |
+| `get`                   |                         |
+| `orElse`                | `orElse`                |
+| `orElseGet`             | `orElseMap`             |
+| `orElseThrow`           | `orElseThrow`           |
+| `orElseThrow(Supplier)` | `orElseThrow(Function)` |
+|                         | `getFailureOrElseThrow` |
+| `stream`                | `stream`                |
+|                         | `streamFailure`         |
+| `ifPresent`             | `ifSuccess`             |
+|                         | `ifFailure`             |
+| `ifPresentOrElse`       | `ifSuccessOrElse`       |
+| `filter`                | `filter`                |
+| `map`                   | `mapSuccess`            |
+|                         | `mapFailure`            |
+|                         | `map`                   |
+| `flatMap`               | `flatMapSuccess`        |
+| `or`                    | `flatMapFailure`        |
+|                         | `flatMap`               |
+
+</details>
+
 
 ## Adding Result to Your Build
 
@@ -372,7 +405,7 @@ void should_return_lower_case() {
     final Result<String, String> mapped = result
         .map(String::toUpperCase, String::toLowerCase);
     // Then
-    assertThat(mapped.getFailure()).isEqualTo("hello world!");
+    assertThat(mapped.getFailureOrElseThrow()).isEqualTo("hello world!");
 }
 ```
 
@@ -386,7 +419,7 @@ void should_return_is_empty() {
     // When
     final Result<Integer, Boolean> mapped = result.mapFailure(String::isEmpty);
     // Then
-    assertThat(mapped.getFailure()).isTrue();
+    assertThat(mapped.getFailureOrElseThrow()).isTrue();
 }
 ```
 
@@ -455,7 +488,7 @@ void should_contain_user_problem() {
     final Result<File, Problem> result = user.getCustomConfigPath()
         .flatMapSuccess(this::openFile);
     // Then
-    assertThat(result.getFailure()).isInstanceOf(UserProblem.class);
+    assertThat(result.getFailureOrElseThrow()).isInstanceOf(UserProblem.class);
 }
 
 @Test
@@ -466,7 +499,7 @@ void should_contain_file_problem() {
     final Result<File, Problem> result = user.getCustomConfigPath()
         .flatMapSuccess(this::openFile);
     // Then
-    assertThat(result.getFailure()).isInstanceOf(FileProblem.class);
+    assertThat(result.getFailureOrElseThrow()).isInstanceOf(FileProblem.class);
 }
 ```
 
@@ -474,14 +507,14 @@ There is another [`flatMap`][FLATMAP] method to transform either success/failure
 
 ```java
 @Test
-void should_contain_false() {
+void should_contain_123() {
     // Given
     final User user = new User("Phoebe", false);
     // When
-    final Result<File, Boolean> result = user.getCustomConfigPath()
-        .flatMap(this::openFile, Objects::isNull);
+    final Result<File, Integer> result = user.getCustomConfigPath()
+        .flatMap(this::openFile, f -> 123);
     // Then
-    assertThat(result.getFailure()).isFalse();
+    assertThat(result.getFailureOrElseThrow()).isEqualTo(123);
 }
 ```
 
@@ -489,14 +522,14 @@ And the [`flatMapFailure()`][FLATMAP_FAILURE] method allows us to transform fail
 
 ```java
 @Test
-void should_contain_true() {
+void should_contain_error() {
     // Given
     final User user = new User("Joey", false);
     // When
-    final Result<String, Boolean> result = user.getCustomConfigPath()
-        .flatMapFailure(Objects::nonNull);
+    final Result<String, String> result = user.getCustomConfigPath()
+        .flatMapFailure(f -> "error");
     // Then
-    assertThat(result.getFailure()).isTrue();
+    assertThat(result.getFailureOrElseThrow()).isEqualTo("error");
 }
 ```
 
