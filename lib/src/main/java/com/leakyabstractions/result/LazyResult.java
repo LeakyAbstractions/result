@@ -25,7 +25,7 @@ final class LazyResult<S, F> implements Result<S, F> {
     private Result<S, F> backingResult;
 
     LazyResult(Supplier<Result<S, F>> supplier) {
-        this.supplier = requireNonNull(supplier);
+        this.supplier = supplier;
     }
 
     @Override

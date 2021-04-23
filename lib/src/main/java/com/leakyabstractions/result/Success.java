@@ -72,13 +72,13 @@ final class Success<S, F> implements Result<S, F> {
 
     @Override
     public Result<S, F> ifSuccess(Consumer<? super S> action) {
-        requireNonNull(action).accept(this.value);
+        action.accept(this.value);
         return this;
     }
 
     @Override
     public Result<S, F> ifSuccessOrElse(Consumer<? super S> successAction, Consumer<? super F> failureAction) {
-        requireNonNull(successAction).accept(this.value);
+        successAction.accept(this.value);
         return this;
     }
 
@@ -89,18 +89,17 @@ final class Success<S, F> implements Result<S, F> {
 
     @Override
     public Result<S, F> filter(Predicate<? super S> predicate, Function<? super S, ? extends F> mapper) {
-        return requireNonNull(predicate).test(this.value) ? this
-                : new Failure<>(requireNonNull(mapper).apply(this.value));
+        return predicate.test(this.value) ? this : new Failure<>(requireNonNull(mapper.apply(this.value)));
     }
 
     @Override
     public <S2, F2> Result<S2, F2> map(Function<? super S, S2> successMapper, Function<? super F, F2> failureMapper) {
-        return new Success<>(requireNonNull(successMapper).apply(this.value));
+        return new Success<>(requireNonNull(successMapper.apply(this.value)));
     }
 
     @Override
     public <S2> Result<S2, F> mapSuccess(Function<? super S, S2> mapper) {
-        return new Success<>(requireNonNull(mapper).apply(this.value));
+        return new Success<>(requireNonNull(mapper.apply(this.value)));
     }
 
     @Override
@@ -113,12 +112,12 @@ final class Success<S, F> implements Result<S, F> {
     public <S2, F2> Result<S2, F2> flatMap(
             Function<? super S, Result<S2, F2>> successMapper,
             Function<? super F, Result<S2, F2>> failureMapper) {
-        return requireNonNull(successMapper).apply(this.value);
+        return successMapper.apply(this.value);
     }
 
     @Override
     public <S2> Result<S2, F> flatMapSuccess(Function<? super S, Result<S2, F>> mapper) {
-        return requireNonNull(mapper).apply(this.value);
+        return mapper.apply(this.value);
     }
 
     @Override
