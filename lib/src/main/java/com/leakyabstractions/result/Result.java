@@ -14,8 +14,8 @@ import java.util.stream.Stream;
  * <li><strong>Success</strong>: the operation completed entirely.</li>
  * <li><strong>Failure</strong>: the operation could not get through.</li>
  * </ul>
- * On the other hand, it also holds a possibly-{@code null} value whose meaning totally depends on the semantics defined
- * by the operation:
+ * On the other hand, it also holds a non-{@code null} value whose meaning totally depends on the semantics defined by
+ * the operation:
  * <ul>
  * <li>A <em>successful</em> result wraps a value of type {@code S}.</li>
  * <li>A <em>failed</em> result wraps a value of type {@code F}.</li>
@@ -185,11 +185,12 @@ public interface Result<S, F> {
      * The mapping function will be applied to this result's success value to produce the failure value.
      *
      * @param predicate the predicate to apply to this result's success value
-     * @param mapper the mapping function that produces the possibly-{@code null} failure value
+     * @param mapper the mapping function that produces the failure value
      * @return a new failed result with the value produced by {@code mapper} if this is a successful result whose value
      *         does not match the given predicate; otherwise this result
      * @throws NullPointerException if this is a successful result and {@code predicate} is {@code null}, or if its
-     *             success value does not match the predicate and {@code failureAction} is {@code null}
+     *             success value does not match the predicate and {@code mapper} is {@code null}; or if {@code mapper}
+     *             returns {@code null}
      */
     Result<S, F> filter(Predicate<? super S> predicate, Function<? super S, ? extends F> mapper);
 
@@ -197,8 +198,7 @@ public interface Result<S, F> {
      * Returns a new result with the value produced by the appropriate mapping function.
      * <p>
      * Depending on this result's state, one of the two given functions will be applied to its success or failure value
-     * to produce a new, possibly-{@code null} value. The types of the new <em>success/failure</em> values may be
-     * different from this result's.
+     * to produce a new value. The types of the new <em>success/failure</em> values may be different from this result's.
      *
      * @param <S2> the type of the value returned by {@code successMapper}
      * @param <F2> the type of the value returned by {@code failureMapper}
@@ -206,7 +206,8 @@ public interface Result<S, F> {
      * @param failureMapper the mapping function that produces a failure value
      * @return a new result with a value produced by either {@code successMapper} or {@code failureMapper}
      * @throws NullPointerException if this is a successful result and {@code successMapper} is {@code null}; or if this
-     *             is a failed result and {@code failureMapper} is {@code null}
+     *             is a failed result and {@code failureMapper} is {@code null}; or if either {@code successMapper} or
+     *             {@code failureMapper} returns {@code null}
      * @see mapFailure mapFailure
      * @see mapSuccess mapSuccess
      */
@@ -216,14 +217,15 @@ public interface Result<S, F> {
      * If this is a successful result, returns a new successful result with the value produced by the given mapping
      * function; otherwise returns a failed result with this result's failure value.
      * <p>
-     * The mapping function will be applied to this result's success value to produce the new, possibly-{@code null}
-     * success value. The type of the new success value may be different from this result's.
+     * The mapping function will be applied to this result's success value to produce the new success value. The type of
+     * the new success value may be different from this result's.
      *
      * @param <S2> the type of the value returned by {@code mapper}
      * @param mapper the mapping function that produces the new success value
      * @return a new successful result with the value produced by {@code mapper} if this is a successful result;
      *         otherwise a failed result with this result's failure value
-     * @throws NullPointerException if this is a successful result and {@code mapper} is {@code null}
+     * @throws NullPointerException if this is a successful result and {@code mapper} is {@code null}; or if
+     *             {@code mapper} returns {@code null}
      * @see map map
      * @see mapFailure mapFailure
      */
@@ -233,14 +235,15 @@ public interface Result<S, F> {
      * If this is a failed result, returns a new failed result with the value produced by the given mapping function;
      * otherwise returns a successful result with this result's success value.
      * <p>
-     * The mapping function will be applied to this result's failure value to produce the new, possibly-{@code null}
-     * failure value. The type of the new failure value may be different from this result's.
+     * The mapping function will be applied to this result's failure value to produce the new failure value. The type of
+     * the new failure value may be different from this result's.
      *
      * @param <F2> the type of the value returned by {@code mapper}
      * @param mapper the mapping function that produces the new failure value
      * @return a new failed result with the value produced by {@code mapper} if this is a failed result; otherwise a
      *         successful result with this result's success value
-     * @throws NullPointerException if this is a failed result and {@code mapper} is {@code null}
+     * @throws NullPointerException if this is a failed result and {@code mapper} is {@code null}; or if {@code mapper}
+     *             returns {@code null}
      * @see map map
      * @see mapSuccess mapSuccess
      */
@@ -258,7 +261,8 @@ public interface Result<S, F> {
      * @param failureMapper the mapping function that produces a new result if this is a failed result
      * @return the result produced by either {@code successMapper} or {@code failureMapper}
      * @throws NullPointerException if this is a successful result and {@code successMapper} is {@code null}; or if this
-     *             is a failed result and {@code failureMapper} is {@code null}
+     *             is a failed result and {@code failureMapper} is {@code null}; or if either {@code successMapper} or
+     *             {@code failureMapper} returns {@code null}
      * @see flatMapFailure flatMapFailure
      * @see flatMapSuccess flatMapSuccess
      */
@@ -277,7 +281,8 @@ public interface Result<S, F> {
      * @param mapper the mapping function that produces a new result
      * @return the result produced by {@code mapper} if this is a successful result; otherwise a failed result with this
      *         result's failure value.
-     * @throws NullPointerException if this is a successful result and {@code mapper} is {@code null}
+     * @throws NullPointerException if this is a successful result and {@code mapper} is {@code null}; or if
+     *             {@code mapper} returns {@code null}
      * @see flatMap flatMap
      * @see flatMapFailure flatMapFailure
      */
@@ -294,7 +299,8 @@ public interface Result<S, F> {
      * @param mapper the mapping function that produces a new result
      * @return the result produced by {@code mapper} if this is a failed result; otherwise a successful result with this
      *         result's success value.
-     * @throws NullPointerException if this is a failed result and {@code mapper} is {@code null}
+     * @throws NullPointerException if this is a failed result and {@code mapper} is {@code null}; or if {@code mapper}
+     *             returns {@code null}
      * @see flatMap flatMap
      * @see flatMapSuccess flatMapSuccess
      */
