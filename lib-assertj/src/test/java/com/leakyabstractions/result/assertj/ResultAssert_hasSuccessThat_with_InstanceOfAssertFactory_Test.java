@@ -59,18 +59,6 @@ class ResultAssert_hasSuccessThat_with_InstanceOfAssertFactory_Test
     }
 
     @Test
-    void should_fail_if_result_is_empty() {
-        // Given
-        final Result<String, Integer> result = success(null);
-        final InstanceOfAssertFactory<String, AbstractStringAssert<?>> factory = STRING;
-        // When
-        final ThrowingCallable callable = () -> assertThat(result).hasSuccessThat(factory);
-        final AssertionError assertionError = expectAssertionError(callable);
-        // Then
-        then(assertionError).hasMessage(shouldNotBeNull("success value").create());
-    }
-
-    @Test
     void should_fail_throwing_npe_if_assert_factory_is_null() {
         // Given
         final Result<String, Integer> result = success("Frodo");

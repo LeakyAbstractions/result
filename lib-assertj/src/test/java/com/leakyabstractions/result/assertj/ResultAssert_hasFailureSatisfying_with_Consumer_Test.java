@@ -65,17 +65,6 @@ class ResultAssert_hasFailureSatisfying_with_Consumer_Test {
     }
 
     @Test
-    void should_pass_when_consumer_passes_even_if_result_is_empty() {
-        // Given
-        final Result<Integer, String> result = failure(null);
-        final Consumer<String> consumer = s -> {};
-        // When
-        final ThrowingCallable callable = () -> assertThat(result).hasFailureSatisfying(consumer);
-        // Then
-        assertThatCode(callable).doesNotThrowAnyException();
-    }
-
-    @Test
     void should_fail_from_consumer() {
         // Given
         final Result<Integer, String> actual = failure("something else");
