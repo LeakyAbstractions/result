@@ -88,3 +88,17 @@ jobs:
         SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
         SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
       run: ./gradlew publish
+
+    # ================================
+    # JAVADOC
+    # ================================
+    - name: Publish Javadoc to GitHub Pages
+      shell: bash
+      run: |
+        cp -r lib/build/docs/javadoc docs/javadoc/${{ github.ref }}
+        git config user.name "Guillermo Calvo"
+        git config user.email "guillermo@guillermo.dev"
+        git add docs/javadoc/${{ github.ref }}
+        git status
+        git commit --message "Publish Javadoc to GitHub Pages"
+        git push origin main

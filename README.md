@@ -4,8 +4,7 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=LeakyAbstractions_result&metric=coverage)](https://sonarcloud.io/component_measures?id=LeakyAbstractions_result&metric=coverage&view=list)
 [![Maven Central](https://img.shields.io/endpoint?url=https://dev.leakyabstractions.com/result/badge.json&logo=java&label=maven-central&labelColor=555)](https://search.maven.org/artifact/com.leakyabstractions/result)
 [![Latest Release](https://img.shields.io/github/release/leakyabstractions/result.svg?logo=github)](https://github.com/leakyabstractions/result/releases/latest)
-[![Javadoc](https://img.shields.io/badge/javadoc-result-blue)](https://javadoc.io/doc/com.leakyabstractions/result/0.2.0.0/)
-[![Javadoc](https://img.shields.io/badge/javadoc-result--assertj-blue)](https://javadoc.io/doc/com.leakyabstractions/result-assertj/0.2.0.0/)
+[![Javadoc](https://img.shields.io/endpoint?url=https://dev.leakyabstractions.com/result/badge.json&label=javadoc&color=blue)](https://dev.leakyabstractions.com/result/javadoc/)
 
 # Result Library for Java
 
@@ -130,7 +129,7 @@ Artifacts are available in [Maven Central](https://search.maven.org/artifact/com
 
 ## Javadoc
 
-Here you can find the full [Result API documentation](https://javadoc.io/doc/com.leakyabstractions/result/0.2.0.0/).
+Here you can find the full [Result API documentation](https://dev.leakyabstractions.com/result/javadoc/).
 
 
 ## Looking for Support?
@@ -148,3 +147,44 @@ If you'd like to contribute to this project, please [start here](https://dev.lea
 This project is governed by the
 [Contributor Covenant Code of Conduct](https://dev.leakyabstractions.com/result/CODE_OF_CONDUCT.html).
 By participating, you are expected to uphold this code.
+
+
+## Author
+
+Copyright 2021 [Guillermo Calvo](https://github.com/guillermocalvo)
+
+[![](https://guillermo.dev/assets/images/thumb.png)](https://guillermo.dev/)
+
+
+## License
+
+This is free software: you can redistribute it and/or modify it under the terms of the
+**GNU Lesser General Public License** as published by the *Free Software Foundation*,
+either version 3 of the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful, but **WITHOUT ANY WARRANTY**;
+without even the implied warranty of **MERCHANTABILITY** or **FITNESS FOR A PARTICULAR PURPOSE**.
+See the [GNU Lesser General Public License](http://www.gnu.org/licenses/lgpl.html) for more details.
+
+You should have received a copy of the GNU Lesser General Public License along with this software.
+If not, see <http://www.gnu.org/licenses/>.
+
+### Required
+
+- **License and copyright notice**: Include a copy of the license and copyright notice with the code.
+- **Library usage**: The library may be used within a non-open-source application.
+- **Disclose Source**: Source code for this library must be made available when distributing the software.
+
+### Permitted
+
+- **Commercial Use**: This software and derivatives may be used for commercial purposes.
+- **Modification**: This software may be modified.
+- **Distribution**: You may distribute this software.
+- **Sublicensing**: You may grant a sublicense to modify and distribute this software to third parties not included in
+the license.
+- **Patent Grant**: This license provides an express grant of patent rights from the contributor to the recipient.
+
+### Forbidden
+
+- **Hold Liable**: Software is provided without warranty and the software author/license owner cannot be held liable
+for damages.
