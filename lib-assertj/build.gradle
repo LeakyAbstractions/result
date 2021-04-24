@@ -27,7 +27,7 @@ dependencies {
 
 javadoc {
     options {
-        linksOffline "https://javadoc.io/doc/com.leakyabstractions/result/${rootProject.version}/",
+        linksOffline "https://dev.leakyabstractions.com/result/javadoc/${rootProject.version}/",
                 rootProject.file('common/javadoc/result').toString()
         linksOffline 'https://javadoc.io/doc/org.assertj/assertj-core/latest/',
                 rootProject.file('common/javadoc/assertj-core').toString()
