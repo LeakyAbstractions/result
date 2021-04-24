@@ -56,16 +56,6 @@ class ResultAssert_hasFailureThat_Test implements NavigationMethodBaseTest<Resul
         assertThatCode(callable).doesNotThrowAnyException();
     }
 
-    @Test
-    void should_pass_even_if_result_is_empty() {
-        // Given
-        final Result<Integer, String> result = failure(null);
-        // When
-        final ThrowingCallable callable = () -> assertThat(result).hasFailureThat().isNull();
-        // Then
-        assertThatCode(callable).doesNotThrowAnyException();
-    }
-
     @Override
     public ResultAssert<Integer, String> getAssertion() {
         final Result<Integer, String> result = failure("Frodo");

@@ -51,19 +51,6 @@ class ResultAssert_hasFailureInstanceOf_Test {
     }
 
     @Test
-    void should_fail_if_result_is_empty() {
-        // Given
-        final Class<?> expectedClass = Object.class;
-        final Object actual = null;
-        final Result<Integer, Object> result = failure(actual);
-        // When
-        final ThrowingCallable callable = () -> assertThat(result).hasFailureInstanceOf(expectedClass);
-        // Then
-        final AssertionError assertionError = expectAssertionError(callable);
-        then(assertionError).hasMessage(shouldHaveInstanceOf(result, expectedClass, actual).create());
-    }
-
-    @Test
     void should_pass_if_result_contains_required_type() {
         // Given
         final Class<?> expectedClass = String.class;

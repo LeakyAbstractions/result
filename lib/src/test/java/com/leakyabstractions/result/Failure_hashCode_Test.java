@@ -23,12 +23,4 @@ class Failure_hashCode_Test {
         // Then
         assertThat(failure).hasSameHashCodeAs(FAILURE);
     }
-
-    @Test
-    void should_return_zero_when_value_is_null() {
-        // Given
-        final Result<Integer, String> failure = new Failure<>(null);
-        // Then
-        assertThat(failure).hasSameHashCodeAs(0);
-    }
 }

@@ -9,6 +9,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 /**
  * Lazy implementation of a {@link Result}.
@@ -24,7 +25,7 @@ final class LazyResult<S, F> implements Result<S, F> {
     private Result<S, F> backingResult;
 
     LazyResult(Supplier<Result<S, F>> supplier) {
-        this.supplier = requireNonNull(supplier);
+        this.supplier = supplier;
     }
 
     @Override
@@ -63,9 +64,19 @@ final class LazyResult<S, F> implements Result<S, F> {
     }
 
     @Override
-    public Result<S, F> ifSuccess(Consumer<? super S> successAction) {
-        return lazily(this.isLazy && successAction instanceof LazyConsumer,
-                () -> this.getBackingResult().ifSuccess(successAction));
+    public Stream<S> stream() {
+        return this.getBackingResult().stream();
+    }
+
+    @Override
+    public Stream<F> streamFailure() {
+        return this.getBackingResult().streamFailure();
+    }
+
+    @Override
+    public Result<S, F> ifSuccess(Consumer<? super S> action) {
+        return lazily(this.isLazy && action instanceof LazyConsumer,
+                () -> this.getBackingResult().ifSuccess(action));
     }
 
     @Override
@@ -75,9 +86,9 @@ final class LazyResult<S, F> implements Result<S, F> {
     }
 
     @Override
-    public Result<S, F> ifFailure(Consumer<? super F> failureAction) {
-        return lazily(this.isLazy && failureAction instanceof LazyConsumer,
-                () -> this.getBackingResult().ifFailure(failureAction));
+    public Result<S, F> ifFailure(Consumer<? super F> action) {
+        return lazily(this.isLazy && action instanceof LazyConsumer,
+                () -> this.getBackingResult().ifFailure(action));
     }
 
     @Override

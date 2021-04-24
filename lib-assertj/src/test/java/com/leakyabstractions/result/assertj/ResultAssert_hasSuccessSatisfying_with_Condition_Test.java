@@ -81,17 +81,6 @@ class ResultAssert_hasSuccessSatisfying_with_Condition_Test {
     }
 
     @Test
-    void should_pass_when_condition_is_met_even_if_result_is_empty() {
-        // Given
-        final Result<String, Integer> result = success(null);
-        final Condition<String> condition = passingCondition;
-        // When
-        final ThrowingCallable callable = () -> assertThat(result).hasSuccessSatisfying(condition);
-        // Then
-        assertThatCode(callable).doesNotThrowAnyException();
-    }
-
-    @Test
     void should_fail_when_condition_is_not_met() {
         // Given
         final Result<String, Integer> result = success("something");

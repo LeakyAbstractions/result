@@ -52,19 +52,6 @@ class ResultAssert_hasFailureSameAs_Test {
     }
 
     @Test
-    void should_fail_if_expected_value_is_null_even_if_result_is_empty() {
-        // Given
-        final String expected = null;
-        final String actual = expected;
-        final Result<Integer, String> result = failure(actual);
-        // When
-        final ThrowingCallable callable = () -> assertThat(result).hasFailureSameAs(expected);
-        // Then
-        assertThatIllegalArgumentException().isThrownBy(callable)
-                .withMessage("The expected value should not be <null>.");
-    }
-
-    @Test
     void should_pass_if_result_contains_the_expected_object_reference() {
         // Given
         final String expected = "something";
@@ -115,19 +102,5 @@ class ResultAssert_hasFailureSameAs_Test {
         assertThatExceptionOfType(AssertionError.class)
                 .isThrownBy(callable)
                 .withMessage(shouldBeFailure(result).create());
-    }
-
-    @Test
-    void should_fail_if_result_is_empty() {
-        // Given
-        final String expected = "something";
-        final String actual = null;
-        final Result<Integer, String> result = failure(actual);
-        // When
-        final ThrowingCallable callable = () -> assertThat(result).hasFailureSameAs(expected);
-        // Then
-        assertThatExceptionOfType(AssertionError.class)
-                .isThrownBy(callable)
-                .withMessage(shouldHaveSame(result, expected, actual).create());
     }
 }

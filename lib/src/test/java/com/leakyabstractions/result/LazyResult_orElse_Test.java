@@ -39,15 +39,4 @@ class LazyResult_orElse_Test {
         // Then
         assertThat(value).isSameAs(SUCCESS);
     }
-
-    @Test
-    void should_ignore_other_even_if_value_is_null() {
-        // Given
-        final Supplier<Result<String, Integer>> supplier = () -> new Success<>(null);
-        final Result<String, Integer> lazy = new LazyResult<>(supplier);
-        // When
-        final String value = lazy.orElse("ANOTHER");
-        // Then
-        assertThat(value).isNull();
-    }
 }

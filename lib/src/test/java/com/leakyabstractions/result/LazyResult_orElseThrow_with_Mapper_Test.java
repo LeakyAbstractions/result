@@ -48,16 +48,4 @@ class LazyResult_orElseThrow_with_Mapper_Test {
         // Then
         assertThat(value).isSameAs(SUCCESS);
     }
-
-    @Test
-    void should_not_throw_exception_even_if_value_is_null() {
-        // Given
-        final Supplier<Result<String, Integer>> supplier = () -> new Success<>(null);
-        final Result<String, Integer> lazy = new LazyResult<>(supplier);
-        final Function<Integer, NullPointerException> mapper = f -> new NullPointerException();
-        // When
-        final String value = lazy.orElseThrow(mapper);
-        // Then
-        assertThat(value).isNull();
-    }
 }

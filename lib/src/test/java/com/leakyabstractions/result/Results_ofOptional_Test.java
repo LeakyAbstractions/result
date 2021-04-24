@@ -1,6 +1,7 @@
 
 package com.leakyabstractions.result;
 
+import static com.leakyabstractions.result.Results.failure;
 import static com.leakyabstractions.result.Results.ofOptional;
 import static com.leakyabstractions.result.Results.success;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,13 +20,14 @@ import org.junit.jupiter.api.Test;
 class Results_ofOptional_Test {
 
     private static final String SUCCESS = "SUCCESS";
+    private static final String FAILURE = "FAILURE";
 
     @Test
     void should_return_success_when_present() {
         // Given
         final Optional<String> optional = Optional.of(SUCCESS);
         // When
-        final Result<String, Void> result = ofOptional(optional);
+        final Result<String, String> result = ofOptional(optional, FAILURE);
         // Then
         assertThat(result).isEqualTo(success(SUCCESS));
     }
@@ -35,8 +37,8 @@ class Results_ofOptional_Test {
         // Given
         final Optional<Integer> optional = Optional.empty();
         // When
-        final Result<Integer, Void> result = ofOptional(optional);
+        final Result<Integer, String> result = ofOptional(optional, FAILURE);
         // Then
-        assertThat(result).isInstanceOf(Failure.class);
+        assertThat(result).isEqualTo(failure(FAILURE));
     }
 }

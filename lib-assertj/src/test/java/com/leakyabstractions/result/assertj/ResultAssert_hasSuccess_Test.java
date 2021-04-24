@@ -54,19 +54,6 @@ class ResultAssert_hasSuccess_Test {
     }
 
     @Test
-    void should_fail_if_expected_value_is_null_even_if_result_is_empty() {
-        // Given
-        final String expected = null;
-        final String actual = expected;
-        final Result<String, Integer> result = success(actual);
-        // When
-        final ThrowingCallable callable = () -> assertThat(result).hasSuccess(expected);
-        // Then
-        assertThatIllegalArgumentException().isThrownBy(callable)
-                .withMessage("The expected value should not be <null>.");
-    }
-
-    @Test
     void should_pass_if_result_has_expected_value() {
         // Given
         final String expected = "something";
@@ -91,19 +78,6 @@ class ResultAssert_hasSuccess_Test {
         assertThat(error).hasMessage(shouldHave(result, expected, actual).create());
         assertThat(error.getActual().getStringRepresentation()).isEqualTo(actual);
         assertThat(error.getExpected().getStringRepresentation()).isEqualTo(expected);
-    }
-
-    @Test
-    void should_fail_if_result_is_empty() {
-        // Given
-        final String expected = "something";
-        final String actual = null;
-        final Result<String, Integer> result = success(actual);
-        // When
-        final ThrowingCallable callable = () -> assertThat(result).hasSuccess(expected);
-        // Then
-        final Throwable error = catchThrowable(callable);
-        assertThat(error).hasMessage(shouldHave(result, expected, actual).create());
     }
 
     @Test

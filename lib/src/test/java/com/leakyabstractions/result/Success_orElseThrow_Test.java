@@ -25,14 +25,4 @@ class Success_orElseThrow_Test {
         // Then
         assertThat(value).isSameAs(SUCCESS);
     }
-
-    @Test
-    void should_not_throw_exception_even_if_value_is_null() {
-        // Given
-        final Result<String, Integer> success = new Success<>(null);
-        // When
-        final String value = success.orElseThrow();
-        // Then
-        assertThat(value).isNull();
-    }
 }

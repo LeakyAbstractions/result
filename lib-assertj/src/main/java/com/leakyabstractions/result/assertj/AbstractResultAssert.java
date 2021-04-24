@@ -7,7 +7,6 @@ import static com.leakyabstractions.result.assertj.ResultShouldHave.shouldHave;
 import static com.leakyabstractions.result.assertj.ResultShouldHave.shouldHaveInstanceOf;
 import static com.leakyabstractions.result.assertj.ResultShouldHave.shouldHaveSame;
 import static org.assertj.core.api.ObjectAssertProxy.assertWithAssertionState;
-import static org.assertj.core.error.ShouldNotBeNull.shouldNotBeNull;
 import static org.assertj.core.util.Preconditions.checkArgument;
 
 import java.util.function.Consumer;
@@ -50,7 +49,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * <pre class="row-color">
      * {@code
      * assertThat(Results.success("yay")).isSuccess();
-     * assertThat(Results.success(null)).isSuccess();
+     * assertThat(Results.success(123)).isSuccess();
      * }
      * </pre>
      *
@@ -59,7 +58,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * <pre class="row-color">
      * {@code
      * assertThat(Results.failure("nay")).isSuccess();
-     * assertThat(Results.failure(null)).isSuccess();
+     * assertThat(Results.failure(123)).isSuccess();
      * }
      * </pre>
      *
@@ -91,15 +90,12 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * }
      * </pre>
      *
-     * @param expectedValue the expected success value inside the {@link Result}; can't be {@code null}.
+     * @param expectedValue the expected success value inside the {@link Result}.
      * @return this assertion object.
      */
     public SELF hasSuccess(S expectedValue) {
         final S value = this.assertIsSuccess();
         this.checkNotNull(expectedValue);
-        if (value == null) {
-            this.throwAssertionError(shouldHave(this.actual(), expectedValue, value));
-        }
         if (!StandardComparisonStrategy.instance().areEqual(value, expectedValue)) {
             throw Failures.instance().failure(this.info(), shouldHave(this.actual(), expectedValue, value), value,
                     expectedValue);
@@ -139,7 +135,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * }
      * </pre>
      *
-     * @param expectedValue the expected success value inside the {@link Result}; can't be {@code null}.
+     * @param expectedValue the expected success value inside the {@link Result}.
      * @return this assertion object.
      */
     public SELF hasSuccessSameAs(S expectedValue) {
@@ -153,7 +149,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
 
     /**
      * Verifies that the actual {@link Result} is a successful result and invokes the given {@link Consumer} with the
-     * possibly-{@code null} success value for further assertions.
+     * success value for further assertions.
      * <p>
      * Should be used as a way of deeper asserting on the containing object, as further requirement(s) for the value.
      * <p>
@@ -163,7 +159,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * {@code
      * // one requirement
      * assertThat(Results.success(10)).hasSuccessSatisfying(s -> { assertThat(s).isGreaterThan(9); });
-     * assertThat(Results.success(null)).hasSuccessSatisfying(s -> { assertThat(s).isNull(); });
+     * assertThat(Results.success("yay")).hasSuccessSatisfying(s -> { assertThat(s).isEqualTo("yay"); });
      *
      * // multiple requirements
      * assertThat(Results.success("hello")).hasSuccessSatisfying(s -> {
@@ -193,8 +189,8 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
     }
 
     /**
-     * Verifies that the actual {@link Result} is a successful result whose possibly-{@code null} success value
-     * satisfies the given {@link Condition}.
+     * Verifies that the actual {@link Result} is a successful result whose success value satisfies the given
+     * {@link Condition}.
      * <p>
      * Given:
      *
@@ -233,8 +229,8 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
     }
 
     /**
-     * Verifies that the actual {@link Result} is a successful result containing a non-null value that is an instance of
-     * the given class.
+     * Verifies that the actual {@link Result} is a successful result containing a value that is an instance of the
+     * given class.
      * <p>
      * Assertions will pass:
      *
@@ -270,7 +266,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
 
     /**
      * Verifies that the actual {@link Result} is a successful result and returns an Object assertion that allows
-     * chaining (object) assertions on its value.
+     * chaining (object) assertions on its success value.
      * <p>
      * Assertions will pass:
      *
@@ -300,8 +296,8 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
     }
 
     /**
-     * Verifies that the actual {@link Result} is a successful result containing a non-null value and returns an new
-     * assertion instance to chain assertions on it.
+     * Verifies that the actual {@link Result} is a successful result and returns an new assertion instance to chain
+     * assertions on its success value.
      * <p>
      * The {@code assertFactory} parameter allows to specify an {@link InstanceOfAssertFactory}, which is used to get
      * the assertions narrowed to the factory type.
@@ -334,9 +330,6 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
     @CheckReturnValue
     public <T extends AbstractAssert<?, ?>> T hasSuccessThat(InstanceOfAssertFactory<?, T> assertFactory) {
         final S value = this.assertIsSuccess();
-        if (value == null) {
-            this.throwAssertionError(shouldNotBeNull("success value"));
-        }
         return assertWithAssertionState(myself, value).asInstanceOf(assertFactory);
     }
 
@@ -348,7 +341,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * <pre class="row-color">
      * {@code
      * assertThat(Results.failure("yay")).isFailure();
-     * assertThat(Results.failure(null)).isFailure();
+     * assertThat(Results.failure(123)).isFailure();
      * }
      * </pre>
      *
@@ -357,7 +350,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * <pre class="row-color">
      * {@code
      * assertThat(Results.success("nay")).isFailure();
-     * assertThat(Results.success(null)).isFailure();
+     * assertThat(Results.success(123)).isFailure();
      * }
      * </pre>
      *
@@ -389,15 +382,12 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * }
      * </pre>
      *
-     * @param expectedValue the expected failure value inside the {@link Result}; can't be {@code null}.
+     * @param expectedValue the expected failure value inside the {@link Result}.
      * @return this assertion object.
      */
     public SELF hasFailure(F expectedValue) {
         final F value = this.assertIsFailure();
         this.checkNotNull(expectedValue);
-        if (value == null) {
-            this.throwAssertionError(shouldHave(this.actual(), expectedValue, value));
-        }
         if (!StandardComparisonStrategy.instance().areEqual(value, expectedValue)) {
             throw Failures.instance().failure(this.info(), shouldHave(this.actual(), expectedValue, value), value,
                     expectedValue);
@@ -438,7 +428,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * }
      * </pre>
      *
-     * @param expectedValue the expected failure value inside the {@link Result}; can't be {@code null}.
+     * @param expectedValue the expected failure value inside the {@link Result}.
      * @return this assertion object.
      */
     public SELF hasFailureSameAs(F expectedValue) {
@@ -452,7 +442,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
 
     /**
      * Verifies that the actual {@link Result} is a failed result and invokes the given {@link Consumer} with the
-     * possibly-{@code null} failure value for further assertions.
+     * failure value for further assertions.
      * <p>
      * Should be used as a way of deeper asserting on the containing object, as further requirement(s) for the value.
      * <p>
@@ -461,14 +451,14 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * <pre class="row-color">
      * {@code
      * // one requirement
-     * assertThat(Results.failure(10)).hasFailureSatisfying(s -> { assertThat(s).isGreaterThan(9); });
-     * assertThat(Results.failure(null)).hasFailureSatisfying(s -> { assertThat(s).isNull(); });
+     * assertThat(Results.failure(10)).hasFailureSatisfying(f -> { assertThat(f).isGreaterThan(9); });
+     * assertThat(Results.failure("yay")).hasFailureSatisfying(f -> { assertThat(f).isEqualTo("yay"); });
      *
      * // multiple requirements
-     * assertThat(Results.failure("hello")).hasFailureSatisfying(s -> {
-     *   assertThat(s).isEqualTo("hello");
-     *   assertThat(s).startsWith("h");
-     *   assertThat(s).endsWith("o");
+     * assertThat(Results.failure("hello")).hasFailureSatisfying(f -> {
+     *   assertThat(f).isEqualTo("hello");
+     *   assertThat(f).startsWith("h");
+     *   assertThat(f).endsWith("o");
      * });
      * }
      * </pre>
@@ -478,7 +468,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
      * <pre class="row-color">
      * {@code
      * assertThat(Results.success("hello")).hasSuccessSatisfying(s -> assertThat(s).isEqualTo("hello"));
-     * assertThat(Results.failure("hello")).hasSuccessSatisfying(o -> {});
+     * assertThat(Results.failure("hello")).hasSuccessSatisfying(s -> {});
      * }
      * </pre>
      *
@@ -492,8 +482,8 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
     }
 
     /**
-     * Verifies that the actual {@link Result} is a failed result whose possibly-{@code null} failure value satisfies
-     * the given {@link Condition}.
+     * Verifies that the actual {@link Result} is a failed result whose failure value satisfies the given
+     * {@link Condition}.
      * <p>
      * Given:
      *
@@ -532,8 +522,8 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
     }
 
     /**
-     * Verifies that the actual {@link Result} is a failed result containing a non-null value that is an instance of the
-     * given class.
+     * Verifies that the actual {@link Result} is a failed result containing a value that is an instance of the given
+     * class.
      * <p>
      * Assertions will pass:
      *
@@ -569,7 +559,7 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
 
     /**
      * Verifies that the actual {@link Result} is a failed result and returns an Object assertion that allows chaining
-     * (object) assertions on its value.
+     * (object) assertions on its failure value.
      * <p>
      * Assertions will pass:
      *
@@ -599,8 +589,8 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
     }
 
     /**
-     * Verifies that the actual {@link Result} is a failed result containing a non-null value and returns an new
-     * assertion instance to chain assertions on it.
+     * Verifies that the actual {@link Result} is a failed result and returns a new assertion instance to chain
+     * assertions on its failure value.
      * <p>
      * The {@code assertFactory} parameter allows to specify an {@link InstanceOfAssertFactory}, which is used to get
      * the assertions narrowed to the factory type.
@@ -633,9 +623,6 @@ abstract class AbstractResultAssert<SELF extends AbstractResultAssert<SELF, S, F
     @CheckReturnValue
     public <T extends AbstractAssert<?, ?>> T hasFailureThat(InstanceOfAssertFactory<?, T> assertFactory) {
         final F value = this.assertIsFailure();
-        if (value == null) {
-            this.throwAssertionError(shouldNotBeNull("failure value"));
-        }
         return assertWithAssertionState(myself, value).asInstanceOf(assertFactory);
     }
 

@@ -54,14 +54,4 @@ class ResultAssert_isFailure_Test {
         // Then
         assertThatCode(callable).doesNotThrowAnyException();
     }
-
-    @Test
-    void should_pass_even_if_result_is_empty() {
-        // Given
-        final Result<String, Integer> result = failure(null);
-        // When
-        final ThrowingCallable callable = () -> assertThat(result).isFailure();
-        // Then
-        assertThatCode(callable).doesNotThrowAnyException();
-    }
 }

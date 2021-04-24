@@ -3,22 +3,26 @@ package com.leakyabstractions.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests for {@link Failure#toString()}.
+ * Tests for {@link Failure#streamFailure()}.
  *
  * @author Guillermo Calvo
  */
-@DisplayName("Failure toString")
-class Failure_toString_Test {
+@DisplayName("Failure streamFailure")
+class Failure_streamFailure_Test {
 
     @Test
-    void should_return_expected_string_when_value_is_not_null() {
+    void should_return_non_empty_stream() {
         // Given
         final Result<Integer, String> failure = new Failure<>("FAILURE");
+        // When
+        final Stream<String> stream = failure.streamFailure();
         // Then
-        assertThat(failure).hasToString("failure[FAILURE]");
+        assertThat(stream).singleElement().isEqualTo("FAILURE");
     }
 }
