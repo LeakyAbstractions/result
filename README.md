@@ -173,22 +173,26 @@ See the [GNU Lesser General Public License](http://www.gnu.org/licenses/lgpl.htm
 You should have received a copy of the GNU Lesser General Public License along with this software.
 If not, see <http://www.gnu.org/licenses/>.
 
-### Required
-
-- **License and copyright notice**: Include a copy of the license and copyright notice with the code.
-- **Library usage**: The library may be used within a non-open-source application.
-- **Disclose Source**: Source code for this library must be made available when distributing the software.
-
 ### Permitted
 
-- **Commercial Use**: This software and derivatives may be used for commercial purposes.
-- **Modification**: This software may be modified.
-- **Distribution**: You may distribute this software.
-- **Sublicensing**: You may grant a sublicense to modify and distribute this software to third parties not included in
-the license.
-- **Patent Grant**: This license provides an express grant of patent rights from the contributor to the recipient.
+- **Library Use**: Applications using this library can be released under any license.
+- **Commercial Use**: You may use this library and derivatives for commercial purposes.
+- **Modification**: You may modify this library.
+- **Distribution**: You may distribute this library.
+- **Private Use**: You may use and modify this library without distributing it.
+- **Patent Grant**: This license provides an express grant of patent rights from contributors.
+
+### Required
+
+- **License and Copyright Notice**: If you distribute this library you must include a copy of the license and copyright
+  notice.
+- **Disclose Source**: If you distribute this library you must make available its source code (not the entire program
+  using the library).
+- **State Changes**: If you modify and distribute this library you must document changes made to this library.
+- **Same License**: If you modify and distribute this library you must release it (not the entire program using the
+  library) under the same license.
 
 ### Forbidden
 
-- **Hold Liable**: Software is provided without warranty and the software author/license owner cannot be held liable
-for damages.
+- **Warranty**: This library is provided without any warranty.
+- **Liability**: The library author cannot be held liable for damages.
