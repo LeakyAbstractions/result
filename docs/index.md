@@ -1,3 +1,8 @@
+---
+title: Result Library for Java
+description: A Java library to handle success and failure without exceptions
+image: /result-banner-centered.png
+---
 
 # Result Library for Java
 
