@@ -15,9 +15,10 @@ The best way to think of _Result_ is as a super-powered version of _Optional_. T
 _Optional_ may contain a successful value or express the absence of a value, _Result_ contains either a successful value
 or a failure value that explains what went wrong.
 
-<details>
- <summary><code>Result</code> objects have methods equivalent to those in <code>Optional</code>, plus a few more to
- to handle failure values.</summary>
+<details style="margin-bottom: 20px">
+ <summary style="display: list-item"><code>Result</code> objects have methods equivalent to those in
+ <code>Optional</code>, plus a few more to handle failure values.</summary>
+ <div markdown="1">
 
 | Optional                | Result                  |
 |-------------------------|-------------------------|
@@ -42,7 +43,10 @@ or a failure value that explains what went wrong.
 | `or`                    | `flatMapFailure`        |
 |                         | `flatMap`               |
 
+ </div>
 </details>
+
+---
 
 
 ## Adding Result to Your Build
