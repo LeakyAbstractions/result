@@ -193,34 +193,34 @@ public class Results {
      * Lazy results can be <em>filtered</em> and <em>transformed</em> without actually performing the expensive
      * operation:
      * <ul>
-     * <li>{@link Result#filter filter}</li>
-     * <li>{@link Result#map map}</li>
-     * <li>{@link Result#mapSuccess mapSuccess}</li>
-     * <li>{@link Result#mapFailure mapFailure}</li>
-     * <li>{@link Result#flatMap flatMap}</li>
-     * <li>{@link Result#flatMapSuccess flatMapSuccess}</li>
-     * <li>{@link Result#flatMapFailure flatMapFailure}</li>
+     * <li>{@link Result#filter(java.util.function.Predicate, Function) filter}</li>
+     * <li>{@link Result#map(Function, Function) map}</li>
+     * <li>{@link Result#mapSuccess(Function) mapSuccess}</li>
+     * <li>{@link Result#mapFailure(Function) mapFailure}</li>
+     * <li>{@link Result#flatMap(Function, Function) flatMap}</li>
+     * <li>{@link Result#flatMapSuccess(Function) flatMapSuccess}</li>
+     * <li>{@link Result#flatMapFailure(Function) flatMapFailure}</li>
      * </ul>
      * <p>
      * On the other hand, the supplier will be invoked if any of these <em>terminal operations</em> is performed on a
      * lazy result:
      * <ul>
-     * <li>{@link Result#isSuccess isSuccess}</li>
-     * <li>{@link Result#isFailure isFailure}</li>
-     * <li>{@link Result#orElse orElse}</li>
-     * <li>{@link Result#orElseMap orElseMap}</li>
+     * <li>{@link Result#isSuccess() isSuccess}</li>
+     * <li>{@link Result#isFailure() isFailure}</li>
+     * <li>{@link Result#orElse(Object) orElse}</li>
+     * <li>{@link Result#orElseMap(Function) orElseMap}</li>
      * <li>{@link Result#orElseThrow() orElseThrow}</li>
      * <li>{@link Result#orElseThrow(Function) orElseThrow(Function)}</li>
-     * <li>{@link Result#getFailureOrElseThrow getFailureOrElseThrow}</li>
-     * <li>{@link Result#stream stream}</li>
-     * <li>{@link Result#streamFailure streamFailure}</li>
+     * <li>{@link Result#getFailureOrElseThrow() getFailureOrElseThrow}</li>
+     * <li>{@link Result#stream() stream}</li>
+     * <li>{@link Result#streamFailure() streamFailure}</li>
      * </ul>
      * <p>
      * Finally, conditional actions will be performed immediately unless they are {@link #lazy(Consumer) lazy} too:
      * <ul>
-     * <li>{@link Result#ifSuccess ifSuccess}</li>
-     * <li>{@link Result#ifSuccessOrElse ifSuccessOrElse}</li>
-     * <li>{@link Result#ifFailure ifFailure}</li>
+     * <li>{@link Result#ifSuccess(Consumer) ifSuccess}</li>
+     * <li>{@link Result#ifSuccessOrElse(Consumer, Consumer) ifSuccessOrElse}</li>
+     * <li>{@link Result#ifFailure(Consumer) ifFailure}</li>
      * </ul>
      * <p>
      * Once a lazy result retrieves the supplied result, all future operations will be performed immediately and the
@@ -233,7 +233,7 @@ public class Results {
      * @param supplier the function that supplies the actual result
      * @return the new lazy result
      * @throws NullPointerException if {@code supplier} is {@code null}
-     * @see #lazy(Consumer) lazy(Consumer)
+     * @see #lazy(Consumer)
      */
     public static <S, F> Result<S, F> lazy(Supplier<Result<S, F>> supplier) {
         return new LazyResult<>(requireNonNull(supplier));
@@ -245,9 +245,9 @@ public class Results {
      * Lazy consumers encapsulate actions that depend on success or failure and can be safely deferred or even
      * completely ignored if a lazy result is never evaluated. They are intended to be passed as parameters to:
      * <ul>
-     * <li>{@link Result#ifSuccess ifSuccess}</li>
-     * <li>{@link Result#ifSuccessOrElse ifSuccessOrElse}</li>
-     * <li>{@link Result#ifFailure ifFailure}</li>
+     * <li>{@link Result#ifSuccess(Consumer) ifSuccess}</li>
+     * <li>{@link Result#ifSuccessOrElse(Consumer, Consumer) ifSuccessOrElse}</li>
+     * <li>{@link Result#ifFailure(Consumer) ifFailure}</li>
      * </ul>
      * <p>
      * These actions will execute immediately if passed to non-lazy results.
@@ -255,7 +255,7 @@ public class Results {
      * @param <T> the type of the input to the action
      * @param consumer the action to be applied to this result's success value
      * @return the new lazy consumer
-     * @see #lazy(Supplier) lazy(Supplier)
+     * @see #lazy(Supplier)
      */
     public static <T> Consumer<T> lazy(Consumer<T> consumer) {
         return LazyConsumer.of(consumer);
