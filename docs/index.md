@@ -30,6 +30,8 @@ or a failure value that explains what went wrong.
 | `orElseThrow`           | `orElseThrow`           |
 | `orElseThrow(Supplier)` | `orElseThrow(Function)` |
 |                         | `getFailureOrElseThrow` |
+|                         | `optional`              |
+|                         | `optionalFailure`       |
 | `stream`                | `stream`                |
 |                         | `streamFailure`         |
 | `ifPresent`             | `ifSuccess`             |
