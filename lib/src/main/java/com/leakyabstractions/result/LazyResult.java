@@ -74,6 +74,16 @@ final class LazyResult<S, F> implements Result<S, F> {
     }
 
     @Override
+    public Optional<S> optional() {
+        return this.getBackingResult().optional();
+    }
+
+    @Override
+    public Optional<F> optionalFailure() {
+        return this.getBackingResult().optionalFailure();
+    }
+
+    @Override
     public Result<S, F> ifSuccess(Consumer<? super S> action) {
         return lazily(this.isLazy && action instanceof LazyConsumer,
                 () -> this.getBackingResult().ifSuccess(action));

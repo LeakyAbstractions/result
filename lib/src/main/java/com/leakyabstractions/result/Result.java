@@ -1,6 +1,7 @@
 
 package com.leakyabstractions.result;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -128,6 +129,24 @@ public interface Result<S, F> {
      * @see #orElseThrow()
      */
     F getFailureOrElseThrow();
+
+    /**
+     * If this is a successful result, returns an optional containing its success value; otherwise returns an empty
+     * optional.
+     * 
+     * @see #optionalFailure()
+     * @return this result's success value as an optional if successful; otherwise an empty optional.
+     */
+    Optional<S> optional();
+
+    /**
+     * If this is a failed result, returns an optional containing its failure value; otherwise returns an empty
+     * optional.
+     *
+     * @see #optional()
+     * @return this result's failure value as an optional if failed; otherwise an empty optional.
+     */
+    Optional<F> optionalFailure();
 
     /**
      * If this is a successful result, returns a sequential stream containing only its success value; otherwise returns

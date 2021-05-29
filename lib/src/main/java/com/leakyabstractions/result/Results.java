@@ -158,32 +158,6 @@ public class Results {
     }
 
     /**
-     * If the given result is successful and its success value is not {@code null}, returns an optional with it;
-     * otherwise returns an empty optional.
-     *
-     * @param <S> the type of the optional value
-     * @param result the result to check if successful
-     * @return an optional containing the success value if the given result is successful; otherwise an empty optional
-     * @throws NullPointerException if {@code result} is {@code null}
-     */
-    public static <S> Optional<S> toOptional(Result<S, ?> result) {
-        return result.isSuccess() ? Optional.of(result.orElseThrow()) : Optional.empty();
-    }
-
-    /**
-     * If the given result is failed and its failure value is not {@code null}, returns an optional with it; otherwise
-     * returns an empty optional.
-     *
-     * @param <F> the type of the optional value
-     * @param result the result to check if failed
-     * @return an optional containing the failure value if the given result is failed; otherwise an empty optional
-     * @throws NullPointerException if {@code result} is {@code null}
-     */
-    public static <F> Optional<F> toOptionalFailure(Result<?, F> result) {
-        return result.isFailure() ? Optional.of(result.getFailureOrElseThrow()) : Optional.empty();
-    }
-
-    /**
      * Creates a new lazy result based on the given result supplier.
      * <p>
      * Lazy results can be manipulated just like any other result; they will try to defer the invocation of the given
@@ -212,6 +186,8 @@ public class Results {
      * <li>{@link Result#orElseThrow() orElseThrow}</li>
      * <li>{@link Result#orElseThrow(Function) orElseThrow(Function)}</li>
      * <li>{@link Result#getFailureOrElseThrow() getFailureOrElseThrow}</li>
+     * <li>{@link Result#optional() optional}</li>
+     * <li>{@link Result#optionalFailure() optionalFailure}</li>
      * <li>{@link Result#stream() stream}</li>
      * <li>{@link Result#streamFailure() streamFailure}</li>
      * </ul>

@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -68,6 +69,16 @@ final class Success<S, F> implements Result<S, F> {
     @Override
     public Stream<F> streamFailure() {
         return Stream.empty();
+    }
+
+    @Override
+    public Optional<S> optional() {
+        return Optional.of(this.value);
+    }
+
+    @Override
+    public Optional<F> optionalFailure() {
+        return Optional.empty();
     }
 
     @Override
