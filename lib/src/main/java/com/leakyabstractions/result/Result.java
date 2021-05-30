@@ -1,6 +1,7 @@
 
 package com.leakyabstractions.result;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -21,9 +22,10 @@ import java.util.stream.Stream;
  * <li>A <em>failed</em> result wraps a value of type {@code F}.</li>
  * </ul>
  * <p>
- * Result state can be determined via {@link isSuccess} or {@link isFailure}. Additional methods to unwrap the included
- * value are provided, such as {@link orElse orElse} (return an <em>alternative success value</em> if the operation
- * failed) and {@link ifSuccess ifSuccess} (execute a block of code if the operation succeeded).
+ * Result state can be determined via {@link #isSuccess() isSuccess} or {@link #isFailure() isFailure}. Additional
+ * methods to unwrap the included value are provided, such as {@link #orElse(Object) orElse} (return an <em>alternative
+ * success value</em> if the operation failed) and {@link #ifSuccess(Consumer) ifSuccess} (execute a block of code if
+ * the operation succeeded).
  *
  * @apiNote {@code Result} is primarily intended for use as a method return type whenever failure is expected and
  *          recoverable, and where using {@code null} is likely to cause errors. A variable whose type is {@code Result}
@@ -48,6 +50,7 @@ import java.util.stream.Stream;
  *           invocation SHOULD produce no visible change in behavior.</li>
  *           </ul>
  * @author Guillermo Calvo
+ * @see com.leakyabstractions.result
  * @see Results
  * @param <S> the type of the success value
  * @param <F> the type of the failure value
@@ -58,7 +61,7 @@ public interface Result<S, F> {
      * If this is a successful result, returns {@code true}; otherwise {@code false}.
      *
      * @return {@code true} if successful; otherwise {@code false}
-     * @see isFailure isFailure
+     * @see #isFailure()
      */
     boolean isSuccess();
 
@@ -66,7 +69,7 @@ public interface Result<S, F> {
      * If this is a failed result, returns {@code true}; otherwise {@code false}.
      *
      * @return {@code true} if failed; otherwise {@code false}
-     * @see isSuccess isSuccess
+     * @see #isSuccess()
      */
     boolean isFailure();
 
@@ -75,7 +78,7 @@ public interface Result<S, F> {
      *
      * @param other the possibly-{@code null} alternative success value
      * @return this result's success value if successful; otherwise {@code other}
-     * @see orElseMap orElseMap
+     * @see #orElseMap(Function)
      */
     S orElse(S other);
 
@@ -88,7 +91,7 @@ public interface Result<S, F> {
      * @param mapper the mapping function that produces the possibly-{@code null} alternative success value
      * @return this result's success value if successful; otherwise the value produced by the mapping function
      * @throws NullPointerException if this is a failed result and {@code mapper} is {@code null}
-     * @see orElse orElse
+     * @see #orElse(Object)
      */
     S orElseMap(Function<? super F, ? extends S> mapper);
 
@@ -98,8 +101,8 @@ public interface Result<S, F> {
      *
      * @return this result's success value
      * @throws java.util.NoSuchElementException if this is a failed result
-     * @see getFailureOrElseThrow getFailureOrElseThrow
-     * @see #orElseThrow(Function) orElseThrow(Function)
+     * @see #getFailureOrElseThrow()
+     * @see #orElseThrow(Function)
      */
     S orElseThrow();
 
@@ -114,7 +117,7 @@ public interface Result<S, F> {
      * @return this result's success value
      * @throws NullPointerException if this is a failed result and {@code mapper} is {@code null}
      * @throws E if this is a failed result
-     * @see orElseThrow orElseThrow
+     * @see #orElseThrow()
      */
     <E extends Throwable> S orElseThrow(Function<? super F, E> mapper) throws E;
 
@@ -123,14 +126,33 @@ public interface Result<S, F> {
      *
      * @return this result's failure value
      * @throws java.util.NoSuchElementException if this is a successful result
-     * @see orElseThrow orElseThrow
+     * @see #orElseThrow()
      */
     F getFailureOrElseThrow();
+
+    /**
+     * If this is a successful result, returns an optional containing its success value; otherwise returns an empty
+     * optional.
+     * 
+     * @see #optionalFailure()
+     * @return this result's success value as an optional if successful; otherwise an empty optional.
+     */
+    Optional<S> optional();
+
+    /**
+     * If this is a failed result, returns an optional containing its failure value; otherwise returns an empty
+     * optional.
+     *
+     * @see #optional()
+     * @return this result's failure value as an optional if failed; otherwise an empty optional.
+     */
+    Optional<F> optionalFailure();
 
     /**
      * If this is a successful result, returns a sequential stream containing only its success value; otherwise returns
      * an empty stream.
      *
+     * @see #streamFailure()
      * @return this result's success value as a stream if successful; otherwise an empty stream.
      */
     Stream<S> stream();
@@ -139,6 +161,7 @@ public interface Result<S, F> {
      * If this is a failed result, returns a sequential stream containing only its failure value; otherwise returns an
      * empty stream.
      *
+     * @see #stream()
      * @return this result's failure value as a stream if failed; otherwise an empty stream.
      */
     Stream<F> streamFailure();
@@ -149,8 +172,8 @@ public interface Result<S, F> {
      * @param action the action to be applied to this result's success value
      * @throws NullPointerException if this is a successful result and {@code action} is {@code null}
      * @return this result
-     * @see ifFailure ifFailure
-     * @see ifSuccessOrElse ifSuccessOrElse
+     * @see #ifFailure(Consumer)
+     * @see #ifSuccessOrElse(Consumer, Consumer)
      */
     Result<S, F> ifSuccess(Consumer<? super S> action);
 
@@ -162,8 +185,8 @@ public interface Result<S, F> {
      * @return this result
      * @throws NullPointerException if this is a successful result and {@code successAction} is {@code null}; or if it
      *             is failed and {@code failureAction} is {@code null}
-     * @see ifFailure ifFailure
-     * @see ifSuccess ifSuccess
+     * @see #ifFailure(Consumer)
+     * @see #ifSuccess(Consumer)
      */
     Result<S, F> ifSuccessOrElse(Consumer<? super S> successAction, Consumer<? super F> failureAction);
 
@@ -173,8 +196,8 @@ public interface Result<S, F> {
      * @param action the action to be applied to this result's failure value
      * @return this result
      * @throws NullPointerException if this is a failed result and {@code action} is {@code null}
-     * @see ifSuccess ifSuccess
-     * @see ifSuccessOrElse ifSuccessOrElse
+     * @see #ifSuccess(Consumer)
+     * @see #ifSuccessOrElse(Consumer, Consumer)
      */
     Result<S, F> ifFailure(Consumer<? super F> action);
 
@@ -208,8 +231,8 @@ public interface Result<S, F> {
      * @throws NullPointerException if this is a successful result and {@code successMapper} is {@code null}; or if this
      *             is a failed result and {@code failureMapper} is {@code null}; or if either {@code successMapper} or
      *             {@code failureMapper} returns {@code null}
-     * @see mapFailure mapFailure
-     * @see mapSuccess mapSuccess
+     * @see #mapFailure(Function)
+     * @see #mapSuccess(Function)
      */
     <S2, F2> Result<S2, F2> map(Function<? super S, S2> successMapper, Function<? super F, F2> failureMapper);
 
@@ -226,8 +249,8 @@ public interface Result<S, F> {
      *         otherwise a failed result with this result's failure value
      * @throws NullPointerException if this is a successful result and {@code mapper} is {@code null}; or if
      *             {@code mapper} returns {@code null}
-     * @see map map
-     * @see mapFailure mapFailure
+     * @see #map(Function, Function)
+     * @see #mapFailure(Function)
      */
     <S2> Result<S2, F> mapSuccess(Function<? super S, S2> mapper);
 
@@ -244,8 +267,8 @@ public interface Result<S, F> {
      *         successful result with this result's success value
      * @throws NullPointerException if this is a failed result and {@code mapper} is {@code null}; or if {@code mapper}
      *             returns {@code null}
-     * @see map map
-     * @see mapSuccess mapSuccess
+     * @see #map(Function, Function)
+     * @see #mapSuccess(Function)
      */
     <F2> Result<S, F2> mapFailure(Function<? super F, F2> mapper);
 
@@ -263,8 +286,8 @@ public interface Result<S, F> {
      * @throws NullPointerException if this is a successful result and {@code successMapper} is {@code null}; or if this
      *             is a failed result and {@code failureMapper} is {@code null}; or if either {@code successMapper} or
      *             {@code failureMapper} returns {@code null}
-     * @see flatMapFailure flatMapFailure
-     * @see flatMapSuccess flatMapSuccess
+     * @see #flatMapFailure(Function)
+     * @see #flatMapSuccess(Function)
      */
     <S2, F2> Result<S2, F2> flatMap(
             Function<? super S, Result<S2, F2>> successMapper,
@@ -283,8 +306,8 @@ public interface Result<S, F> {
      *         result's failure value.
      * @throws NullPointerException if this is a successful result and {@code mapper} is {@code null}; or if
      *             {@code mapper} returns {@code null}
-     * @see flatMap flatMap
-     * @see flatMapFailure flatMapFailure
+     * @see #flatMap(Function, Function)
+     * @see #flatMapFailure(Function)
      */
     <S2> Result<S2, F> flatMapSuccess(Function<? super S, Result<S2, F>> mapper);
 
@@ -301,8 +324,8 @@ public interface Result<S, F> {
      *         result's success value.
      * @throws NullPointerException if this is a failed result and {@code mapper} is {@code null}; or if {@code mapper}
      *             returns {@code null}
-     * @see flatMap flatMap
-     * @see flatMapSuccess flatMapSuccess
+     * @see #flatMap(Function, Function)
+     * @see #flatMapSuccess(Function)
      */
     <F2> Result<S, F2> flatMapFailure(Function<? super F, Result<S, F2>> mapper);
 }

@@ -20,7 +20,8 @@ jobs:
     # ================================
     # CHECKOUT
     # ================================
-    - uses: actions/checkout@v2
+    - name: Checkout git tag
+      uses: actions/checkout@v2
       with:
         fetch-depth: 0
 
@@ -90,15 +91,24 @@ jobs:
       run: ./gradlew publish
 
     # ================================
-    # JAVADOC
+    # UPLOAD JAVADOC
+    # ================================
+    - name: Upload Javadoc files
+      uses: actions/upload-artifact@v2
+      with:
+        name: javadoc
+        path: lib/build/docs/javadoc/
+
+    # ================================
+    # PUBLISH JAVADOC
     # ================================
     - name: Publish Javadoc to GitHub Pages
       shell: bash
       run: |
-        cp -r lib/build/docs/javadoc docs/javadoc/${{ github.ref }}
+        cp -r lib/build/docs/javadoc docs/javadoc/${GITHUB_REF#refs/tags/}
         git config user.name "Guillermo Calvo"
         git config user.email "guillermo@guillermo.dev"
-        git add docs/javadoc/${{ github.ref }}
+        git add docs/javadoc/${GITHUB_REF#refs/tags/}
         git status
         git commit --message "Publish Javadoc to GitHub Pages"
         git push origin main

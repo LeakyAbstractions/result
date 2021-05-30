@@ -6,6 +6,109 @@
  * failed, instead of throwing exceptions.
  * <p>
  * If you like {@link java.util.Optional} but feel that it sometimes falls too short, you'll love {@link Result}.
+ * <p>
+ * The best way to think of {@code Result} is as a super-powered version of {@code Optional}. The only difference is
+ * that whereas {@code Optional} may contain a successful value or express the absence of a value, {@code Result}
+ * contains either a successful value or a failure value that explains what went wrong. <div class="type-summary">
+ * <table class="type-summary">
+ * <caption> Result objects have methods equivalent to those in Optional, plus a few more to handle failure values.
+ * </caption> <thead>
+ * <tr>
+ * <th class="col-first">Optional</th>
+ * <th class="col-last">Result</th>
+ * </tr>
+ * </thead> <tbody>
+ * <tr class="alt-color">
+ * <td><code>isPresent</code></td>
+ * <td><code>isSuccess</code></td>
+ * </tr>
+ * <tr class="row-color">
+ * <td><code>isEmpty</code></td>
+ * <td><code>isFailure</code></td>
+ * </tr>
+ * <tr class="alt-color">
+ * <td><code>get</code></td>
+ * <td>&nbsp;</td>
+ * </tr>
+ * <tr class="row-color">
+ * <td><code>orElse</code></td>
+ * <td><code>orElse</code></td>
+ * </tr>
+ * <tr class="alt-color">
+ * <td><code>orElseGet</code></td>
+ * <td><code>orElseMap</code></td>
+ * </tr>
+ * <tr class="row-color">
+ * <td><code>orElseThrow</code></td>
+ * <td><code>orElseThrow</code></td>
+ * </tr>
+ * <tr class="alt-color">
+ * <td><code>orElseThrow(Supplier)</code></td>
+ * <td><code>orElseThrow(Function)</code></td>
+ * </tr>
+ * <tr class="row-color">
+ * <td>&nbsp;</td>
+ * <td><code>getFailureOrElseThrow</code></td>
+ * </tr>
+ * <tr class="alt-color">
+ * <td>&nbsp;</td>
+ * <td><code>optional</code></td>
+ * </tr>
+ * <tr class="row-color">
+ * <td>&nbsp;</td>
+ * <td><code>optionalFailure</code></td>
+ * </tr>
+ * <tr class="alt-color">
+ * <td><code>stream</code></td>
+ * <td><code>stream</code></td>
+ * </tr>
+ * <tr class="row-color">
+ * <td>&nbsp;</td>
+ * <td><code>streamFailure</code></td>
+ * </tr>
+ * <tr class="alt-color">
+ * <td><code>ifPresent</code></td>
+ * <td><code>ifSuccess</code></td>
+ * </tr>
+ * <tr class="row-color">
+ * <td>&nbsp;</td>
+ * <td><code>ifFailure</code></td>
+ * </tr>
+ * <tr class="alt-color">
+ * <td><code>ifPresentOrElse</code></td>
+ * <td><code>ifSuccessOrElse</code></td>
+ * </tr>
+ * <tr class="row-color">
+ * <td><code>filter</code></td>
+ * <td><code>filter</code></td>
+ * </tr>
+ * <tr class="alt-color">
+ * <td><code>map</code></td>
+ * <td><code>mapSuccess</code></td>
+ * </tr>
+ * <tr class="row-color">
+ * <td>&nbsp;</td>
+ * <td><code>mapFailure</code></td>
+ * </tr>
+ * <tr class="alt-color">
+ * <td>&nbsp;</td>
+ * <td><code>map</code></td>
+ * </tr>
+ * <tr class="row-color">
+ * <td><code>flatMap</code></td>
+ * <td><code>flatMapSuccess</code></td>
+ * </tr>
+ * <tr class="alt-color">
+ * <td><code>or</code></td>
+ * <td><code>flatMapFailure</code></td>
+ * </tr>
+ * <tr class="row-color">
+ * <td>&nbsp;</td>
+ * <td><code>flatMap</code></td>
+ * </tr>
+ * </tbody>
+ * </table>
+ * </div>
  * <h3>Result Library in a Nutshell</h3>
  * <p>
  * Before {@code Result}, we would wrap exception-throwing {@code foobar} method invocation inside a {@code try} block
