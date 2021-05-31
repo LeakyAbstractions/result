@@ -111,4 +111,4 @@ jobs:
         git add docs/javadoc/${GITHUB_REF#refs/tags/}
         git status
         git commit --message "Publish Javadoc to GitHub Pages"
-        git push origin main
+        git push origin HEAD:main

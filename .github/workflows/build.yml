@@ -83,6 +83,15 @@ jobs:
       run: ./gradlew javadoc --info
 
     # ================================
+    # UPLOAD JAVADOC
+    # ================================
+    - name: Upload Javadoc files
+      uses: actions/upload-artifact@v2
+      with:
+        name: javadoc
+        path: lib/build/docs/javadoc/
+
+    # ================================
     # TEST
     # ================================
     - name: Test
