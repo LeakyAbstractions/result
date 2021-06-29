@@ -2,6 +2,17 @@
 plugins {
     id 'com.diffplug.spotless' version '5.12.5' apply false
     id 'org.sonarqube' version '3.2.0' apply false
+    id 'io.github.gradle-nexus.publish-plugin' version '1.1.0'
+}
+
+// Configure Gradle Nexus Publish Plugin publishing repository
+nexusPublishing {
+    repositories {
+        sonatype {
+            username = System.env.SONATYPE_USERNAME
+            password = System.env.SONATYPE_PASSWORD
+        }
+    }
 }
 
 /**
