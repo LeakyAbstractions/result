@@ -5,9 +5,9 @@ jacoco {
 
 jacocoTestReport {
     reports {
-        csv.enabled false
-        xml.enabled true
-        html.enabled true
+        csv.required = false
+        xml.required = true
+        html.required = true
     }
 }
 
