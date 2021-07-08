@@ -88,8 +88,18 @@ local.properties
 .idea/**/dictionaries
 .idea/**/shelf
 
+# AWS User-specific
+.idea/**/aws.xml
+
 # Generated files
+.idea/**/.gitignore
+.idea/**/codeStyles
 .idea/**/contentModel.xml
+.idea/**/compiler.xml
+.idea/**/jarRepositories.xml
+.idea/**/libraries-with-intellij-classes.xml
+.idea/**/misc.xml
+.idea/**/vcs.xml
 
 # Sensitive or high-churn files
 .idea/**/dataSources/
