@@ -1,5 +1,5 @@
 # Set the default behavior that will override individual core.autocrlf setting
-* text=lf
+* text eol=lf
 
 # Text files that will always be normalized on checkout
 *.config text
@@ -27,3 +27,4 @@
 *.bin binary
 *.class binary
 *.jar binary
+*.png binary
