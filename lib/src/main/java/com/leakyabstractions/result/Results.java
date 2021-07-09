@@ -73,7 +73,7 @@ public class Results {
      * @param failureSupplier the supplier function that produces a failure value
      * @return the new result
      * @throws NullPointerException if both {@code value} and {@code failureSupplier} are {@code null}, or if
-     *             {@code failureSupplier} returns {@code null}
+     *     {@code failureSupplier} returns {@code null}
      */
     public static <S, F> Result<S, F> ofNullable(S value, Supplier<? extends F> failureSupplier) {
         return value != null ? new Success<>(value) : new Failure<>(requireNonNull(failureSupplier.get()));
@@ -89,7 +89,7 @@ public class Results {
      * @param failure the failure value to use in case {@code optional} is empty
      * @return the new result
      * @throws NullPointerException if {@code optional} is {@code null}; or if {@code optional} is empty and
-     *             {@code failure} is {@code null}
+     *     {@code failure} is {@code null}
      */
     public static <S, F> Result<S, F> ofOptional(Optional<S> optional, F failure) {
         return optional.isPresent() ? new Success<>(optional.get()) : new Failure<>(requireNonNull(failure));
@@ -105,7 +105,7 @@ public class Results {
      * @param failureSupplier the supplier function that produces a failure value
      * @return the new result
      * @throws NullPointerException if {@code optional} is {@code null}; or if {@code optional} is empty and
-     *             {@code failureSupplier} is {@code null}; or if {@code failureSupplier} returns {@code null}
+     *     {@code failureSupplier} is {@code null}; or if {@code failureSupplier} returns {@code null}
      */
     public static <S, F> Result<S, F> ofOptional(Optional<S> optional, Supplier<? extends F> failureSupplier) {
         return optional.isPresent() ? new Success<>(optional.get())
@@ -117,7 +117,7 @@ public class Results {
      * returns a new failed result with the exception thrown by {@code callable}.
      *
      * @apiNote If {@code callable} returns {@code null} then a new failed result with a {@link NullPointerException}
-     *          will be returned.
+     *     will be returned.
      * @param <S> the success type of the result
      * @param callable the task that produces a success value, or throws an exception if unable to do so
      * @return the new result
@@ -139,14 +139,14 @@ public class Results {
      * The mapping function will be applied to the exception thrown by {@code callable} to produce the failure value.
      *
      * @apiNote If {@code callable} returns {@code null} then the mapping function will be applied to an instance of
-     *          {@link NullPointerException}.
+     *     {@link NullPointerException}.
      * @param <S> the success type of the result
      * @param <F> the failure type of the result
      * @param callable the task that produces a success value, or throws an exception if unable to do so
      * @param exceptionMapper the mapping function that produces a failure value
      * @return the new result
      * @throws NullPointerException if {@code callable} is {@code null}, or if {@code callable} throws an exception and
-     *             {@code exceptionMapper} is {@code null}, or if {@code exceptionMapper} returns {@code null}
+     *     {@code exceptionMapper} is {@code null}, or if {@code exceptionMapper} returns {@code null}
      */
     public static <S, F> Result<S, F> wrap(Callable<S> callable, Function<? super Exception, F> exceptionMapper) {
         Objects.requireNonNull(callable);
@@ -203,7 +203,7 @@ public class Results {
      * returned Result objects should not be lazy.
      *
      * @apiNote The supplier is guaranteed to be invoked at most once. If it throws an exception or returns {@code null}
-     *          then the behavior of the lazy result will be undefined.
+     *     then the behavior of the lazy result will be undefined.
      * @param <S> the success type of the result
      * @param <F> the failure type of the result
      * @param supplier the function that supplies the actual result

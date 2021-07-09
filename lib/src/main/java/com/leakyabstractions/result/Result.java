@@ -28,27 +28,24 @@ import java.util.stream.Stream;
  * the operation succeeded).
  *
  * @apiNote {@code Result} is primarily intended for use as a method return type whenever failure is expected and
- *          recoverable, and where using {@code null} is likely to cause errors. A variable whose type is {@code Result}
- *          should never itself be {@code null}; it should always point to a {@code Result} instance.
+ *     recoverable, and where using {@code null} is likely to cause errors. A variable whose type is {@code Result}
+ *     should never itself be {@code null}; it should always point to a {@code Result} instance.
  * @implSpec This is a
- *           <a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/lang/doc-files/ValueBased.html">
- *           value-based</a> type. Instances of classes that implement {@code Result}:
- *           <ul>
- *           <li>MUST be {@code final} and immutable (though MAY contain references to mutable objects);</li>
- *           <li>MUST have implementations of {@code equals}, {@code hashCode}, and {@code toString} which are computed
- *           solely from the instance's state and not from its identity or the state of any other object or
- *           variable;</li>
- *           <li>MUST NOT make no use of identity-sensitive operations such as reference equality ({@code ==}) between
- *           instances, identity hash code of instances, or synchronization on an instances's intrinsic lock;</li>
- *           <li>MUST be considered equal solely based on {@code equals()}, not based on reference equality
- *           ({@code ==});</li>
- *           <li>MUST NOT have accessible constructors, but SHOULD be instead instantiated through factory methods (such
- *           as the ones provided by {@link Results}) which make no commitment as to the identity of returned
- *           instances;</li>
- *           <li>MUST be <em>freely substitutable</em> when equal, meaning that interchanging any two instances
- *           {@code x} and {@code y} that are equal according to {@code equals()} in any computation or method
- *           invocation SHOULD produce no visible change in behavior.</li>
- *           </ul>
+ *     <a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/lang/doc-files/ValueBased.html">
+ *     value-based</a> type. Instances of classes that implement {@code Result}:
+ *     <ul>
+ *     <li>MUST be {@code final} and immutable (though MAY contain references to mutable objects);</li>
+ *     <li>MUST have implementations of {@code equals}, {@code hashCode}, and {@code toString} which are computed solely
+ *     from the instance's state and not from its identity or the state of any other object or variable;</li>
+ *     <li>MUST NOT make no use of identity-sensitive operations such as reference equality ({@code ==}) between
+ *     instances, identity hash code of instances, or synchronization on an instances's intrinsic lock;</li>
+ *     <li>MUST be considered equal solely based on {@code equals()}, not based on reference equality ({@code ==});</li>
+ *     <li>MUST NOT have accessible constructors, but SHOULD be instead instantiated through factory methods (such as
+ *     the ones provided by {@link Results}) which make no commitment as to the identity of returned instances;</li>
+ *     <li>MUST be <em>freely substitutable</em> when equal, meaning that interchanging any two instances {@code x} and
+ *     {@code y} that are equal according to {@code equals()} in any computation or method invocation SHOULD produce no
+ *     visible change in behavior.</li>
+ *     </ul>
  * @author Guillermo Calvo
  * @see com.leakyabstractions.result
  * @see Results
@@ -184,7 +181,7 @@ public interface Result<S, F> {
      * @param failureAction the action to be applied to this result's failure value
      * @return this result
      * @throws NullPointerException if this is a successful result and {@code successAction} is {@code null}; or if it
-     *             is failed and {@code failureAction} is {@code null}
+     *     is failed and {@code failureAction} is {@code null}
      * @see #ifFailure(Consumer)
      * @see #ifSuccess(Consumer)
      */
@@ -210,10 +207,10 @@ public interface Result<S, F> {
      * @param predicate the predicate to apply to this result's success value
      * @param mapper the mapping function that produces the failure value
      * @return a new failed result with the value produced by {@code mapper} if this is a successful result whose value
-     *         does not match the given predicate; otherwise this result
+     *     does not match the given predicate; otherwise this result
      * @throws NullPointerException if this is a successful result and {@code predicate} is {@code null}, or if its
-     *             success value does not match the predicate and {@code mapper} is {@code null}; or if {@code mapper}
-     *             returns {@code null}
+     *     success value does not match the predicate and {@code mapper} is {@code null}; or if {@code mapper} returns
+     *     {@code null}
      */
     Result<S, F> filter(Predicate<? super S> predicate, Function<? super S, ? extends F> mapper);
 
@@ -229,8 +226,8 @@ public interface Result<S, F> {
      * @param failureMapper the mapping function that produces a failure value
      * @return a new result with a value produced by either {@code successMapper} or {@code failureMapper}
      * @throws NullPointerException if this is a successful result and {@code successMapper} is {@code null}; or if this
-     *             is a failed result and {@code failureMapper} is {@code null}; or if either {@code successMapper} or
-     *             {@code failureMapper} returns {@code null}
+     *     is a failed result and {@code failureMapper} is {@code null}; or if either {@code successMapper} or
+     *     {@code failureMapper} returns {@code null}
      * @see #mapFailure(Function)
      * @see #mapSuccess(Function)
      */
@@ -246,9 +243,9 @@ public interface Result<S, F> {
      * @param <S2> the type of the value returned by {@code mapper}
      * @param mapper the mapping function that produces the new success value
      * @return a new successful result with the value produced by {@code mapper} if this is a successful result;
-     *         otherwise a failed result with this result's failure value
+     *     otherwise a failed result with this result's failure value
      * @throws NullPointerException if this is a successful result and {@code mapper} is {@code null}; or if
-     *             {@code mapper} returns {@code null}
+     *     {@code mapper} returns {@code null}
      * @see #map(Function, Function)
      * @see #mapFailure(Function)
      */
@@ -264,9 +261,9 @@ public interface Result<S, F> {
      * @param <F2> the type of the value returned by {@code mapper}
      * @param mapper the mapping function that produces the new failure value
      * @return a new failed result with the value produced by {@code mapper} if this is a failed result; otherwise a
-     *         successful result with this result's success value
+     *     successful result with this result's success value
      * @throws NullPointerException if this is a failed result and {@code mapper} is {@code null}; or if {@code mapper}
-     *             returns {@code null}
+     *     returns {@code null}
      * @see #map(Function, Function)
      * @see #mapSuccess(Function)
      */
@@ -284,8 +281,8 @@ public interface Result<S, F> {
      * @param failureMapper the mapping function that produces a new result if this is a failed result
      * @return the result produced by either {@code successMapper} or {@code failureMapper}
      * @throws NullPointerException if this is a successful result and {@code successMapper} is {@code null}; or if this
-     *             is a failed result and {@code failureMapper} is {@code null}; or if either {@code successMapper} or
-     *             {@code failureMapper} returns {@code null}
+     *     is a failed result and {@code failureMapper} is {@code null}; or if either {@code successMapper} or
+     *     {@code failureMapper} returns {@code null}
      * @see #flatMapFailure(Function)
      * @see #flatMapSuccess(Function)
      */
@@ -303,9 +300,9 @@ public interface Result<S, F> {
      * @param <S2> the success type of the result returned by {@code mapper}
      * @param mapper the mapping function that produces a new result
      * @return the result produced by {@code mapper} if this is a successful result; otherwise a failed result with this
-     *         result's failure value.
+     *     result's failure value.
      * @throws NullPointerException if this is a successful result and {@code mapper} is {@code null}; or if
-     *             {@code mapper} returns {@code null}
+     *     {@code mapper} returns {@code null}
      * @see #flatMap(Function, Function)
      * @see #flatMapFailure(Function)
      */
@@ -321,9 +318,9 @@ public interface Result<S, F> {
      * @param <F2> the failure type of the result returned by {@code mapper}
      * @param mapper the mapping function that produces a new result
      * @return the result produced by {@code mapper} if this is a failed result; otherwise a successful result with this
-     *         result's success value.
+     *     result's success value.
      * @throws NullPointerException if this is a failed result and {@code mapper} is {@code null}; or if {@code mapper}
-     *             returns {@code null}
+     *     returns {@code null}
      * @see #flatMap(Function, Function)
      * @see #flatMapSuccess(Function)
      */
