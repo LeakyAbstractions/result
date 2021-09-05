@@ -13,8 +13,6 @@ on:
 
 env:
   GRADLE_OPTS: '-Dorg.gradle.daemon=false'
-  SONAR_HOST_URL: https://sonarcloud.io
-  SONAR_ORGANIZATION: leakyabstractions
 
 jobs:
   build:
@@ -24,7 +22,7 @@ jobs:
 
     strategy:
       matrix:
-        jdk: [ 8, 11, 15 ]
+        jdk: [ 8, 11, 16 ]
 
     steps:
 
@@ -63,12 +61,20 @@ jobs:
     - name: Cache Gradle packages
       uses: actions/cache@v2
       with:
-        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
         path: |
           ~/.gradle/caches
           ~/.gradle/wrapper
         restore-keys: |
           ${{ runner.os }}-gradle-
+
+    # ================================
+    # GOOGLE JAVA FORMAT WORKAROUND
+    # ================================
+    - name: Set Gradle properties on JDK16
+      if: ${{ matrix.jdk == 16 }}
+      shell: bash
+      run: cat google-java-format.properties >> gradle.properties
 
     # ================================
     # BUILD
@@ -104,21 +110,13 @@ jobs:
       run: ./gradlew jacocoTestReport jacocoTestCoverageVerification --info
 
     # ================================
-    # ANALYZE RESULT
+    # ANALYZE
     # ================================
-    - name: Analyze Library RESULT
-      if: ${{ matrix.jdk == 15 }}
+    - name: Analyze
+      if: ${{ matrix.jdk == 16 }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_RESULT }}
+        SONAR_HOST_URL: https://sonarcloud.io
+        SONAR_ORGANIZATION: leakyabstractions
       run: ./gradlew :lib:sonarqube --info
-
-    # ================================
-    # ANALYZE RESULT-ASSERTJ
-    # ================================
-    - name: Analyze Library RESULT-ASSERTJ
-      if: ${{ matrix.jdk == 15 }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_RESULT_ASSERTJ }}
-      run: ./gradlew :lib-assertj:sonarqube --info
