@@ -130,7 +130,7 @@ public interface Result<S, F> {
     /**
      * If this is a successful result, returns an optional containing its success value; otherwise returns an empty
      * optional.
-     * 
+     *
      * @see #optionalFailure()
      * @return this result's success value as an optional if successful; otherwise an empty optional.
      */
@@ -231,7 +231,9 @@ public interface Result<S, F> {
      * @see #mapFailure(Function)
      * @see #mapSuccess(Function)
      */
-    <S2, F2> Result<S2, F2> map(Function<? super S, S2> successMapper, Function<? super F, F2> failureMapper);
+    <S2, F2> Result<S2, F2> map(
+            Function<? super S, ? extends S2> successMapper,
+            Function<? super F, ? extends F2> failureMapper);
 
     /**
      * If this is a successful result, returns a new successful result with the value produced by the given mapping
@@ -249,7 +251,7 @@ public interface Result<S, F> {
      * @see #map(Function, Function)
      * @see #mapFailure(Function)
      */
-    <S2> Result<S2, F> mapSuccess(Function<? super S, S2> mapper);
+    <S2> Result<S2, F> mapSuccess(Function<? super S, ? extends S2> mapper);
 
     /**
      * If this is a failed result, returns a new failed result with the value produced by the given mapping function;
@@ -267,7 +269,7 @@ public interface Result<S, F> {
      * @see #map(Function, Function)
      * @see #mapSuccess(Function)
      */
-    <F2> Result<S, F2> mapFailure(Function<? super F, F2> mapper);
+    <F2> Result<S, F2> mapFailure(Function<? super F, ? extends F2> mapper);
 
     /**
      * Returns a new result produced by the appropriate {@code Result}-bearing mapping function.
@@ -287,8 +289,8 @@ public interface Result<S, F> {
      * @see #flatMapSuccess(Function)
      */
     <S2, F2> Result<S2, F2> flatMap(
-            Function<? super S, Result<S2, F2>> successMapper,
-            Function<? super F, Result<S2, F2>> failureMapper);
+            Function<? super S, ? extends Result<? extends S2, ? extends F2>> successMapper,
+            Function<? super F, ? extends Result<? extends S2, ? extends F2>> failureMapper);
 
     /**
      * If this is a successful result, returns a new result produced by the given, {@code Result}-bearing mapping
@@ -306,7 +308,7 @@ public interface Result<S, F> {
      * @see #flatMap(Function, Function)
      * @see #flatMapFailure(Function)
      */
-    <S2> Result<S2, F> flatMapSuccess(Function<? super S, Result<S2, F>> mapper);
+    <S2> Result<S2, F> flatMapSuccess(Function<? super S, ? extends Result<? extends S2, ? extends F>> mapper);
 
     /**
      * If this is a failed result, returns a new result produced by the given, {@code Result}-bearing mapping function;
@@ -324,5 +326,5 @@ public interface Result<S, F> {
      * @see #flatMap(Function, Function)
      * @see #flatMapSuccess(Function)
      */
-    <F2> Result<S, F2> flatMapFailure(Function<? super F, Result<S, F2>> mapper);
+    <F2> Result<S, F2> flatMapFailure(Function<? super F, ? extends Result<? extends S, ? extends F2>> mapper);
 }

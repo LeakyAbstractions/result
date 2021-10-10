@@ -107,34 +107,36 @@ final class LazyResult<S, F> implements Result<S, F> {
     }
 
     @Override
-    public <S2, F2> Result<S2, F2> map(Function<? super S, S2> successMapper, Function<? super F, F2> failureMapper) {
+    public <S2, F2> Result<S2, F2> map(
+            Function<? super S, ? extends S2> successMapper,
+            Function<? super F, ? extends F2> failureMapper) {
         return lazily(this.isLazy, () -> this.getBackingResult().map(successMapper, failureMapper));
     }
 
     @Override
-    public <S2> Result<S2, F> mapSuccess(Function<? super S, S2> mapper) {
+    public <S2> Result<S2, F> mapSuccess(Function<? super S, ? extends S2> mapper) {
         return lazily(this.isLazy, () -> this.getBackingResult().mapSuccess(mapper));
     }
 
     @Override
-    public <F2> Result<S, F2> mapFailure(Function<? super F, F2> mapper) {
+    public <F2> Result<S, F2> mapFailure(Function<? super F, ? extends F2> mapper) {
         return lazily(this.isLazy, () -> this.getBackingResult().mapFailure(mapper));
     }
 
     @Override
     public <S2, F2> Result<S2, F2> flatMap(
-            Function<? super S, Result<S2, F2>> successMapper,
-            Function<? super F, Result<S2, F2>> failureMapper) {
+            Function<? super S, ? extends Result<? extends S2, ? extends F2>> successMapper,
+            Function<? super F, ? extends Result<? extends S2, ? extends F2>> failureMapper) {
         return lazily(this.isLazy, () -> this.getBackingResult().flatMap(successMapper, failureMapper));
     }
 
     @Override
-    public <S2> Result<S2, F> flatMapSuccess(Function<? super S, Result<S2, F>> mapper) {
+    public <S2> Result<S2, F> flatMapSuccess(Function<? super S, ? extends Result<? extends S2, ? extends F>> mapper) {
         return lazily(this.isLazy, () -> this.getBackingResult().flatMapSuccess(mapper));
     }
 
     @Override
-    public <F2> Result<S, F2> flatMapFailure(Function<? super F, Result<S, F2>> mapper) {
+    public <F2> Result<S, F2> flatMapFailure(Function<? super F, ? extends Result<? extends S, ? extends F2>> mapper) {
         return lazily(this.isLazy, () -> this.getBackingResult().flatMapFailure(mapper));
     }
 
