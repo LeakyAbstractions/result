@@ -3,7 +3,6 @@ package com.leakyabstractions.result;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.Callable;
 import java.util.function.Consumer;
@@ -60,7 +59,7 @@ public class Results {
      * @throws NullPointerException if both {@code value} and {@code failure} are {@code null}
      */
     public static <S, F> Result<S, F> ofNullable(S value, F failure) {
-        return value != null ? new Success<>(value) : new Failure<>(requireNonNull(failure));
+        return value != null ? new Success<>(value) : failure(failure);
     }
 
     /**
@@ -76,7 +75,7 @@ public class Results {
      *     {@code failureSupplier} returns {@code null}
      */
     public static <S, F> Result<S, F> ofNullable(S value, Supplier<? extends F> failureSupplier) {
-        return value != null ? new Success<>(value) : new Failure<>(requireNonNull(failureSupplier.get()));
+        return value != null ? new Success<>(value) : failure(failureSupplier.get());
     }
 
     /**
@@ -92,7 +91,7 @@ public class Results {
      *     {@code failure} is {@code null}
      */
     public static <S, F> Result<S, F> ofOptional(Optional<S> optional, F failure) {
-        return optional.isPresent() ? new Success<>(optional.get()) : new Failure<>(requireNonNull(failure));
+        return optional.map((Function<S, Result<S, F>>) Success::new).orElseGet(() -> failure(failure));
     }
 
     /**
@@ -108,8 +107,7 @@ public class Results {
      *     {@code failureSupplier} is {@code null}; or if {@code failureSupplier} returns {@code null}
      */
     public static <S, F> Result<S, F> ofOptional(Optional<S> optional, Supplier<? extends F> failureSupplier) {
-        return optional.isPresent() ? new Success<>(optional.get())
-                : new Failure<>(requireNonNull(failureSupplier.get()));
+        return optional.map((Function<S, Result<S, F>>) Success::new).orElseGet(() -> failure(failureSupplier.get()));
     }
 
     /**
@@ -124,9 +122,9 @@ public class Results {
      * @throws NullPointerException if {@code callable} is {@code null}
      */
     public static <S> Result<S, Exception> wrap(Callable<S> callable) {
-        Objects.requireNonNull(callable);
+        requireNonNull(callable);
         try {
-            return new Success<>(requireNonNull(callable.call()));
+            return success(callable.call());
         } catch (Exception exception) {
             return new Failure<>(exception);
         }
@@ -149,11 +147,11 @@ public class Results {
      *     {@code exceptionMapper} is {@code null}, or if {@code exceptionMapper} returns {@code null}
      */
     public static <S, F> Result<S, F> wrap(Callable<S> callable, Function<? super Exception, F> exceptionMapper) {
-        Objects.requireNonNull(callable);
+        requireNonNull(callable);
         try {
-            return new Success<>(requireNonNull(callable.call()));
+            return success(callable.call());
         } catch (Exception exception) {
-            return new Failure<>(requireNonNull(exceptionMapper.apply(exception)));
+            return failure(exceptionMapper.apply(exception));
         }
     }
 
