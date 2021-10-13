@@ -31,9 +31,7 @@ or a failure value that explains what went wrong.
 | `get`                   |                         |
 | `orElse`                | `orElse`                |
 | `orElseGet`             | `orElseMap`             |
-| `orElseThrow`           | `orElseThrow`           |
-| `orElseThrow(Supplier)` | `orElseThrow(Function)` |
-|                         | `getFailureOrElseThrow` |
+| `orElseThrow`           |                         |
 |                         | `optional`              |
 |                         | `optionalFailure`       |
 | `stream`                | `stream`                |
