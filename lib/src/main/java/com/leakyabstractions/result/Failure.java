@@ -3,7 +3,6 @@ package com.leakyabstractions.result;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -44,21 +43,6 @@ final class Failure<S, F> implements Result<S, F> {
     @Override
     public S orElseMap(Function<? super F, ? extends S> mapper) {
         return mapper.apply(this.value);
-    }
-
-    @Override
-    public S orElseThrow() {
-        throw new NoSuchElementException("Not a successful result");
-    }
-
-    @Override
-    public <E extends Throwable> S orElseThrow(Function<? super F, E> mapper) throws E {
-        throw mapper.apply(this.value);
-    }
-
-    @Override
-    public F getFailureOrElseThrow() {
-        return this.value;
     }
 
     @Override

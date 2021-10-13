@@ -181,9 +181,6 @@ public class Results {
      * <li>{@link Result#isFailure() isFailure}</li>
      * <li>{@link Result#orElse(Object) orElse}</li>
      * <li>{@link Result#orElseMap(Function) orElseMap}</li>
-     * <li>{@link Result#orElseThrow() orElseThrow}</li>
-     * <li>{@link Result#orElseThrow(Function) orElseThrow(Function)}</li>
-     * <li>{@link Result#getFailureOrElseThrow() getFailureOrElseThrow}</li>
      * <li>{@link Result#optional() optional}</li>
      * <li>{@link Result#optionalFailure() optionalFailure}</li>
      * <li>{@link Result#stream() stream}</li>

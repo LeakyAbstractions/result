@@ -49,21 +49,6 @@ final class LazyResult<S, F> implements Result<S, F> {
     }
 
     @Override
-    public S orElseThrow() {
-        return this.getBackingResult().orElseThrow();
-    }
-
-    @Override
-    public <E extends Throwable> S orElseThrow(Function<? super F, E> mapper) throws E {
-        return this.getBackingResult().orElseThrow(mapper);
-    }
-
-    @Override
-    public F getFailureOrElseThrow() {
-        return this.getBackingResult().getFailureOrElseThrow();
-    }
-
-    @Override
     public Stream<S> stream() {
         return this.getBackingResult().stream();
     }
