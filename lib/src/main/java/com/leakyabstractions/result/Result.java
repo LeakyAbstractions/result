@@ -93,41 +93,6 @@ public interface Result<S, F> {
     S orElseMap(Function<? super F, ? extends S> mapper);
 
     /**
-     * If this is a successful result, returns its success value; otherwise throws
-     * {@link java.util.NoSuchElementException}.
-     *
-     * @return this result's success value
-     * @throws java.util.NoSuchElementException if this is a failed result
-     * @see #getFailureOrElseThrow()
-     * @see #orElseThrow(Function)
-     */
-    S orElseThrow();
-
-    /**
-     * If this is a successful result, returns its success value; otherwise throws an exception produced by the given
-     * mapping function.
-     * <p>
-     * The mapping function will be applied to this result's failure value to produce an exception.
-     *
-     * @param <E> Type of the exception to be thrown
-     * @param mapper the mapping function that produces an exception to be thrown
-     * @return this result's success value
-     * @throws NullPointerException if this is a failed result and {@code mapper} is {@code null}
-     * @throws E if this is a failed result
-     * @see #orElseThrow()
-     */
-    <E extends Throwable> S orElseThrow(Function<? super F, E> mapper) throws E;
-
-    /**
-     * If this is a failed result, returns its failure value; otherwise throws {@link java.util.NoSuchElementException}.
-     *
-     * @return this result's failure value
-     * @throws java.util.NoSuchElementException if this is a successful result
-     * @see #orElseThrow()
-     */
-    F getFailureOrElseThrow();
-
-    /**
      * If this is a successful result, returns an optional containing its success value; otherwise returns an empty
      * optional.
      *
