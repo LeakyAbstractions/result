@@ -42,7 +42,7 @@ class LazyResult_flatMap_Test {
         final Function<String, Result<String, String>> successMapper = s -> fail("Should not happen");
         final Function<String, Result<String, String>> failureMapper = f -> new Success<>(SUCCESS);
         // When
-        final String value = lazy.flatMap(successMapper, failureMapper).orElseThrow();
+        final String value = lazy.flatMap(successMapper, failureMapper).orElse(null);
         // Then
         assertThat(value).isSameAs(SUCCESS);
     }
@@ -56,7 +56,7 @@ class LazyResult_flatMap_Test {
         final Function<String, Result<String, String>> successMapper = s -> another;
         final Function<String, Result<String, String>> failureMapper = f -> fail("Should not happen");
         // When
-        final String value = lazy.orElseThrow();
+        final String value = lazy.orElse(null);
         final Result<String, String> result = lazy.flatMap(successMapper, failureMapper);
         // Then
         assertThat(value).isSameAs(SUCCESS);

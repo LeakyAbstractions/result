@@ -42,7 +42,7 @@ class LazyResult_map_Test {
         final Function<Integer, String> successMapper = s -> SUCCESS;
         final Function<Integer, String> failureMapper = f -> fail("Should not happen");
         // When
-        final String value = lazy.map(successMapper, failureMapper).orElseThrow();
+        final String value = lazy.map(successMapper, failureMapper).orElse(null);
         // Then
         assertThat(value).isSameAs(SUCCESS);
     }
@@ -56,7 +56,7 @@ class LazyResult_map_Test {
         final Function<Integer, String> successMapper = s -> fail("Should not happen");
         final Function<Integer, String> failureMapper = f -> FAILURE;
         // When
-        final Integer value = lazy.getFailureOrElseThrow();
+        final Integer value = lazy.optionalFailure().orElse(null);
         final Result<String, String> result = lazy.map(successMapper, failureMapper);
         // Then
         assertThat(value).isEqualTo(123);

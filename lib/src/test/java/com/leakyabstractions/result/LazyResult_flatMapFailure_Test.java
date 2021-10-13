@@ -4,6 +4,7 @@ package com.leakyabstractions.result;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -40,7 +41,7 @@ class LazyResult_flatMapFailure_Test {
         final LazyResult<String, String> lazy = new LazyResult<>(supplier);
         final Function<String, Result<String, String>> mapper = s -> new Success<>(SUCCESS);
         // When
-        final String value = lazy.flatMapFailure(mapper).orElseThrow();
+        final String value = lazy.flatMapFailure(mapper).orElse(null);
         // Then
         assertThat(value).isSameAs(SUCCESS);
     }
@@ -53,10 +54,10 @@ class LazyResult_flatMapFailure_Test {
         final Result<String, String> another = new Failure<>("ANOTHER");
         final Function<String, Result<String, String>> mapper = s -> another;
         // When
-        final String value = lazy.getFailureOrElseThrow();
+        final Optional<String> value = lazy.optionalFailure();
         final Result<String, String> result = lazy.flatMapFailure(mapper);
         // Then
-        assertThat(value).isSameAs(FAILURE);
+        assertThat(value).containsSame(FAILURE);
         assertThat(result).isSameAs(another);
     }
 }

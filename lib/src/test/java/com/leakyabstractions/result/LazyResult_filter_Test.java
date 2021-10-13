@@ -51,7 +51,7 @@ class LazyResult_filter_Test {
         final Function<String, Integer> mapper = s -> fail("Should not happen");
         // When
         final Result<String, Integer> result = lazy.filter(filter, mapper);
-        final String supplied = result.orElseThrow();
+        final String supplied = result.orElse(null);
         // Then
         assertThat(supplied).isSameAs(SUCCESS);
         assertThat(filterEvaluated).isTrue();
@@ -65,7 +65,7 @@ class LazyResult_filter_Test {
         final Predicate<String> filter = s -> false;
         final Function<String, String> mapper = s -> FAILURE;
         // When
-        final String supplied = lazy.orElseThrow();
+        final String supplied = lazy.orElse(null);
         final Result<String, String> result = lazy.filter(filter, mapper);
         // Then
         assertThat(supplied).isSameAs(SUCCESS);

@@ -69,7 +69,7 @@ class LazyResult_ifSuccess_Test {
         final LazyConsumer<String> successAction = s -> actionPerformed.set(true);
         // When
         final Result<String, String> result = lazy.ifSuccess(successAction);
-        final String value = result.orElseThrow();
+        final String value = result.orElse(null);
         // Then
         assertThat(value).isSameAs(SUCCESS);
         assertThat(result)
@@ -86,7 +86,7 @@ class LazyResult_ifSuccess_Test {
         final AtomicBoolean actionPerformed = new AtomicBoolean(false);
         final LazyConsumer<String> successAction = s -> actionPerformed.set(true);
         // When
-        final String value = lazy.orElseThrow();
+        final String value = lazy.orElse(null);
         final Result<String, String> result = lazy.ifSuccess(successAction);
         // Then
         assertThat(value).isSameAs(SUCCESS);

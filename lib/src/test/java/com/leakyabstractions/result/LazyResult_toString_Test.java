@@ -42,7 +42,7 @@ class LazyResult_toString_Test {
         final Supplier<Result<String, Integer>> supplier = () -> new Success<>("TESTING");
         final Result<String, Integer> lazy = new LazyResult<>(supplier);
         // When
-        lazy.orElseThrow();
+        lazy.orElse(null);
         // Then
         assertThat(lazy).hasToString("lazy-result[success[TESTING]]");
     }
