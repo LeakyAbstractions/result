@@ -27,9 +27,7 @@ or a failure value that explains what went wrong.
 | `get`                   |                         |
 | `orElse`                | `orElse`                |
 | `orElseGet`             | `orElseMap`             |
-| `orElseThrow`           | `orElseThrow`           |
-| `orElseThrow(Supplier)` | `orElseThrow(Function)` |
-|                         | `getFailureOrElseThrow` |
+| `orElseThrow`           |                         |
 |                         | `optional`              |
 |                         | `optionalFailure`       |
 | `stream`                | `stream`                |
@@ -289,61 +287,6 @@ void should_map_the_failure_value() {
 }
 ```
 
-The [`orElseThrow()`][OR_ELSE_THROW] methods follow from `orElse` and `orElseMap` and add a new approach for handling a
-failed result.
-
-Instead of returning a default value, they throw an exception. If you [provide a mapping function][OR_ELSE_THROW_WITH_MAPPER]
-you can transform the failure value to the appropriate exception to be thrown. If you don't, then
-[_NoSuchElementException_](https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/NoSuchElementException.html)
-will be thrown.
-
-```java
-@Test
-void should_throw_exception() {
-    // Given
-    final Result<Integer, String> result = failure("Could not compute result");
-    // When
-    final ThrowingCallable callable = () -> result.orElseThrow();
-    // Then
-    assertThatThrownBy(callable).isInstanceOf(NoSuchElementException.class);
-}
-
-@Test
-void should_return_success_value() {
-    // Given
-    final Result<Integer, String> result = success(0);
-    // When
-    final Integer number = result.orElseThrow(IllegalArgumentException::new);
-    // Then
-    assertThat(number).isZero();
-}
-```
-
-Method [`getFailureOrElseThrow()`][GET_FAILURE_OR_ELSE_THROW] is the counterpart of `orElseThrow`; it will return the
-failure value unless the result is successful:
-
-```java
-@Test
-void should_return_failure_value() {
-    // Given
-    final Result<Integer, String> result = failure("NETWORK PROBLEM");
-    // When
-    final String error = result.getFailureOrElseThrow();
-    // Then
-    assertThat(error).isEqualTo("NETWORK PROBLEM");
-}
-
-@Test
-void should_throw_exception() {
-    // Given
-    final Result<Integer, String> result = success(0);
-    // When
-    final ThrowingCallable callable = () -> result.getFailureOrElseThrow();
-    // Then
-    assertThatThrownBy(callable).isInstanceOf(NoSuchElementException.class);
-}
-```
-
 
 ## Filtering Success Values
 
@@ -385,7 +328,7 @@ void should_return_string_length() {
     // When
     final Result<Integer, String> mapped = result.mapSuccess(String::length);
     // Then
-    assertThat(mapped.orElseThrow()).isEqualTo(4);
+    assertThat(mapped.optional()).contains(4);
 }
 ```
 
@@ -405,7 +348,7 @@ void should_return_upper_case() {
     final Result<String, String> mapped = result
         .map(String::toUpperCase, String::toLowerCase);
     // Then
-    assertThat(mapped.orElseThrow()).isEqualTo("HELLO WORLD!");
+    assertThat(mapped.optional()).contains("HELLO WORLD!");
 }
 
 @Test
@@ -416,7 +359,7 @@ void should_return_lower_case() {
     final Result<String, String> mapped = result
         .map(String::toUpperCase, String::toLowerCase);
     // Then
-    assertThat(mapped.getFailureOrElseThrow()).isEqualTo("hello world!");
+    assertThat(mapped.optionalFailure()).contains("hello world!");
 }
 ```
 
@@ -430,7 +373,7 @@ void should_return_is_empty() {
     // When
     final Result<Integer, Boolean> mapped = result.mapFailure(String::isEmpty);
     // Then
-    assertThat(mapped.getFailureOrElseThrow()).isTrue();
+    assertThat(mapped.optionalFailure().orElse(false)).isTrue();
 }
 ```
 
@@ -488,7 +431,7 @@ void should_contain_file() {
     final Result<File, Problem> result = user.getCustomConfigPath()
         .flatMapSuccess(this::openFile);
     // Then
-    assertThat(result.orElseThrow()).isAbsolute();
+    assertThat(result.orElse(null)).isAbsolute();
 }
 
 @Test
@@ -499,7 +442,7 @@ void should_contain_user_problem() {
     final Result<File, Problem> result = user.getCustomConfigPath()
         .flatMapSuccess(this::openFile);
     // Then
-    assertThat(result.getFailureOrElseThrow()).isInstanceOf(UserProblem.class);
+    assertThat(result.optionalFailure()).containsInstanceOf(UserProblem.class);
 }
 
 @Test
@@ -510,7 +453,7 @@ void should_contain_file_problem() {
     final Result<File, Problem> result = user.getCustomConfigPath()
         .flatMapSuccess(this::openFile);
     // Then
-    assertThat(result.getFailureOrElseThrow()).isInstanceOf(FileProblem.class);
+    assertThat(result.optionalFailure()).containsInstanceOf(FileProblem.class);
 }
 ```
 
@@ -525,7 +468,7 @@ void should_contain_123() {
     final Result<File, Integer> result = user.getCustomConfigPath()
         .flatMap(this::openFile, f -> 123);
     // Then
-    assertThat(result.getFailureOrElseThrow()).isEqualTo(123);
+    assertThat(result.optionalFailure()).contains(123);
 }
 ```
 
@@ -540,7 +483,7 @@ void should_contain_error() {
     final Result<String, String> result = user.getCustomConfigPath()
         .flatMapFailure(f -> "error");
     // Then
-    assertThat(result.getFailureOrElseThrow()).isEqualTo("error");
+    assertThat(result.optionalFailure()).contains("error");
 }
 ```
 
@@ -646,9 +589,6 @@ expected to uphold this code.
 [IF_FAILURE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#ifFailure(java.util.function.Consumer)
 [OR_ELSE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#orElse(S)
 [OR_ELSE_MAP]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#orElseMap(java.util.function.Function)
-[OR_ELSE_THROW]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#orElseThrow()
-[OR_ELSE_THROW_WITH_MAPPER]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#orElseThrow(java.util.function.Function)
-[GET_FAILURE_OR_ELSE_THROW]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#getFailureOrElseThrow()
 [FILTER]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#filter(java.util.function.Predicate,java.util.function.Function)
 [MAP]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#map(java.util.function.Function,java.util.function.Function)
 [MAP_SUCCESS]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#mapSuccess(java.util.function.Function)

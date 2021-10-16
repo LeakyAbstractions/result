@@ -4,6 +4,7 @@ package com.leakyabstractions.result;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -74,7 +75,7 @@ class LazyResult_ifSuccessOrElse_Test {
         final LazyConsumer<String> failureAction = f -> fail("Should not happen");
         // When
         final Result<String, String> result = lazy.ifSuccessOrElse(successAction, failureAction);
-        final String value = result.orElseThrow();
+        final String value = result.orElse(null);
         // Then
         assertThat(value).isSameAs(SUCCESS);
         assertThat(result)
@@ -92,10 +93,10 @@ class LazyResult_ifSuccessOrElse_Test {
         final LazyConsumer<String> successAction = s -> fail("Should not happen");
         final LazyConsumer<String> failureAction = f -> actionPerformed.set(true);
         // When
-        final String value = lazy.getFailureOrElseThrow();
+        final Optional<String> value = lazy.optionalFailure();
         final Result<String, String> result = lazy.ifSuccessOrElse(successAction, failureAction);
         // Then
-        assertThat(value).isSameAs(FAILURE);
+        assertThat(value).containsSame(FAILURE);
         assertThat(result).isSameAs(failure);
         assertThat(actionPerformed).isTrue();
     }

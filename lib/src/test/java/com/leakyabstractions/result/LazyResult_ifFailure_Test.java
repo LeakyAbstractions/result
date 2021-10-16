@@ -4,6 +4,7 @@ package com.leakyabstractions.result;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -69,9 +70,9 @@ class LazyResult_ifFailure_Test {
         final LazyConsumer<String> failureAction = f -> actionPerformed.set(true);
         // When
         final Result<?, String> result = lazy.ifFailure(failureAction);
-        final String value = result.getFailureOrElseThrow();
+        final Optional<String> value = result.optionalFailure();
         // Then
-        assertThat(value).isSameAs(FAILURE);
+        assertThat(value).containsSame(FAILURE);
         assertThat(result)
                 .isInstanceOf(LazyResult.class)
                 .isNotSameAs(lazy);
@@ -86,10 +87,10 @@ class LazyResult_ifFailure_Test {
         final AtomicBoolean actionPerformed = new AtomicBoolean(false);
         final LazyConsumer<String> failureAction = f -> actionPerformed.set(true);
         // When
-        final String value = lazy.getFailureOrElseThrow();
+        final Optional<String> value = lazy.optionalFailure();
         final Result<?, String> result = lazy.ifFailure(failureAction);
         // Then
-        assertThat(value).isSameAs(FAILURE);
+        assertThat(value).containsSame(FAILURE);
         assertThat(result).isSameAs(failure);
         assertThat(actionPerformed).isTrue();
     }

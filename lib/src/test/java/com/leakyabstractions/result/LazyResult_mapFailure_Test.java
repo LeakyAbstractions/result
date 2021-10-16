@@ -4,6 +4,7 @@ package com.leakyabstractions.result;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -41,9 +42,9 @@ class LazyResult_mapFailure_Test {
         final LazyResult<String, String> lazy = new LazyResult<>(supplier);
         final Function<String, String> mapper = f -> ANOTHER;
         // When
-        final String value = lazy.mapFailure(mapper).getFailureOrElseThrow();
+        final Optional<String> value = lazy.mapFailure(mapper).optionalFailure();
         // Then
-        assertThat(value).isSameAs(ANOTHER);
+        assertThat(value).containsSame(ANOTHER);
     }
 
     @Test
@@ -53,7 +54,7 @@ class LazyResult_mapFailure_Test {
         final LazyResult<String, String> lazy = new LazyResult<>(supplier);
         final Function<String, String> mapper = f -> fail("Should not happen");
         // When
-        final String value = lazy.mapFailure(mapper).orElseThrow();
+        final String value = lazy.mapFailure(mapper).orElse(null);
         // Then
         assertThat(value).isSameAs(SUCCESS);
     }
@@ -66,10 +67,10 @@ class LazyResult_mapFailure_Test {
         final Function<Integer, String> mapper = f -> FAILURE;
         final Failure<Object, String> expected = new Failure<>(FAILURE);
         // When
-        final Integer value = lazy.getFailureOrElseThrow();
+        final Optional<Integer> value = lazy.optionalFailure();
         final Result<String, String> result = lazy.mapFailure(mapper);
         // Then
-        assertThat(value).isEqualTo(123);
+        assertThat(value).containsSame(123);
         assertThat(result).isEqualTo(expected);
     }
 }
