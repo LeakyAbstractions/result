@@ -41,15 +41,7 @@
  * </tr>
  * <tr class="row-color rowColor">
  * <td><code>orElseThrow</code></td>
- * <td><code>orElseThrow</code></td>
- * </tr>
- * <tr class="alt-color altColor">
- * <td><code>orElseThrow(Supplier)</code></td>
- * <td><code>orElseThrow(Function)</code></td>
- * </tr>
- * <tr class="row-color rowColor">
  * <td>&nbsp;</td>
- * <td><code>getFailureOrElseThrow</code></td>
  * </tr>
  * <tr class="alt-color altColor">
  * <td>&nbsp;</td>
