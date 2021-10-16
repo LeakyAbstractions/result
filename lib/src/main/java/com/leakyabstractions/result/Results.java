@@ -121,7 +121,7 @@ public class Results {
      * @return the new result
      * @throws NullPointerException if {@code callable} is {@code null}
      */
-    public static <S> Result<S, Exception> wrap(Callable<S> callable) {
+    public static <S> Result<S, Exception> ofCallable(Callable<S> callable) {
         requireNonNull(callable);
         try {
             return success(callable.call());
@@ -146,7 +146,7 @@ public class Results {
      * @throws NullPointerException if {@code callable} is {@code null}, or if {@code callable} throws an exception and
      *     {@code exceptionMapper} is {@code null}, or if {@code exceptionMapper} returns {@code null}
      */
-    public static <S, F> Result<S, F> wrap(Callable<S> callable, Function<? super Exception, F> exceptionMapper) {
+    public static <S, F> Result<S, F> ofCallable(Callable<S> callable, Function<? super Exception, F> exceptionMapper) {
         requireNonNull(callable);
         try {
             return success(callable.call());

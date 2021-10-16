@@ -2,8 +2,8 @@
 package com.leakyabstractions.result;
 
 import static com.leakyabstractions.result.Results.failure;
+import static com.leakyabstractions.result.Results.ofCallable;
 import static com.leakyabstractions.result.Results.success;
-import static com.leakyabstractions.result.Results.wrap;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
@@ -14,12 +14,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests for {@link Results#wrap(Callable, Function)}.
+ * Tests for {@link Results#ofCallable(Callable, Function)}.
  *
  * @author Guillermo Calvo
  */
-@DisplayName("Results wrap with mapper")
-class Results_wrap_with_Mapper_Test {
+@DisplayName("Results ofCallable with mapper")
+class Results_ofCallable_with_Mapper_Test {
 
     private static final String SUCCESS = "SUCCESS";
     private static final String FAILURE = "FAILURE";
@@ -30,7 +30,7 @@ class Results_wrap_with_Mapper_Test {
         final Callable<String> callable = () -> SUCCESS;
         final Function<Exception, String> exceptionMapper = e -> FAILURE;
         // When
-        final Result<String, String> result = wrap(callable, exceptionMapper);
+        final Result<String, String> result = ofCallable(callable, exceptionMapper);
         // Then
         assertThat(result).isEqualTo(success(SUCCESS));
     }
@@ -44,7 +44,7 @@ class Results_wrap_with_Mapper_Test {
         };
         final Function<Exception, String> exceptionMapper = e -> FAILURE;
         // When
-        final Result<String, String> result = wrap(callable, exceptionMapper);
+        final Result<String, String> result = ofCallable(callable, exceptionMapper);
         // Then
         assertThat(result).isEqualTo(failure(FAILURE));
     }
