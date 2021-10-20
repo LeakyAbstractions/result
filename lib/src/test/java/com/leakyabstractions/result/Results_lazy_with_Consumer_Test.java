@@ -1,6 +1,7 @@
 
 package com.leakyabstractions.result;
 
+import static com.leakyabstractions.result.Results.lazy;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -23,7 +24,7 @@ class Results_lazy_with_Consumer_Test {
         // Given
         final Consumer<String> consumer = null;
         // When
-        ThrowingCallable callable = () -> Results.lazy(consumer);
+        ThrowingCallable callable = () -> lazy(consumer);
         // Then
         assertThatThrownBy(callable).isInstanceOf(NullPointerException.class);
     }
@@ -33,7 +34,7 @@ class Results_lazy_with_Consumer_Test {
         // Given
         final Consumer<String> consumer = s -> {};
         // When
-        Consumer<String> result = Results.lazy(consumer);
+        Consumer<String> result = lazy(consumer);
         // Then
         assertThat(result).isInstanceOf(LazyConsumer.class);
     }
