@@ -12,7 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests for {@link Results#ofOptional(Optional)}.
+ * Tests for {@link Results#ofOptional(Optional, Object)}.
  *
  * @author Guillermo Calvo
  */

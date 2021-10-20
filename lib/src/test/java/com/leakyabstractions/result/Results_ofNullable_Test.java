@@ -10,7 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests for {@link Results#ofNullable(Object)}.
+ * Tests for {@link Results#ofNullable(Object, Object)}.
  *
  * @author Guillermo Calvo
  */
