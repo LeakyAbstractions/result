@@ -4,19 +4,19 @@ description: A Java library to handle success and failure without exceptions
 image: /result-banner-centered.png
 ---
 
-# Result Library for Java
+# Getting Started
 
 The purpose of this library is to provide a type-safe encapsulation of operation results that may have succeeded or
 failed, instead of throwing exceptions.
 
-If you like `Optional` but feel that it sometimes falls too short, you'll love `Result`.
+If you like <tt>Optional</tt> but feel that it sometimes falls too short, you'll love <tt>Result</tt>.
 
-The best way to think of _Result_ is as a super-powered version of _Optional_. The only difference is that whereas
-_Optional_ may contain a successful value or express the absence of a value, _Result_ contains either a successful value
-or a failure value that explains what went wrong.
+The best way to think of <tt>Result</tt> is as a super-powered version of <tt>Optional</tt>. The only difference is that
+whereas <tt>Optional</tt> may contain a successful value or express the absence of a value, <tt>Result</tt> contains
+either a successful value or a failure value that explains what went wrong.
 
 <details style="margin-bottom: 20px">
- <summary style="display: list-item"><code>Result</code> objects have methods equivalent to those in
+ <summary style="display: list-item; cursor: pointer"><code>Result</code> objects have methods equivalent to those in
  <code>Optional</code>, plus a few more to handle failure values.</summary>
  <div markdown="1">
 
@@ -60,7 +60,7 @@ Artifact coordinates:
 - Artifact ID: `result`
 - Version: `{{ site.current_version }}`
 
-To add a dependency on _Result_ using [**Maven**](https://maven.apache.org/), use the following:
+To add a dependency on <tt>Result</tt> using [**Maven**](https://maven.apache.org/), use the following:
 
 ```xml
 <dependencies>
@@ -73,8 +73,8 @@ To add a dependency on _Result_ using [**Maven**](https://maven.apache.org/), us
 </dependencies>
 ```
 
-To add the dependency using [**Gradle**](https://gradle.org/), if you are building an application that will use _Result_
-internally:
+To add the dependency using [**Gradle**](https://gradle.org/), if you are building an application that will use
+<tt>Result</tt> internally:
 
 ```gradle
 dependencies {
@@ -82,7 +82,7 @@ dependencies {
 }
 ```
 
-If you are building a library that will use _Result_ type in its public API, you should use instead:
+If you are building a library that will use <tt>Result</tt> type in its public API, you should use instead:
 
 ```gradle
 dependencies {
@@ -90,13 +90,16 @@ dependencies {
 }
 ```
 
-For more information on when to use _api_ and _implementation_, read the [Gradle documentation on API and implementation
-separation](https://docs.gradle.org/current/userguide/java_library_plugin.html#sec:java_library_separation).
+For more information on when to use <tt>api</tt> and <tt>implementation</tt>, read the [Gradle documentation on API and
+implementation separation](https://docs.gradle.org/current/userguide/java_library_plugin.html#sec:java_library_separation).
 
 
 ## Creating Result Objects
 
-There are several ways of creating _Result_ objects.
+There are several ways of creating <tt>Result</tt> objects.
+
+
+#### Successful Results
 
 To create a successful result, we simply need to use static method [`Results.success()`][NEW_SUCCESS]:
 
@@ -113,95 +116,87 @@ void should_be_success() {
 Note that we can use methods [`isSuccess()`][IS_SUCCESS]  or [`isFailure()`][IS_FAILURE] to check if the result was
 successful or not.
 
+
+#### Failed Results
+
 On the other hand, if we want to create a failed result, we can use static method [`Results.failure()`][NEW_FAILURE]:
 
 ```java
 @Test
-void should_not_be_success() {
+void should_be_failure() {
     // When
     final Result<?, String> result = Results.failure("The operation failed");
     // Then
-    assertThat(result.isSuccess()).isFalse();
+    assertThat(result.isFailure()).isTrue();
 }
 ```
+
+
+#### Results Based on Nullable Value
+
+We can use static method [`Results.ofNullable()`][OF_NULLABLE] to create results that depend on a possibly-null value:
+
+```java
+@Test
+void should_not_be_failure() {
+    // Given
+    final String nullable = "Hello world!";
+    // When
+    final Result<String, Integer> result = Results.ofOptional(nullable, 0);
+    // Then
+    assertThat(result.isFailure()).isFalse();
+}
+```
+
+
+#### Results Based on Optional Value
 
 We can also use static method [`Results.ofOptional()`][OF_OPTIONAL] to create results that depend on an optional value:
 
 ```java
 @Test
-void should_be_failure() {
+void should_not_be_success() {
     // Given
     final Optional<String> optional = Optional.empty();
     // When
-    final Result<String, Void> result = Results.ofOptional(optional);
+    final Result<String, Integer> result = Results.ofOptional(optional, -1);
     // Then
-    assertThat(result.isFailure()).isTrue();
+    assertThat(result.isSuccess()).isFalse();
 }
 ```
 
-And sometimes it might come in handy to encapsulate actual thrown exceptions inside a result object via static method
-[`Results.wrap()`][WRAP]:
+
+#### Results Based on Callable Value
+
+And sometimes it might come in handy to wrap actual thrown exceptions inside a result object via static method
+[`Results.ofCallable()`][OF_CALLABLE]:
 
 ```java
 @Test
-void should_be_failure_too() {
+void should_wrap_exception() {
     // Given
     final Callable<String> callable = () -> { throw new RuntimeException("Whoops!") };
     // When
-    final Result<String, Exception> result = Results.wrap(callable);
+    final Result<String, Exception> result = Results.ofCallable(callable);
     // Then
     assertThat(result.isFailure()).isTrue();
 }
 ```
 
-There's also a way to encapsulate expensive operations that can be entirely omitted (as an optimization) if there's no
-actual need to examine the result. To create a _lazy_ result we need to use static method [`Results.lazy()`][LAZY]:
 
-```java
-    Result<String, Void> expensiveCalculation(AtomicLong timesExecuted) {
-        timesExecuted.getAndIncrement();
-        return Results.success("HELLO");
-    }
+# Basic Usage
 
-    @Test
-    void should_not_execute_expensive_action() {
-        final AtomicLong timesExecuted = new AtomicLong();
-        // Given
-        final Result<String, Void> lazy = Results
-                .lazy(() -> this.expensiveCalculation(timesExecuted));
-        // When
-        final Result<Integer, Void> transformed = lazy.mapSuccess(String::length);
-        // Then
-        assertThat(transformed).isNotNull();
-        assertThat(timesExecuted).hasValue(0);
-    }
-```
+When we have an <tt>Result</tt> instance, often we want to execute a specific action on the underlying success value. On
+the other hand, if it's a failed result we may have some recovery strategy or alternative actions to take.
 
-Lazy results can be manipulated just like any other result; they will try to defer the invocation of the given supplier
-as long as possible. For example, when we actually try to determine if the operation succeeded or failed.
-
-```java
-    @Test
-    void should_execute_expensive_action() {
-        final AtomicLong timesExecuted = new AtomicLong();
-        // Given
-        final Result<String, Void> lazy = Results
-                .lazy(() -> this.expensiveCalculation(timesExecuted));
-        // When
-        final Result<Integer, Void> transformed = lazy.mapSuccess(String::length);
-        final boolean success = transformed.isSuccess();
-        // Then
-        assertThat(success).isTrue();
-        assertThat(timesExecuted).hasValue(1);
-    }
-```
+Other simple use-case scenarios include unwrapping the success/failure value held by the <tt>Result</tt> object.
 
 
 ## Conditional Actions
 
-The `if...` family of methods enable us to run some code on the wrapped success/failure value. Before _Result_, we would
-wrap exception-throwing `foobar` method invocation inside a `try` block so that errors can be handled inside a `catch`
-block:
+The <tt>if...</tt> family of methods enables us to run some code on the wrapped success/failure value. Before
+<tt>Result</tt>, we would wrap exception-throwing <tt>foobar</tt> method invocation inside a <tt>try</tt> block so that
+errors can be handled inside a <tt>catch</tt> block:
 
 ```java
 try {
@@ -212,16 +207,16 @@ try {
 }
 ```
 
-Let's now look at how the above code could be refactored if method `foobar` returned a _Result_ object instead of
-throwing an exception:
+Let's now look at how the above code could be refactored if method <tt>foobar</tt> returned a <tt>Result</tt> object
+instead of throwing an exception:
 
 ```java
 final Result<String, SomeFailure> result = foobar();
 result.ifSuccessOrElse(this::commit, this::rollback);
 ```
 
-The first action passed to [`ifSuccessOrElse()`][IF_SUCCESS_OR_ELSE] will be performed if `foobar` succeeded;
-otherwise the second one will.
+The first action passed to [`ifSuccessOrElse()`][IF_SUCCESS_OR_ELSE] will be performed if <tt>foobar</tt> succeeded;
+otherwise, the second one will.
 
 The above example is not only shorter but also faster. We can make it even shorter by chaining methods in typical
 functional programming style:
@@ -234,7 +229,7 @@ There are other methods [`ifSuccess()`][IF_SUCCESS] and [`ifFailure()`][IF_FAILU
 failure cases only:
 
 ```java
-foobar(123)
+foobar()
     .ifSuccess(this::commit) // commits only if the result is success
     .ifFailure(this::rollback); // rolls back only if the result is failure
 ```
@@ -243,10 +238,10 @@ foobar(123)
 ## Unwrapping Values
 
 The [`Optional::orElse`](https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/Optional.html#orElse(T))
-method is used to retrieve the value wrapped inside an `Optional` instance, or a _default value_ in case the optional is
-empty.
+method is used to retrieve the value wrapped inside an <tt>Optional</tt> instance, or a _default value_ in case the
+<tt>Optional</tt> is empty.
 
-Similarly, you can use [`orElse()`][OR_ELSE] to obtain the success value held by a _Result_ object; or a _default
+Similarly, you can use [`orElse()`][OR_ELSE] to obtain the success value held by a <tt>Result</tt> object; or a _default
 success value_ in case the result is failed.
 
 ```java
@@ -271,9 +266,9 @@ void should_return_the_default_value() {
 }
 ```
 
-The [`orElseMap()`][OR_ELSE_MAP] method is similar to `orElse`. However, instead of taking a value to return if the
-_Result_ object is failed, it takes a mapping function, which would be applied to the failure value to produce an
-alternative success value:
+The [`orElseMap()`][OR_ELSE_MAP] method is similar to <tt>orElse()</tt>. However, instead of taking a value to return if
+the <tt>Result</tt> object is failed, it takes a mapping function, which would be applied to the failure value to
+produce an alternative success value:
 
 ```java
 @Test
@@ -287,16 +282,49 @@ void should_map_the_failure_value() {
 }
 ```
 
+Finally, the methods [`optional()`][OPTIONAL] and [`optionalFailure()`][OPTIONAL_FAILURE] can be used to wrap success/
+failure values held by a <tt>Result</tt> object in an <tt>Optional</tt> object.
+
+```java
+@Test
+void success_should_be_present() {
+    // Given
+    final Result<String, Integer> result = success("HI");
+    // When
+    final Optional<String> optional = result.optional();
+    // Then
+    assertThat(optional).isPresent();
+}
+
+@Test
+void failure_should_be_empty() {
+    // Given
+    final Result<String, Integer> result = success("HOWDY");
+    // When
+    final Optional<Integer> optional = result.optionalFailure();
+    // Then
+    assertThat(optional).isEmpty();
+}
+```
+
+
+# Advanced Usage
+
+While retrieving success/failure values out of <tt>Result</tt> objects can be convenient sometimes, what's in fact more
+idiomatic is to manipulate the value inside a result without actually unwrapping it. Most of the times, we will apply
+transformations to a _Result_ instance, obtaining a possibly different result object in return. This allows us to
+compose behavior in a [monadic way](https://en.wikipedia.org/wiki/Monad_(functional_programming)).
+
 
 ## Filtering Success Values
 
 We can run an inline test on our wrapped success value with the [`filter()`][FILTER] method. It takes a predicate and a
-mapping function as arguments and returns a _Result_ object:
+mapping function as arguments and returns a <tt>Result</tt> object:
 
 - If it is a failed result, or it is a successful result whose success value passes testing by the predicate then the
-  _Result_ is returned as-is.
-- If the predicate returns `false` then the mapping function will be applied to the success value to produce a failure
-  value that will be wrapped in a new failed result.
+  <tt>Result</tt> is returned as-is.
+- If the predicate returns <tt>false</tt> then the mapping function will be applied to the success value to produce a
+  failure value that will be wrapped in a new failed result.
 
 ```java
 @Test
@@ -311,14 +339,14 @@ void should_pass_test() {
 }
 ```
 
-The `filter` method is normally used to reject wrapped success values based on a predefined rule.
+The <tt>filter</tt> method is normally used to reject wrapped success values based on a predefined rule.
 
 
 ## Transforming Values
 
 In the previous section, we looked at how to reject or accept a success value based on a filter.
 
-We can also transform success/failure values held by _Result_ objects with the `map...` family of methods:
+We can also transform success/failure values held by <tt>Result</tt> objects with the <tt>map...</tt> family of methods:
 
 ```java
 @Test
@@ -332,10 +360,10 @@ void should_return_string_length() {
 }
 ```
 
-In this example, we wrap a string inside a _Result_ object and use its [`mapSuccess()`][MAP_SUCCESS] method to
-manipulate it (here we calculate its length). Note that we can specify the action as a method reference, or a a lambda.
-In any case, the result of this action gets wrapped inside a new _Result_ object. And then we call the appropriate
-method on the returned result to retrieve its value.
+In this example, we wrap a <tt>String</tt> inside a <tt>Result</tt> object and use its [`mapSuccess()`][MAP_SUCCESS]
+method to manipulate it (here we calculate its length). Note that we can specify the action as a method reference, or a
+lambda. In any case, the result of this action gets wrapped inside a new <tt>Result</tt> object. And then we call the
+appropriate method on the returned result to retrieve its value.
 
 There is another [`map()`][MAP] method to transform either success/failure value at once:
 
@@ -377,17 +405,18 @@ void should_return_is_empty() {
 }
 ```
 
-Just like the `map...` methods, we also have the `flatMap...` family of methods as an alternative for transforming
-values. The difference is that `map...` methods don't alter the success/failure state of the result, whereas with
-`flatMap...` ones, you can start with a successful result and end up with a failed one, and _vice versa_.
+Just like the <tt>map...</tt> methods, we also have the <tt>flatMap...</tt> family of methods as an alternative for
+transforming values. The difference is that <tt>map...</tt> methods don't alter the success/failure state of the result,
+whereas with <tt>flatMap...</tt> ones, you can start with a successful result and end up with a failed one, and _vice
+versa_.
 
-Previously, we created simple `String` and `Integer` objects for wrapping in a _Result_ instance. However, frequently,
-we will receive these objects as we invoke third-party methods.
+Previously, we created simple <tt>String</tt> and <tt>Integer</tt> objects for wrapping in a <tt>Result</tt> instance.
+However, frequently, we will receive these objects as we invoke third-party methods.
 
-To get a clearer picture of the difference, let's have a look at a `User` object that takes a _name_ and a boolean flag
-that determines if the user has custom configuration. It also has a method `getCustomConfigPath` which returns a
-_Result_ containing either the path to the user configuration file, or a `Problem` object describing why the path cannot
-be obtained:
+To get a clearer picture of the difference, let's have a look at a <tt>User</tt> object that takes a <tt>name</tt> and a
+boolean flag that determines if the user has custom configuration. It also has a method <tt>getCustomConfigPath</tt>
+which returns a <tt>Result</tt> containing either the path to the user configuration file, or a <tt>Problem</tt> object
+describing why the path cannot be obtained:
 
 ```java
 class User {
@@ -409,8 +438,8 @@ class User {
 }
 ```
 
-Now suppose we have a method `openFile` which checks if a given file exists and returns a result containing the file
-object or a `Problem` object explaining why the file cannot be retrieved:
+Now suppose we have a method <tt>openFile</tt> which checks if a given file exists and returns a result containing the
+file object or a <tt>Problem</tt> object explaining why the file cannot be retrieved:
 
 ```java
 Result<File, Problem> openFile(String path) {
@@ -420,7 +449,7 @@ Result<File, Problem> openFile(String path) {
 ```
 
 If we wanted to obtain the file path from the user _and then_ invoke the above method to get the file object, we could
-use [`flatMapSuccess`][FLATMAP_SUCCESS] to fluently transform one result into another:
+use [`flatMapSuccess()`][FLATMAP_SUCCESS] to fluently transform one result into another:
 
 ```java
 @Test
@@ -457,7 +486,7 @@ void should_contain_file_problem() {
 }
 ```
 
-There is another [`flatMap`][FLATMAP] method to transform either success/failure values at once:
+There is another [`flatMap()`][FLATMAP] method to transform either success/failure values at once:
 
 ```java
 @Test
@@ -488,7 +517,55 @@ void should_contain_error() {
 ```
 
 
-## Asserting Result objects
+## Lazy Results
+
+_Lazy_ results encapsulate expensive operations that can be entirely omitted (as an optimization). These result can be
+manipulated just like any other, but the encapsulated operation will not be executed unless there's an actual check for
+success/failure.
+
+To create a _lazy_ result we need to use static method [`Results.lazy()`][LAZY]:
+
+```java
+    Result<String, Void> expensiveCalculation(AtomicLong timesExecuted) {
+        timesExecuted.getAndIncrement();
+        return Results.success("HELLO");
+    }
+
+    @Test
+    void should_not_execute_expensive_action() {
+        final AtomicLong timesExecuted = new AtomicLong();
+        // Given
+        final Result<String, Void> lazy = Results
+                .lazy(() -> this.expensiveCalculation(timesExecuted));
+        // When
+        final Result<Integer, Void> transformed = lazy.mapSuccess(String::length);
+        // Then
+        assertThat(transformed).isNotNull();
+        assertThat(timesExecuted).hasValue(0);
+    }
+```
+
+Lazy results can be manipulated just like any other result; they will try to defer the invocation of the given supplier
+as long as possible. For example, when we actually try to determine if the operation succeeded or failed.
+
+```java
+    @Test
+    void should_execute_expensive_action() {
+        final AtomicLong timesExecuted = new AtomicLong();
+        // Given
+        final Result<String, Void> lazy = Results
+                .lazy(() -> this.expensiveCalculation(timesExecuted));
+        // When
+        final Result<Integer, Void> transformed = lazy.mapSuccess(String::length);
+        final boolean success = transformed.isSuccess();
+        // Then
+        assertThat(success).isTrue();
+        assertThat(timesExecuted).hasValue(1);
+    }
+```
+
+
+## Fluent Assertions
 
 You can use fluent assertions (based on [AssertJ](https://assertj.github.io/)) for Result objects in your unit tests.
 
@@ -511,7 +588,7 @@ dependencies {
 }
 ```
 
-This allows you to use _Result_ assertions in your tests via `assertThat`:
+This allows you to use <tt>Result</tt> assertions in your tests via <tt>assertThat</tt>:
 
 ```java
 import static com.leakyabstractions.result.assertj.ResultAssertions.assertThat;
@@ -528,8 +605,8 @@ public void should_pass() {
 }
 ```
 
-If, for some reason, you cannot statically import static method `ResultAssertions.assertThat()` you can use static
-method `ResultAssert.assertThatResult()` instead:
+If, for some reason, you cannot statically import static method <tt>ResultAssertions.assertThat</tt> you can use static
+method <tt>ResultAssert.assertThatResult</tt> instead:
 
 ```java
 import static com.leakyabstractions.result.assertj.ResultAssert.assertThatResult;
@@ -548,17 +625,17 @@ public void should_pass_too() {
 ```
 
 
+# Additional Info
+
+Here's the full
+[Result API documentation](https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/).
+
+
 ## Releases
 
 This library adheres to [Pragmatic Versioning](https://pragver.github.io/).
 
 Artifacts are available in [Maven Central](https://search.maven.org/artifact/com.leakyabstractions/result).
-
-
-## Javadoc
-
-Here's the full
-[Result API documentation](https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/).
 
 
 ## Looking for Support?
@@ -570,29 +647,29 @@ We'd love to help. Check out the [support guidelines](SUPPORT.md).
 
 If you'd like to contribute to this project, please [start here](CONTRIBUTING.md).
 
-
-## Code of Conduct
-
 This project is governed by the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are
 expected to uphold this code.
 
 
-[NEW_SUCCESS]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Results.html#success(S)
-[NEW_FAILURE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Results.html#failure(F)
-[OF_OPTIONAL]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Results.html#ofOptional(java.util.Optional)
-[WRAP]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Results.html#wrap(java.util.concurrent.Callable)
-[LAZY]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Results.html#lazy(java.util.function.Supplier)
-[IS_SUCCESS]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#isSuccess()
-[IS_FAILURE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#isFailure()
-[IF_SUCCESS_OR_ELSE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#ifSuccessOrElse(java.util.function.Consumer,java.util.function.Consumer)
-[IF_SUCCESS]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#ifSuccess(java.util.function.Consumer)
-[IF_FAILURE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#ifFailure(java.util.function.Consumer)
-[OR_ELSE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#orElse(S)
-[OR_ELSE_MAP]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#orElseMap(java.util.function.Function)
-[FILTER]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#filter(java.util.function.Predicate,java.util.function.Function)
-[MAP]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#map(java.util.function.Function,java.util.function.Function)
-[MAP_SUCCESS]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#mapSuccess(java.util.function.Function)
-[MAP_FAILURE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#mapFailure(java.util.function.Function)
-[FLATMAP]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#flatMap(java.util.function.Function,java.util.function.Function)
-[FLATMAP_SUCCESS]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#flatMapSuccess(java.util.function.Function)
-[FLATMAP_FAILURE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#flatMapFailure(java.util.function.Function)
+[NEW_SUCCESS]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Results.html#success-S-
+[NEW_FAILURE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Results.html#failure-F-
+[OF_NULLABLE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Results.html#ofNullable-S-F-
+[OF_OPTIONAL]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Results.html#ofOptional-java.util.Optional-F-
+[OF_CALLABLE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Results.html#ofCallable-java.util.concurrent.Callable-
+[LAZY]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Results.html#lazy-java.util.function.Supplier-
+[IS_SUCCESS]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#isSuccess--
+[IS_FAILURE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#isFailure--
+[IF_SUCCESS_OR_ELSE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#ifSuccessOrElse-java.util.function.Consumer,java.util.function.Consumer-
+[IF_SUCCESS]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#ifSuccess-java.util.function.Consumer-
+[IF_FAILURE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#ifFailure-java.util.function.Consumer-
+[OR_ELSE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#orElse-S-
+[OR_ELSE_MAP]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#orElseMap-java.util.function.Function-
+[OPTIONAL]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#optional--
+[OPTIONAL_FAILURE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#optionalFailure--
+[FILTER]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#filter-java.util.function.Predicate,java.util.function.Function-
+[MAP]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#map-java.util.function.Function,java.util.function.Function-
+[MAP_SUCCESS]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#mapSuccess-java.util.function.Function-
+[MAP_FAILURE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#mapFailure-java.util.function.Function-
+[FLATMAP]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#flatMap-java.util.function.Function,java.util.function.Function-
+[FLATMAP_SUCCESS]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#flatMapSuccess-java.util.function.Function-
+[FLATMAP_FAILURE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#flatMapFailure-java.util.function.Function-
