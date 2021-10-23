@@ -2,8 +2,8 @@
 package com.leakyabstractions.result;
 
 import static com.leakyabstractions.result.Results.failure;
+import static com.leakyabstractions.result.Results.ofCallable;
 import static com.leakyabstractions.result.Results.success;
-import static com.leakyabstractions.result.Results.wrap;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
@@ -13,12 +13,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests for {@link Results#wrap(Callable)}.
+ * Tests for {@link Results#ofCallable(Callable)}.
  *
  * @author Guillermo Calvo
  */
-@DisplayName("Results wrap")
-class Results_wrap_Test {
+@DisplayName("Results ofCallable")
+class Results_ofCallable_Test {
 
     private static final String SUCCESS = "SUCCESS";
     private static final String FAILURE = "FAILURE";
@@ -28,7 +28,7 @@ class Results_wrap_Test {
         // Given
         final Callable<String> callable = () -> SUCCESS;
         // When
-        final Result<String, Exception> result = wrap(callable);
+        final Result<String, Exception> result = ofCallable(callable);
         // Then
         assertThat(result).isEqualTo(success(SUCCESS));
     }
@@ -41,7 +41,7 @@ class Results_wrap_Test {
             throw exception;
         };
         // When
-        final Result<String, Exception> result = wrap(callable);
+        final Result<String, Exception> result = ofCallable(callable);
         // Then
         assertThat(result).isEqualTo(failure(exception));
     }

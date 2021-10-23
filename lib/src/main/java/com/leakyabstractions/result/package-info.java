@@ -5,7 +5,8 @@
  * The purpose of this library is to provide a type-safe encapsulation of operation results that may have succeeded or
  * failed, instead of throwing exceptions.
  * <p>
- * If you like {@link java.util.Optional} but feel that it sometimes falls too short, you'll love {@link Result}.
+ * If you like {@link java.util.Optional} but feel that it sometimes falls too short, you'll love
+ * {@link com.leakyabstractions.result.Result}.
  * <p>
  * The best way to think of {@code Result} is as a super-powered version of {@code Optional}. The only difference is
  * that whereas {@code Optional} may contain a successful value or express the absence of a value, {@code Result}
@@ -41,15 +42,7 @@
  * </tr>
  * <tr class="row-color rowColor">
  * <td><code>orElseThrow</code></td>
- * <td><code>orElseThrow</code></td>
- * </tr>
- * <tr class="alt-color altColor">
- * <td><code>orElseThrow(Supplier)</code></td>
- * <td><code>orElseThrow(Function)</code></td>
- * </tr>
- * <tr class="row-color rowColor">
  * <td>&nbsp;</td>
- * <td><code>getFailureOrElseThrow</code></td>
  * </tr>
  * <tr class="alt-color altColor">
  * <td>&nbsp;</td>
@@ -175,7 +168,7 @@
  * This allows others to easily compose operations on top of ours, just like we did with foobar.
  *
  * @author Guillermo Calvo
- * @see Result
+ * @see com.leakyabstractions.result.Result
  */
 
 package com.leakyabstractions.result;

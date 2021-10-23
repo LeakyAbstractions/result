@@ -2,6 +2,7 @@
 package com.leakyabstractions.result;
 
 import static com.leakyabstractions.result.Results.failure;
+import static com.leakyabstractions.result.Results.lazy;
 import static com.leakyabstractions.result.Results.success;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,7 +27,7 @@ class Results_lazy_with_Supplier_Test {
         // Given
         final Supplier<Result<String, Integer>> supplier = () -> success(SUCCESS);
         // When
-        final Result<String, Integer> result = Results.lazy(supplier);
+        final Result<String, Integer> result = lazy(supplier);
         // Then
         assertThat(result)
                 .isInstanceOf(LazyResult.class)
@@ -38,7 +39,7 @@ class Results_lazy_with_Supplier_Test {
         // Given
         final Supplier<Result<Integer, String>> supplier = () -> failure(FAILURE);
         // When
-        final Result<Integer, String> result = Results.lazy(supplier);
+        final Result<Integer, String> result = lazy(supplier);
         // Then
         assertThat(result)
                 .isInstanceOf(LazyResult.class)
