@@ -60,4 +60,41 @@ class LazyResult_flatMapSuccess_Test {
         assertThat(value).isSameAs(SUCCESS);
         assertThat(result).isSameAs(another);
     }
+
+    @Test
+    void obeys_monad_laws() {
+        // Given
+        final Result<String, Void> result = unit(SUCCESS);
+        final Function<String, Result<Integer, Void>> fun1 = x -> unit(x.length());
+        final Function<Integer, Result<String, Void>> fun2 = x -> unit(x * 10 + "a");
+        // Then
+        // Left Identity Law
+        assertThat(resolve(bind(unit(SUCCESS), fun1)))
+                .isEqualTo(resolve(fun1.apply(SUCCESS)))
+                .isEqualTo(new Success<>(7));
+        // Right Identity Law
+        assertThat(resolve(result))
+                .isEqualTo(resolve(bind(result, LazyResult_flatMapSuccess_Test::unit)))
+                .isEqualTo(new Success<>(SUCCESS));
+        // Associativity Law
+        assertThat(resolve(bind(bind(result, fun1), fun2)))
+                .isEqualTo(resolve(bind(result, s -> fun2.apply(unwrap(fun1.apply(s))))))
+                .isEqualTo(new Success<>("70a"));
+    }
+
+    private static <T> Result<T, Void> unit(T value) {
+        return new LazyResult<>(() -> new Success<>(value));
+    }
+
+    private static <T, T2> Result<T2, Void> bind(Result<T, Void> result, Function<T, Result<T2, Void>> function) {
+        return result.flatMapSuccess(function);
+    }
+
+    private static <T> T unwrap(Result<T, Void> result) {
+        return result.optional().get();
+    }
+
+    private static <T> Result<T, Void> resolve(Result<T, Void> result) {
+        return new Success<>(unwrap(result));
+    }
 }
