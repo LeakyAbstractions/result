@@ -62,4 +62,41 @@ class LazyResult_flatMap_Test {
         assertThat(value).isSameAs(SUCCESS);
         assertThat(result).isSameAs(another);
     }
+
+    @Test
+    void obeys_monad_laws() {
+        // Given
+        final Result<String, String> result = unit(SUCCESS);
+        final Function<String, Result<Integer, Integer>> fun1 = x -> new Success<>(x.length());
+        final Function<Integer, Result<String, String>> fun2 = x -> new Failure<>(x * 10 + "a");
+        // Then
+        // Left Identity Law
+        assertThat(resolve(bind(unit(SUCCESS), fun1)))
+                .isEqualTo(resolve(fun1.apply(SUCCESS)))
+                .isEqualTo(new Success<>(7));
+        // Right Identity Law
+        assertThat(resolve(result))
+                .isEqualTo(resolve(bind(result, LazyResult_flatMap_Test::unit)))
+                .isEqualTo(new Success<>(SUCCESS));
+        // Associativity Law
+        assertThat(resolve(bind(bind(result, fun1), fun2)))
+                .isEqualTo(resolve(bind(result, s -> fun2.apply(unwrap(fun1.apply(s))))))
+                .isEqualTo(new Failure<>("70a"));
+    }
+
+    private static <T> Result<T, T> unit(T value) {
+        return new LazyResult<>(() -> new Success<>(value));
+    }
+
+    private static <T, T2> Result<T2, T2> bind(Result<T, T> result, Function<T, Result<T2, T2>> function) {
+        return result.flatMap(function, function);
+    }
+
+    private static <T> T unwrap(Result<T, T> result) {
+        return result.optional().orElseGet(() -> result.optionalFailure().get());
+    }
+
+    private static <T> Result<T, T> resolve(Result<T, T> result) {
+        return Results.ofOptional(result.optional(), () -> result.optionalFailure().get());
+    }
 }

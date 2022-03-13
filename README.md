@@ -155,44 +155,40 @@ By participating, you are expected to uphold this code.
 
 ## Author
 
-Copyright 2021 [Guillermo Calvo](https://github.com/guillermocalvo)
+Copyright 2022 [Guillermo Calvo](https://github.com/guillermocalvo)
 
 [![](https://guillermo.dev/assets/images/thumb.png)](https://guillermo.dev/)
 
 
 ## License
 
-This is free software: you can redistribute it and/or modify it under the terms of the
-**GNU Lesser General Public License** as published by the *Free Software Foundation*,
-either version 3 of the License, or (at your option) any later version.
+This library is licensed under the *Apache License, Version 2.0* (the "License");
+you may not use it except in compliance with the License.
 
-This software is distributed in the hope that it will be useful, but **WITHOUT ANY WARRANTY**;
-without even the implied warranty of **MERCHANTABILITY** or **FITNESS FOR A PARTICULAR PURPOSE**.
-See the [GNU Lesser General Public License](http://www.gnu.org/licenses/lgpl.html) for more details.
+You may obtain a copy of the License at <http://www.apache.org/licenses/LICENSE-2.0>
 
-You should have received a copy of the GNU Lesser General Public License along with this software.
-If not, see <http://www.gnu.org/licenses/>.
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an
+"AS IS" BASIS, **WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND**, either express or implied.
+
+See the License for the specific language governing permissions and limitations under the License.
+
 
 ### Permitted
 
-- **Library Use**: Applications using this library can be released under any license.
 - **Commercial Use**: You may use this library and derivatives for commercial purposes.
 - **Modification**: You may modify this library.
 - **Distribution**: You may distribute this library.
+- **Patent Use**: This license provides an express grant of patent rights from contributors.
 - **Private Use**: You may use and modify this library without distributing it.
-- **Patent Grant**: This license provides an express grant of patent rights from contributors.
 
 ### Required
 
 - **License and Copyright Notice**: If you distribute this library you must include a copy of the license and copyright
   notice.
-- **Disclose Source**: If you distribute this library you must make available its source code (not the entire program
-  using the library).
 - **State Changes**: If you modify and distribute this library you must document changes made to this library.
-- **Same License**: If you modify and distribute this library you must release it (not the entire program using the
-  library) under the same license.
 
 ### Forbidden
 
-- **Warranty**: This library is provided without any warranty.
+- **Trademark use**: This license does not grant any trademark rights.
 - **Liability**: The library author cannot be held liable for damages.
+- **Warranty**: This library is provided without any warranty.
