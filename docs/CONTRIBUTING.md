@@ -5,7 +5,7 @@
 
 Hi there! We're thrilled that you'd like to contribute to this project. Your help is essential for keeping it great.
 
-The Result Library is [free software](https://www.gnu.org/philosophy/free-sw.en.html) that depends on volunteer effort
+The Result Library is [open source](https://opensource.org/osd) that depends on volunteer effort
 and built one contribution at a time by users like you. We'd love for you to get involved. Whatever your level of skill
 or however much time you can give, your contribution is greatly appreciated. There are many ways to contribute, from
 writing tutorials or blog posts, improving the documentation, submitting bug reports and feature requests, helping other
