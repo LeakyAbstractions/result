@@ -99,7 +99,7 @@ implementation separation](https://docs.gradle.org/current/userguide/java_librar
 There are several ways of creating <tt>Result</tt> objects.
 
 
-#### Successful Results
+### Successful Results
 
 To create a successful result, we simply need to use static method [`Results.success()`][NEW_SUCCESS]:
 
@@ -117,7 +117,7 @@ Note that we can use methods [`isSuccess()`][IS_SUCCESS]  or [`isFailure()`][IS_
 successful or not.
 
 
-#### Failed Results
+### Failed Results
 
 On the other hand, if we want to create a failed result, we can use static method [`Results.failure()`][NEW_FAILURE]:
 
@@ -132,7 +132,7 @@ void should_be_failure() {
 ```
 
 
-#### Results Based on Nullable Value
+### Results Based on Nullable Value
 
 We can use static method [`Results.ofNullable()`][OF_NULLABLE] to create results that depend on a possibly-null value:
 
@@ -149,7 +149,7 @@ void should_not_be_failure() {
 ```
 
 
-#### Results Based on Optional Value
+### Results Based on Optional Value
 
 We can also use static method [`Results.ofOptional()`][OF_OPTIONAL] to create results that depend on an optional value:
 
@@ -166,7 +166,7 @@ void should_not_be_success() {
 ```
 
 
-#### Results Based on Callable Value
+### Results Based on Callable Value
 
 And sometimes it might come in handy to wrap actual thrown exceptions inside a result object via static method
 [`Results.ofCallable()`][OF_CALLABLE]:
@@ -517,54 +517,6 @@ void should_contain_error() {
 ```
 
 
-## Lazy Results
-
-_Lazy_ results encapsulate expensive operations that can be entirely omitted (as an optimization). These result can be
-manipulated just like any other, but the encapsulated operation will not be executed unless there's an actual check for
-success/failure.
-
-To create a _lazy_ result we need to use static method [`Results.lazy()`][LAZY]:
-
-```java
-    Result<String, Void> expensiveCalculation(AtomicLong timesExecuted) {
-        timesExecuted.getAndIncrement();
-        return Results.success("HELLO");
-    }
-
-    @Test
-    void should_not_execute_expensive_action() {
-        final AtomicLong timesExecuted = new AtomicLong();
-        // Given
-        final Result<String, Void> lazy = Results
-                .lazy(() -> this.expensiveCalculation(timesExecuted));
-        // When
-        final Result<Integer, Void> transformed = lazy.mapSuccess(String::length);
-        // Then
-        assertThat(transformed).isNotNull();
-        assertThat(timesExecuted).hasValue(0);
-    }
-```
-
-Lazy results can be manipulated just like any other result; they will try to defer the invocation of the given supplier
-as long as possible. For example, when we actually try to determine if the operation succeeded or failed.
-
-```java
-    @Test
-    void should_execute_expensive_action() {
-        final AtomicLong timesExecuted = new AtomicLong();
-        // Given
-        final Result<String, Void> lazy = Results
-                .lazy(() -> this.expensiveCalculation(timesExecuted));
-        // When
-        final Result<Integer, Void> transformed = lazy.mapSuccess(String::length);
-        final boolean success = transformed.isSuccess();
-        // Then
-        assertThat(success).isTrue();
-        assertThat(timesExecuted).hasValue(1);
-    }
-```
-
-
 ## Fluent Assertions
 
 You can use fluent assertions (based on [AssertJ](https://assertj.github.io/)) for Result objects in your unit tests.
@@ -656,7 +608,6 @@ expected to uphold this code.
 [OF_NULLABLE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Results.html#ofNullable-S-F-
 [OF_OPTIONAL]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Results.html#ofOptional-java.util.Optional-F-
 [OF_CALLABLE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Results.html#ofCallable-java.util.concurrent.Callable-
-[LAZY]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Results.html#lazy-java.util.function.Supplier-
 [IS_SUCCESS]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#isSuccess--
 [IS_FAILURE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#isFailure--
 [IF_SUCCESS_OR_ELSE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#ifSuccessOrElse-java.util.function.Consumer,java.util.function.Consumer-
