@@ -133,14 +133,16 @@ public class Results {
      * @param <S> the success type of the result
      * @param callable the task that produces a success value, or throws an exception if unable to do so
      * @return the new result
-     * @throws NullPointerException if {@code callable} is {@code null}
+     * @throws NullPointerException if {@code callable} is {@code null}; or if {@code callable} returns {@code null}
      */
-    public static <S> Result<S, Exception> ofCallable(Callable<S> callable) {
+    public static <S> Result<S, Exception> ofCallable(Callable<? extends S> callable) {
         requireNonNull(callable);
+        final S success;
         try {
-            return success(callable.call());
+            success = callable.call();
         } catch (Exception exception) {
             return new Failure<>(exception);
         }
+        return success(success);
     }
 }

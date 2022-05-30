@@ -5,6 +5,7 @@ import static com.leakyabstractions.result.Results.failure;
 import static com.leakyabstractions.result.Results.ofCallable;
 import static com.leakyabstractions.result.Results.success;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 import java.io.IOException;
 import java.util.concurrent.Callable;
@@ -22,6 +23,26 @@ class Results_ofCallable_Test {
 
     private static final String SUCCESS = "SUCCESS";
     private static final String FAILURE = "FAILURE";
+
+    @Test
+    void should_throw_exception_when_null_callable() {
+        // Given
+        final Callable<Result<String, Integer>> callable = null;
+        // When
+        final Throwable thrown = catchThrowable(() -> Results.ofCallable(callable));
+        // Then
+        assertThat(thrown).isInstanceOf(NullPointerException.class);
+    }
+
+    @Test
+    void should_throw_exception_when_callable_returns_null() {
+        // Given
+        final Callable<Result<String, Integer>> callable = () -> null;
+        // When
+        final Throwable thrown = catchThrowable(() -> Results.ofCallable(callable));
+        // Then
+        assertThat(thrown).isInstanceOf(NullPointerException.class);
+    }
 
     @Test
     void should_return_success_when_no_exception() {
