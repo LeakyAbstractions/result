@@ -143,29 +143,4 @@ public class Results {
             return new Failure<>(exception);
         }
     }
-
-    /**
-     * If the given {@code callable} produces a success value, returns a new successful result with it; otherwise
-     * returns a new failed result with a value produced by the given mapping function.
-     * <p>
-     * The mapping function will be applied to the exception thrown by {@code callable} to produce the failure value.
-     *
-     * @apiNote If {@code callable} returns {@code null} then the mapping function will be applied to an instance of
-     *     {@link NullPointerException}.
-     * @param <S> the success type of the result
-     * @param <F> the failure type of the result
-     * @param callable the task that produces a success value, or throws an exception if unable to do so
-     * @param exceptionMapper the mapping function that produces a failure value
-     * @return the new result
-     * @throws NullPointerException if {@code callable} is {@code null}, or if {@code callable} throws an exception and
-     *     {@code exceptionMapper} is {@code null}, or if {@code exceptionMapper} returns {@code null}
-     */
-    public static <S, F> Result<S, F> ofCallable(Callable<S> callable, Function<? super Exception, F> exceptionMapper) {
-        requireNonNull(callable);
-        try {
-            return success(callable.call());
-        } catch (Exception exception) {
-            return failure(exceptionMapper.apply(exception));
-        }
-    }
 }
