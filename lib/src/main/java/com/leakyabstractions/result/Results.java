@@ -128,8 +128,6 @@ public class Results {
      * If the given {@code callable} produces a success value, returns a new successful result with it; otherwise
      * returns a new failed result with the exception thrown by {@code callable}.
      *
-     * @apiNote If {@code callable} returns {@code null} then a new failed result with a {@link NullPointerException}
-     *     will be returned.
      * @param <S> the success type of the result
      * @param callable the task that produces a success value, or throws an exception if unable to do so
      * @return the new result
