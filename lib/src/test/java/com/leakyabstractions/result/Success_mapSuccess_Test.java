@@ -2,12 +2,11 @@
 package com.leakyabstractions.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
-import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -36,8 +35,8 @@ class Success_mapSuccess_Test {
         final Result<Integer, Integer> success = new Success<>(123);
         final Function<Integer, String> mapper = s -> null;
         // When
-        final ThrowingCallable callable = () -> success.mapSuccess(mapper);
+        final Throwable thrown = catchThrowable(() -> success.mapSuccess(mapper));
         // Then
-        assertThatThrownBy(callable).isInstanceOf(NullPointerException.class);
+        assertThat(thrown).isInstanceOf(NullPointerException.class);
     }
 }
