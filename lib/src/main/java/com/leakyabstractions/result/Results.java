@@ -45,7 +45,8 @@ public class Results {
      * @throws NullPointerException if {@code success} is {@code null}
      */
     public static <S, F> Result<S, F> success(S success) {
-        return new Success<>(requireNonNull(success));
+        requireNonNull(success, "success value");
+        return new Success<>(success);
     }
 
     /**
@@ -58,7 +59,8 @@ public class Results {
      * @throws NullPointerException if {@code failure} is {@code null}
      */
     public static <S, F> Result<S, F> failure(F failure) {
-        return new Failure<>(requireNonNull(failure));
+        requireNonNull(failure, "failure value");
+        return new Failure<>(failure);
     }
 
     /**
@@ -89,7 +91,11 @@ public class Results {
      *     {@code failureSupplier} returns {@code null}
      */
     public static <S, F> Result<S, F> ofNullable(S value, Supplier<? extends F> failureSupplier) {
-        return value != null ? new Success<>(value) : failure(failureSupplier.get());
+        if (value != null) return new Success<>(value);
+        requireNonNull(failureSupplier, "failure supplier");
+        final F failure = failureSupplier.get();
+        requireNonNull(failure, "failure value returned by supplier");
+        return new Failure<>(failure);
     }
 
     /**
@@ -105,6 +111,7 @@ public class Results {
      *     {@code failure} is {@code null}
      */
     public static <S, F> Result<S, F> ofOptional(Optional<S> optional, F failure) {
+        requireNonNull(optional, "optional");
         return optional.map((Function<S, Result<S, F>>) Success::new).orElseGet(() -> failure(failure));
     }
 
@@ -121,7 +128,13 @@ public class Results {
      *     {@code failureSupplier} is {@code null}; or if {@code failureSupplier} returns {@code null}
      */
     public static <S, F> Result<S, F> ofOptional(Optional<S> optional, Supplier<? extends F> failureSupplier) {
-        return optional.map((Function<S, Result<S, F>>) Success::new).orElseGet(() -> failure(failureSupplier.get()));
+        requireNonNull(optional, "optional");
+        return optional.map((Function<S, Result<S, F>>) Success::new).orElseGet(() -> {
+            requireNonNull(failureSupplier, "failure supplier");
+            final F failure = failureSupplier.get();
+            requireNonNull(failure, "failure value returned by supplier");
+            return new Failure<>(failure);
+        });
     }
 
     /**
@@ -134,13 +147,14 @@ public class Results {
      * @throws NullPointerException if {@code callable} is {@code null}; or if {@code callable} returns {@code null}
      */
     public static <S> Result<S, Exception> ofCallable(Callable<? extends S> callable) {
-        requireNonNull(callable);
+        requireNonNull(callable, "callable");
         final S success;
         try {
             success = callable.call();
         } catch (Exception exception) {
             return new Failure<>(exception);
         }
-        return success(success);
+        requireNonNull(success, "success value returned by callable");
+        return new Success<>(success);
     }
 }

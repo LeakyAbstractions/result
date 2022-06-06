@@ -82,12 +82,14 @@ final class Success<S, F> implements Result<S, F> {
 
     @Override
     public Result<S, F> ifSuccess(Consumer<? super S> action) {
+        requireNonNull(action, "action");
         action.accept(this.value);
         return this;
     }
 
     @Override
     public Result<S, F> ifSuccessOrElse(Consumer<? super S> successAction, Consumer<? super F> failureAction) {
+        requireNonNull(successAction, "success action");
         successAction.accept(this.value);
         return this;
     }
@@ -99,19 +101,27 @@ final class Success<S, F> implements Result<S, F> {
 
     @Override
     public Result<S, F> filter(Predicate<? super S> predicate, Function<? super S, ? extends F> mapper) {
-        return predicate.test(this.value) ? this : new Failure<>(requireNonNull(mapper.apply(this.value)));
+        requireNonNull(predicate, "predicate");
+        if (predicate.test(this.value)) return this;
+        requireNonNull(mapper, "mapper");
+        final F failure = requireNonNull(mapper.apply(this.value), "failure value returned by mapper");
+        return new Failure<>(failure);
     }
 
     @Override
     public <S2, F2> Result<S2, F2> map(
             Function<? super S, ? extends S2> successMapper,
             Function<? super F, ? extends F2> failureMapper) {
-        return new Success<>(requireNonNull(successMapper.apply(this.value)));
+        requireNonNull(successMapper, "success mapper");
+        final S2 success = requireNonNull(successMapper.apply(this.value), "success value returned by success mapper");
+        return new Success<>(success);
     }
 
     @Override
     public <S2> Result<S2, F> mapSuccess(Function<? super S, ? extends S2> mapper) {
-        return new Success<>(requireNonNull(mapper.apply(this.value)));
+        requireNonNull(mapper, "mapper");
+        final S2 success = requireNonNull(mapper.apply(this.value), "success value returned by mapper");
+        return new Success<>(success);
     }
 
     @Override
@@ -125,13 +135,17 @@ final class Success<S, F> implements Result<S, F> {
     public <S2, F2> Result<S2, F2> flatMap(
             Function<? super S, ? extends Result<? extends S2, ? extends F2>> successMapper,
             Function<? super F, ? extends Result<? extends S2, ? extends F2>> failureMapper) {
-        return (Result<S2, F2>) requireNonNull(successMapper.apply(this.value));
+        requireNonNull(successMapper, "success mapper");
+        final Result<?, ?> result = successMapper.apply(this.value);
+        return (Result<S2, F2>) requireNonNull(result, "result object returned by success mapper");
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public <S2> Result<S2, F> flatMapSuccess(Function<? super S, ? extends Result<? extends S2, ? extends F>> mapper) {
-        return (Result<S2, F>) requireNonNull(mapper.apply(this.value));
+        requireNonNull(mapper, "mapper");
+        final Result<?, ?> result = requireNonNull(mapper.apply(this.value), "result object returned by mapper");
+        return (Result<S2, F>) result;
     }
 
     @Override
