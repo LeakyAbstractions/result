@@ -41,6 +41,16 @@ final class Success<S, F> implements Result<S, F> {
     }
 
     @Override
+    public S getSuccess() {
+        return this.value;
+    }
+
+    @Override
+    public F getFailure() {
+        return null;
+    }
+
+    @Override
     public boolean isSuccess() {
         return true;
     }
