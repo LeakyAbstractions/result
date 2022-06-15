@@ -24,7 +24,8 @@ either a successful value or a failure value that explains what went wrong.
 |-------------------------|-------------------------|
 | `isPresent`             | `isSuccess`             |
 | `isEmpty`               | `isFailure`             |
-| `get`                   |                         |
+| `get`                   | `getSuccess`            |
+|                         | `getFailure`            |
 | `orElse`                | `orElse`                |
 | `orElseGet`             | `orElseMap`             |
 | `orElseThrow`           |                         |
