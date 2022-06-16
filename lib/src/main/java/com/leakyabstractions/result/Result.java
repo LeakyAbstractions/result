@@ -70,6 +70,22 @@ import java.util.stream.Stream;
 public interface Result<S, F> {
 
     /**
+     * If this is a successful result, returns its success value; otherwise {@code null}.
+     *
+     * @return a success value if successful; otherwise {@code null}
+     * @see #isSuccess()
+     */
+    S getSuccess();
+
+    /**
+     * If this is a failed result, returns its failure value; otherwise {@code null}.
+     *
+     * @return a failure value if failed; otherwise {@code null}
+     * @see #isFailure()
+     */
+    F getFailure();
+
+    /**
      * If this is a successful result, returns {@code true}; otherwise {@code false}.
      *
      * @return {@code true} if successful; otherwise {@code false}

@@ -1,0 +1,26 @@
+
+package com.leakyabstractions.result;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+/**
+ * Tests for {@link Failure#getSuccess()}.
+ *
+ * @author Guillermo Calvo
+ */
+@DisplayName("Failure getSuccess")
+class Failure_getSuccess_Test {
+
+    @Test
+    void should_return_null() {
+        // Given
+        final Result<Integer, String> result = new Failure<>("FAILURE");
+        // When
+        final Integer success = result.getSuccess();
+        // Then
+        assertThat(success).isNull();
+    }
+}
