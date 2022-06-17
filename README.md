@@ -26,17 +26,15 @@ or a failure value that explains what went wrong.
 
 | Optional                | Result                  |
 |-------------------------|-------------------------|
-| `isPresent`             | `isSuccess`             |
-| `isEmpty`               | `isFailure`             |
+| `isPresent`             | `hasSuccess`            |
+| `isEmpty`               | `hasFailure`            |
 | `get`                   | `getSuccess`            |
 |                         | `getFailure`            |
 | `orElse`                | `orElse`                |
 | `orElseGet`             | `orElseMap`             |
 | `orElseThrow`           |                         |
 |                         | `optional`              |
-|                         | `optionalFailure`       |
 | `stream`                | `stream`                |
-|                         | `streamFailure`         |
 | `ifPresent`             | `ifSuccess`             |
 |                         | `ifFailure`             |
 | `ifPresentOrElse`       | `ifSuccessOrElse`       |
