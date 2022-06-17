@@ -22,17 +22,15 @@ either a successful value or a failure value that explains what went wrong.
 
 | Optional                | Result                  |
 |-------------------------|-------------------------|
-| `isPresent`             | `isSuccess`             |
-| `isEmpty`               | `isFailure`             |
+| `isPresent`             | `hasSuccess`            |
+| `isEmpty`               | `hasFailure`            |
 | `get`                   | `getSuccess`            |
 |                         | `getFailure`            |
 | `orElse`                | `orElse`                |
 | `orElseGet`             | `orElseMap`             |
 | `orElseThrow`           |                         |
 |                         | `optional`              |
-|                         | `optionalFailure`       |
 | `stream`                | `stream`                |
-|                         | `streamFailure`         |
 | `ifPresent`             | `ifSuccess`             |
 |                         | `ifFailure`             |
 | `ifPresentOrElse`       | `ifSuccessOrElse`       |
@@ -110,11 +108,11 @@ void should_be_success() {
     // When
     final Result<Integer, ?> result = Results.success(123);
     // Then
-    assertThat(result.isSuccess()).isTrue();
+    assertThat(result.hasSuccess()).isTrue();
 }
 ```
 
-Note that we can use methods [`isSuccess()`][IS_SUCCESS]  or [`isFailure()`][IS_FAILURE] to check if the result was
+Note that we can use methods [`hasSuccess()`][HAS_SUCCESS]  or [`hasFailure()`][HAS_FAILURE] to check if the result was
 successful or not.
 
 
@@ -128,7 +126,7 @@ void should_be_failure() {
     // When
     final Result<?, String> result = Results.failure("The operation failed");
     // Then
-    assertThat(result.isFailure()).isTrue();
+    assertThat(result.hasFailure()).isTrue();
 }
 ```
 
@@ -145,7 +143,7 @@ void should_not_be_failure() {
     // When
     final Result<String, Integer> result = Results.ofOptional(nullable, 0);
     // Then
-    assertThat(result.isFailure()).isFalse();
+    assertThat(result.hasFailure()).isFalse();
 }
 ```
 
@@ -162,7 +160,7 @@ void should_not_be_success() {
     // When
     final Result<String, Integer> result = Results.ofOptional(optional, -1);
     // Then
-    assertThat(result.isSuccess()).isFalse();
+    assertThat(result.hasSuccess()).isFalse();
 }
 ```
 
@@ -180,7 +178,7 @@ void should_wrap_exception() {
     // When
     final Result<String, Exception> result = Results.ofCallable(callable);
     // Then
-    assertThat(result.isFailure()).isTrue();
+    assertThat(result.hasFailure()).isTrue();
 }
 ```
 
@@ -283,8 +281,8 @@ void should_map_the_failure_value() {
 }
 ```
 
-Finally, the methods [`optional()`][OPTIONAL] and [`optionalFailure()`][OPTIONAL_FAILURE] can be used to wrap success/
-failure values held by a <tt>Result</tt> object in an <tt>Optional</tt> object.
+Finally, the method [`optional()`][OPTIONAL] and [`stream()`][STREAM] can be used to wrap success values held by an
+instance of <tt>Result</tt> in <tt>Optional</tt> or <tt>Stream</tt> objects.
 
 ```java
 @Test
@@ -298,13 +296,13 @@ void success_should_be_present() {
 }
 
 @Test
-void failure_should_be_empty() {
+void success_should_be_streamed() {
     // Given
-    final Result<String, Integer> result = success("HOWDY");
+    final Result<Integer, String> result = success(123);
     // When
-    final Optional<Integer> optional = result.optionalFailure();
+    final Stream<Integer> stream = result.stream();
     // Then
-    assertThat(optional).isEmpty();
+    assertThat(stream).containsExactly(123);
 }
 ```
 
@@ -336,7 +334,7 @@ void should_pass_test() {
     // When
     final Result<Integer, String> filtered = result.filter(isPositive, i -> "Negative number");
     // Then
-    assertThat(filtered.isFailure()).isTrue();
+    assertThat(filtered.hasFailure()).isTrue();
 }
 ```
 
@@ -388,7 +386,7 @@ void should_return_lower_case() {
     final Result<String, String> mapped = result
         .map(String::toUpperCase, String::toLowerCase);
     // Then
-    assertThat(mapped.optionalFailure()).contains("hello world!");
+    assertThat(mapped.getFailure()).isEqualTo("hello world!");
 }
 ```
 
@@ -402,7 +400,7 @@ void should_return_is_empty() {
     // When
     final Result<Integer, Boolean> mapped = result.mapFailure(String::isEmpty);
     // Then
-    assertThat(mapped.optionalFailure().orElse(false)).isTrue();
+    assertThat(mapped.getFailure()).isTrue();
 }
 ```
 
@@ -472,7 +470,7 @@ void should_contain_user_problem() {
     final Result<File, Problem> result = user.getCustomConfigPath()
         .flatMapSuccess(this::openFile);
     // Then
-    assertThat(result.optionalFailure()).containsInstanceOf(UserProblem.class);
+    assertThat(result.getFailure()).isInstanceOf(UserProblem.class);
 }
 
 @Test
@@ -483,7 +481,7 @@ void should_contain_file_problem() {
     final Result<File, Problem> result = user.getCustomConfigPath()
         .flatMapSuccess(this::openFile);
     // Then
-    assertThat(result.optionalFailure()).containsInstanceOf(FileProblem.class);
+    assertThat(result.getFailure()).isInstanceOf(FileProblem.class);
 }
 ```
 
@@ -498,7 +496,7 @@ void should_contain_123() {
     final Result<File, Integer> result = user.getCustomConfigPath()
         .flatMap(this::openFile, f -> 123);
     // Then
-    assertThat(result.optionalFailure()).contains(123);
+    assertThat(result.getFailure()).isEqualTo(123);
 }
 ```
 
@@ -513,7 +511,7 @@ void should_contain_error() {
     final Result<String, String> result = user.getCustomConfigPath()
         .flatMapFailure(f -> "error");
     // Then
-    assertThat(result.optionalFailure()).contains("error");
+    assertThat(result.getFailure()).isEqualTo("error");
 }
 ```
 
@@ -609,15 +607,15 @@ expected to uphold this code.
 [OF_NULLABLE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Results.html#ofNullable-S-F-
 [OF_OPTIONAL]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Results.html#ofOptional-java.util.Optional-F-
 [OF_CALLABLE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Results.html#ofCallable-java.util.concurrent.Callable-
-[IS_SUCCESS]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#isSuccess--
-[IS_FAILURE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#isFailure--
+[HAS_SUCCESS]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#hasSuccess--
+[HAS_FAILURE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#hasFailure--
 [IF_SUCCESS_OR_ELSE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#ifSuccessOrElse-java.util.function.Consumer,java.util.function.Consumer-
 [IF_SUCCESS]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#ifSuccess-java.util.function.Consumer-
 [IF_FAILURE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#ifFailure-java.util.function.Consumer-
 [OR_ELSE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#orElse-S-
 [OR_ELSE_MAP]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#orElseMap-java.util.function.Function-
 [OPTIONAL]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#optional--
-[OPTIONAL_FAILURE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#optionalFailure--
+[STREAM]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#stream--
 [FILTER]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#filter-java.util.function.Predicate,java.util.function.Function-
 [MAP]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#map-java.util.function.Function,java.util.function.Function-
 [MAP_SUCCESS]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#mapSuccess-java.util.function.Function-

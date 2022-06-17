@@ -51,12 +51,12 @@ final class Failure<S, F> implements Result<S, F> {
     }
 
     @Override
-    public boolean isSuccess() {
+    public boolean hasSuccess() {
         return false;
     }
 
     @Override
-    public boolean isFailure() {
+    public boolean hasFailure() {
         return true;
     }
 
@@ -77,18 +77,8 @@ final class Failure<S, F> implements Result<S, F> {
     }
 
     @Override
-    public Stream<F> streamFailure() {
-        return Stream.of(this.value);
-    }
-
-    @Override
     public Optional<S> optional() {
         return Optional.empty();
-    }
-
-    @Override
-    public Optional<F> optionalFailure() {
-        return Optional.of(this.value);
     }
 
     @Override

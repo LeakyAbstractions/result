@@ -72,6 +72,6 @@ class Success_flatMapSuccess_Test {
     }
 
     private static <T> T unwrap(Result<T, Void> result) {
-        return result.optional().get();
+        return result.getSuccess();
     }
 }

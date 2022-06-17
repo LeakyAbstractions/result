@@ -5,8 +5,7 @@
  * The purpose of this library is to provide a type-safe encapsulation of operation results that may have succeeded or
  * failed, instead of throwing exceptions.
  * <p>
- * If you like {@link java.util.Optional} but feel that it sometimes falls too short, you'll love
- * {@link com.leakyabstractions.result.Result}.
+ * If you like {@link java.util.Optional} but feel that it sometimes falls too short, you'll love {@link Result}.
  * <p>
  * The best way to think of {@code Result} is as a super-powered version of {@code Optional}. The only difference is
  * that whereas {@code Optional} may contain a successful value or express the absence of a value, {@code Result}
@@ -20,85 +19,81 @@
  * <th class="col-last colLast">Result</th>
  * </tr>
  * </thead> <tbody>
- * <tr class="alt-color altColor">
- * <td><code>isPresent</code></td>
- * <td><code>isSuccess</code></td>
- * </tr>
  * <tr class="row-color rowColor">
- * <td><code>isEmpty</code></td>
- * <td><code>isFailure</code></td>
+ * <td>{@link java.util.Optional#isPresent() isPresent}</td>
+ * <td>{@link Result#hasSuccess() hasSuccess}</td>
  * </tr>
  * <tr class="alt-color altColor">
- * <td><code>get</code></td>
- * <td>&nbsp;</td>
+ * <td>isEmpty</td>
+ * <td>{@link Result#hasFailure() hasFailure}</td>
  * </tr>
  * <tr class="row-color rowColor">
- * <td><code>orElse</code></td>
- * <td><code>orElse</code></td>
- * </tr>
- * <tr class="alt-color altColor">
- * <td><code>orElseGet</code></td>
- * <td><code>orElseMap</code></td>
- * </tr>
- * <tr class="row-color rowColor">
- * <td><code>orElseThrow</code></td>
- * <td>&nbsp;</td>
+ * <td>{@link java.util.Optional#get() get}</td>
+ * <td>{@link Result#getSuccess() getSuccess}</td>
  * </tr>
  * <tr class="alt-color altColor">
  * <td>&nbsp;</td>
- * <td><code>optional</code></td>
+ * <td>{@link Result#getFailure() getFailure}</td>
  * </tr>
  * <tr class="row-color rowColor">
- * <td>&nbsp;</td>
- * <td><code>optionalFailure</code></td>
+ * <td>{@link java.util.Optional#orElse(Object) orElse}</td>
+ * <td>{@link Result#orElse(Object) orElse}</td>
  * </tr>
  * <tr class="alt-color altColor">
- * <td><code>stream</code></td>
- * <td><code>stream</code></td>
+ * <td>{@link java.util.Optional#orElseGet(Supplier) orElseGet}</td>
+ * <td>{@link Result#orElseMap(Function) orElseMap}</td>
  * </tr>
  * <tr class="row-color rowColor">
+ * <td>orElseThrow</td>
  * <td>&nbsp;</td>
- * <td><code>streamFailure</code></td>
- * </tr>
- * <tr class="alt-color altColor">
- * <td><code>ifPresent</code></td>
- * <td><code>ifSuccess</code></td>
- * </tr>
- * <tr class="row-color rowColor">
- * <td>&nbsp;</td>
- * <td><code>ifFailure</code></td>
- * </tr>
- * <tr class="alt-color altColor">
- * <td><code>ifPresentOrElse</code></td>
- * <td><code>ifSuccessOrElse</code></td>
- * </tr>
- * <tr class="row-color rowColor">
- * <td><code>filter</code></td>
- * <td><code>filter</code></td>
- * </tr>
- * <tr class="alt-color altColor">
- * <td><code>map</code></td>
- * <td><code>mapSuccess</code></td>
- * </tr>
- * <tr class="row-color rowColor">
- * <td>&nbsp;</td>
- * <td><code>mapFailure</code></td>
  * </tr>
  * <tr class="alt-color altColor">
  * <td>&nbsp;</td>
- * <td><code>map</code></td>
+ * <td>{@link Result#optional() optional}</td>
  * </tr>
  * <tr class="row-color rowColor">
- * <td><code>flatMap</code></td>
- * <td><code>flatMapSuccess</code></td>
+ * <td>stream</td>
+ * <td>{@link Result#stream() stream}</td>
  * </tr>
  * <tr class="alt-color altColor">
- * <td><code>or</code></td>
- * <td><code>flatMapFailure</code></td>
+ * <td>{@link java.util.Optional#ifPresent(Consumer) isPresent}</td>
+ * <td>{@link Result#ifSuccess(Consumer) ifSuccess}</td>
  * </tr>
  * <tr class="row-color rowColor">
  * <td>&nbsp;</td>
- * <td><code>flatMap</code></td>
+ * <td>{@link Result#ifFailure(Consumer) ifFailure}</td>
+ * </tr>
+ * <tr class="alt-color altColor">
+ * <td>ifPresentOrElse</td>
+ * <td>{@link Result#ifSuccessOrElse(Consumer, Consumer) ifSuccessOrElse}</td>
+ * </tr>
+ * <tr class="row-color rowColor">
+ * <td>{@link java.util.Optional#filter(Predicate) filter}</td>
+ * <td>{@link Result#filter(Predicate, Function) filter}</td>
+ * </tr>
+ * <tr class="alt-color altColor">
+ * <td>{@link java.util.Optional#map(Function) map}</td>
+ * <td>{@link Result#mapSuccess(Function) mapSuccess}</td>
+ * </tr>
+ * <tr class="row-color rowColor">
+ * <td>&nbsp;</td>
+ * <td>{@link Result#mapFailure(Function) mapFailure}</td>
+ * </tr>
+ * <tr class="alt-color altColor">
+ * <td>&nbsp;</td>
+ * <td>{@link Result#map(Function, Function) map}</td>
+ * </tr>
+ * <tr class="row-color rowColor">
+ * <td>{@link java.util.Optional#flatMap(Function) flatMap}</td>
+ * <td>{@link Result#flatMapSuccess(Function) flatMapSuccess}</td>
+ * </tr>
+ * <tr class="alt-color altColor">
+ * <td>or</td>
+ * <td>{@link Result#flatMapFailure(Function) flatMapFailure}</td>
+ * </tr>
+ * <tr class="row-color rowColor">
+ * <td>&nbsp;</td>
+ * <td>{@link Result#flatMap(Function, Function) flatMap}</td>
  * </tr>
  * </tbody>
  * </table>
@@ -168,7 +163,12 @@
  * This allows others to easily compose operations on top of ours, just like we did with foobar.
  *
  * @author Guillermo Calvo
- * @see com.leakyabstractions.result.Result
+ * @see Result
  */
 
 package com.leakyabstractions.result;
+
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;

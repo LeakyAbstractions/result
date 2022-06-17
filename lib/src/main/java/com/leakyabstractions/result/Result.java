@@ -37,7 +37,7 @@ import java.util.stream.Stream;
  * <li>A <em>failed</em> result wraps a value of type {@code F}.</li>
  * </ul>
  * <p>
- * Result state can be determined via {@link #isSuccess() isSuccess} or {@link #isFailure() isFailure}. Additional
+ * Result state can be determined via {@link #hasSuccess() hasSuccess} or {@link #hasFailure() hasFailure}. Additional
  * methods to unwrap the included value are provided, such as {@link #orElse(Object) orElse} (return an <em>alternative
  * success value</em> if the operation failed) and {@link #ifSuccess(Consumer) ifSuccess} (execute a block of code if
  * the operation succeeded).
@@ -73,7 +73,7 @@ public interface Result<S, F> {
      * If this is a successful result, returns its success value; otherwise {@code null}.
      *
      * @return a success value if successful; otherwise {@code null}
-     * @see #isSuccess()
+     * @see #hasSuccess()
      */
     S getSuccess();
 
@@ -81,7 +81,7 @@ public interface Result<S, F> {
      * If this is a failed result, returns its failure value; otherwise {@code null}.
      *
      * @return a failure value if failed; otherwise {@code null}
-     * @see #isFailure()
+     * @see #hasFailure()
      */
     F getFailure();
 
@@ -89,17 +89,17 @@ public interface Result<S, F> {
      * If this is a successful result, returns {@code true}; otherwise {@code false}.
      *
      * @return {@code true} if successful; otherwise {@code false}
-     * @see #isFailure()
+     * @see #hasFailure()
      */
-    boolean isSuccess();
+    boolean hasSuccess();
 
     /**
      * If this is a failed result, returns {@code true}; otherwise {@code false}.
      *
      * @return {@code true} if failed; otherwise {@code false}
-     * @see #isSuccess()
+     * @see #hasSuccess()
      */
-    boolean isFailure();
+    boolean hasFailure();
 
     /**
      * If this is a successful result, returns its success value; otherwise returns {@code other}.
@@ -127,37 +127,17 @@ public interface Result<S, F> {
      * If this is a successful result, returns an optional containing its success value; otherwise returns an empty
      * optional.
      *
-     * @see #optionalFailure()
      * @return this result's success value as an optional if successful; otherwise an empty optional.
      */
     Optional<S> optional();
 
     /**
-     * If this is a failed result, returns an optional containing its failure value; otherwise returns an empty
-     * optional.
-     *
-     * @see #optional()
-     * @return this result's failure value as an optional if failed; otherwise an empty optional.
-     */
-    Optional<F> optionalFailure();
-
-    /**
      * If this is a successful result, returns a sequential stream containing only its success value; otherwise returns
      * an empty stream.
      *
-     * @see #streamFailure()
      * @return this result's success value as a stream if successful; otherwise an empty stream.
      */
     Stream<S> stream();
-
-    /**
-     * If this is a failed result, returns a sequential stream containing only its failure value; otherwise returns an
-     * empty stream.
-     *
-     * @see #stream()
-     * @return this result's failure value as a stream if failed; otherwise an empty stream.
-     */
-    Stream<F> streamFailure();
 
     /**
      * If this is a successful result, performs the given action with its success value; otherwise does nothing.
