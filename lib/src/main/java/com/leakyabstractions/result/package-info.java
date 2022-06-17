@@ -24,7 +24,7 @@
  * <td>{@link Result#hasSuccess() hasSuccess}</td>
  * </tr>
  * <tr class="alt-color altColor">
- * <td>{@link java.util.Optional#isEmpty() isEmpty}</td>
+ * <td>isEmpty</td>
  * <td>{@link Result#hasFailure() hasFailure}</td>
  * </tr>
  * <tr class="row-color rowColor">
@@ -44,7 +44,7 @@
  * <td>{@link Result#orElseMap(Function) orElseMap}</td>
  * </tr>
  * <tr class="row-color rowColor">
- * <td>{@link java.util.Optional#orElseThrow() orElseThrow}</td>
+ * <td>orElseThrow</td>
  * <td>&nbsp;</td>
  * </tr>
  * <tr class="alt-color altColor">
@@ -52,7 +52,7 @@
  * <td>{@link Result#optional() optional}</td>
  * </tr>
  * <tr class="row-color rowColor">
- * <td>{@link java.util.Optional#stream() stream}</td>
+ * <td>stream</td>
  * <td>{@link Result#stream() stream}</td>
  * </tr>
  * <tr class="alt-color altColor">
@@ -64,7 +64,7 @@
  * <td>{@link Result#ifFailure(Consumer) ifFailure}</td>
  * </tr>
  * <tr class="alt-color altColor">
- * <td>{@link java.util.Optional#ifPresentOrElse(Consumer, Runnable) ifPresentOrElse}</td>
+ * <td>ifPresentOrElse</td>
  * <td>{@link Result#ifSuccessOrElse(Consumer, Consumer) ifSuccessOrElse}</td>
  * </tr>
  * <tr class="row-color rowColor">
@@ -88,7 +88,7 @@
  * <td>{@link Result#flatMapSuccess(Function) flatMapSuccess}</td>
  * </tr>
  * <tr class="alt-color altColor">
- * <td>{@link java.util.Optional#or(Supplier) or}</td>
+ * <td>or</td>
  * <td>{@link Result#flatMapFailure(Function) flatMapFailure}</td>
  * </tr>
  * <tr class="row-color rowColor">
