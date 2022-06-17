@@ -7,20 +7,20 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests for {@link Failure#isSuccess()}.
+ * Tests for {@link Failure#hasSuccess()}.
  *
  * @author Guillermo Calvo
  */
-@DisplayName("Failure isSuccess")
-class Failure_isSuccess_Test {
+@DisplayName("Failure hasSuccess")
+class Failure_hasSuccess_Test {
 
     @Test
     void should_return_false() {
         // Given
-        final Result<Integer, String> failure = new Failure<>("FAILURE");
+        final Result<Integer, String> result = new Failure<>("FAILURE");
         // When
-        final boolean isSuccess = failure.isSuccess();
+        final boolean hasSuccess = result.hasSuccess();
         // Then
-        assertThat(isSuccess).isFalse();
+        assertThat(hasSuccess).isFalse();
     }
 }

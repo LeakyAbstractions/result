@@ -72,6 +72,6 @@ class Failure_flatMapFailure_Test {
     }
 
     private static <T> T unwrap(Result<Void, T> result) {
-        return result.optionalFailure().get();
+        return result.getFailure();
     }
 }
