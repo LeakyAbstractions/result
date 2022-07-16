@@ -75,6 +75,6 @@ class Failure_flatMap_Test {
     }
 
     private static <T> T unwrap(Result<T, T> result) {
-        return result.optional().orElseGet(result::getFailure);
+        return result.getSuccess().or(result::getFailure).get();
     }
 }
