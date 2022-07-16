@@ -41,13 +41,13 @@ final class Failure<S, F> implements Result<S, F> {
     }
 
     @Override
-    public S getSuccess() {
-        return null;
+    public Optional<S> getSuccess() {
+        return Optional.empty();
     }
 
     @Override
-    public F getFailure() {
-        return this.value;
+    public Optional<F> getFailure() {
+        return Optional.of(this.value);
     }
 
     @Override
@@ -74,11 +74,6 @@ final class Failure<S, F> implements Result<S, F> {
     @Override
     public Stream<S> stream() {
         return Stream.empty();
-    }
-
-    @Override
-    public Optional<S> optional() {
-        return Optional.empty();
     }
 
     @Override
