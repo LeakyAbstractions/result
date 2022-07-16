@@ -3,6 +3,8 @@ package com.leakyabstractions.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,8 +23,8 @@ class Success_getSuccess_Test {
         // Given
         final Result<String, Integer> result = new Success<>(SUCCESS);
         // When
-        final String success = result.getSuccess();
+        final Optional<String> success = result.getSuccess();
         // Then
-        assertThat(success).isSameAs(SUCCESS);
+        assertThat(success).containsSame(SUCCESS);
     }
 }

@@ -3,6 +3,8 @@ package com.leakyabstractions.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,8 +21,8 @@ class Failure_getSuccess_Test {
         // Given
         final Result<Integer, String> result = new Failure<>("FAILURE");
         // When
-        final Integer success = result.getSuccess();
+        final Optional<Integer> success = result.getSuccess();
         // Then
-        assertThat(success).isNull();
+        assertThat(success).isEmpty();
     }
 }

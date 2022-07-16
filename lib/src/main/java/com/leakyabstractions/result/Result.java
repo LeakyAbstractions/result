@@ -70,20 +70,22 @@ import java.util.stream.Stream;
 public interface Result<S, F> {
 
     /**
-     * If this is a successful result, returns its success value; otherwise {@code null}.
+     * If this is a successful result, returns an optional containing its success value; otherwise returns an empty
+     * optional.
      *
-     * @return a success value if successful; otherwise {@code null}
-     * @see #hasSuccess()
+     * @return this result's success value as an optional if successful; otherwise an empty optional.
+     * @see #getFailure()
      */
-    S getSuccess();
+    Optional<S> getSuccess();
 
     /**
-     * If this is a failed result, returns its failure value; otherwise {@code null}.
+     * If this is a failed result, returns an optional containing its failure value; otherwise returns an empty
+     * optional.
      *
-     * @return a failure value if failed; otherwise {@code null}
-     * @see #hasFailure()
+     * @return this result's failure value as an optional if failed; otherwise an empty optional.
+     * @see #getSuccess()
      */
-    F getFailure();
+    Optional<F> getFailure();
 
     /**
      * If this is a successful result, returns {@code true}; otherwise {@code false}.
@@ -122,14 +124,6 @@ public interface Result<S, F> {
      * @see #orElse(Object)
      */
     S orElseMap(Function<? super F, ? extends S> mapper);
-
-    /**
-     * If this is a successful result, returns an optional containing its success value; otherwise returns an empty
-     * optional.
-     *
-     * @return this result's success value as an optional if successful; otherwise an empty optional.
-     */
-    Optional<S> optional();
 
     /**
      * If this is a successful result, returns a sequential stream containing only its success value; otherwise returns
