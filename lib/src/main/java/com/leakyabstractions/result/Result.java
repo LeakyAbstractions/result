@@ -174,7 +174,7 @@ public interface Result<S, F> {
      * <p>
      * The mapping function will be applied to this result's success value to produce the failure value.
      *
-     * @param predicate the predicate to apply to this result's success value
+     * @param isAcceptable the predicate to apply to this result's success value
      * @param mapper the mapping function that produces the failure value
      * @return a new failed result with the value produced by {@code mapper} if this is a successful result whose value
      *     does not match the given predicate; otherwise this result
@@ -182,7 +182,7 @@ public interface Result<S, F> {
      *     success value does not match the predicate and {@code mapper} is {@code null}; or if {@code mapper} returns
      *     {@code null}
      */
-    Result<S, F> filter(Predicate<? super S> predicate, Function<? super S, ? extends F> mapper);
+    Result<S, F> filter(Predicate<? super S> isAcceptable, Function<? super S, ? extends F> mapper);
 
     /**
      * Returns a new result with the value produced by the appropriate mapping function.

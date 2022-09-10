@@ -95,9 +95,9 @@ final class Success<S, F> implements Result<S, F> {
     }
 
     @Override
-    public Result<S, F> filter(Predicate<? super S> predicate, Function<? super S, ? extends F> mapper) {
-        requireNonNull(predicate, "predicate");
-        if (predicate.test(this.value)) return this;
+    public Result<S, F> filter(Predicate<? super S> isAcceptable, Function<? super S, ? extends F> mapper) {
+        requireNonNull(isAcceptable, "predicate");
+        if (isAcceptable.test(this.value)) return this;
         requireNonNull(mapper, "mapper");
         final F failure = requireNonNull(mapper.apply(this.value), "failure value returned by mapper");
         return new Failure<>(failure);
