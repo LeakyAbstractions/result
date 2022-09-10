@@ -185,6 +185,21 @@ public interface Result<S, F> {
     Result<S, F> filter(Predicate<? super S> isAcceptable, Function<? super S, ? extends F> mapper);
 
     /**
+     * If this is a failed result whose value matches the given predicate, returns a new successful result with a value
+     * produced by the given mapping function; otherwise returns this result.
+     * <p>
+     * The mapping function will be applied to this result's failure value to produce the success value.
+     *
+     * @param isRecoverable the predicate to apply to this result's failure value
+     * @param mapper the mapping function that produces the success value
+     * @return a new successful result with the value produced by {@code mapper} if this is a failed result whose value
+     *     matches the given predicate; otherwise this result
+     * @throws NullPointerException if this is a failed result and {@code predicate} is {@code null}, or if its failure
+     *     value matches the predicate and {@code mapper} is {@code null}; or if {@code mapper} returns {@code null}
+     */
+    Result<S, F> fallBack(Predicate<? super F> isRecoverable, Function<? super F, ? extends S> mapper);
+
+    /**
      * Returns a new result with the value produced by the appropriate mapping function.
      * <p>
      * Depending on this result's state, one of the two given functions will be applied to its success or failure value

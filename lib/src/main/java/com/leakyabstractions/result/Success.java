@@ -104,6 +104,11 @@ final class Success<S, F> implements Result<S, F> {
     }
 
     @Override
+    public Result<S, F> fallBack(Predicate<? super F> isRecoverable, Function<? super F, ? extends S> mapper) {
+        return this;
+    }
+
+    @Override
     public <S2, F2> Result<S2, F2> map(
             Function<? super S, ? extends S2> successMapper,
             Function<? super F, ? extends F2> failureMapper) {
