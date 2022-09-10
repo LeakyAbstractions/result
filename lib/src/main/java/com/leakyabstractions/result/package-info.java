@@ -68,26 +68,30 @@
  * <td>{@link Result#filter(Predicate, Function) filter}</td>
  * </tr>
  * <tr class="row-color rowColor">
+ * <td>&nbsp;</td>
+ * <td>{@link Result#fallBack(Predicate, Function) fallBack}</td>
+ * </tr>
+ * <tr class="alt-color altColor">
  * <td>{@link java.util.Optional#map(Function) map}</td>
  * <td>{@link Result#mapSuccess(Function) mapSuccess}</td>
  * </tr>
- * <tr class="alt-color altColor">
+ * <tr class="row-color rowColor">
  * <td>&nbsp;</td>
  * <td>{@link Result#mapFailure(Function) mapFailure}</td>
  * </tr>
- * <tr class="row-color rowColor">
+ * <tr class="alt-color altColor">
  * <td>&nbsp;</td>
  * <td>{@link Result#map(Function, Function) map}</td>
  * </tr>
- * <tr class="alt-color altColor">
+ * <tr class="row-color rowColor">
  * <td>{@link java.util.Optional#flatMap(Function) flatMap}</td>
  * <td>{@link Result#flatMapSuccess(Function) flatMapSuccess}</td>
  * </tr>
- * <tr class="row-color rowColor">
+ * <tr class="alt-color altColor">
  * <td>or</td>
  * <td>{@link Result#flatMapFailure(Function) flatMapFailure}</td>
  * </tr>
- * <tr class="alt-color altColor">
+ * <tr class="row-color rowColor">
  * <td>&nbsp;</td>
  * <td>{@link Result#flatMap(Function, Function) flatMap}</td>
  * </tr>
