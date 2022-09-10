@@ -21,26 +21,26 @@ class Success_filter_Test {
     private static final String FAILURE = "FAILURE";
 
     @Test
-    void should_return_itself_when_filter_returns_true() {
+    void should_return_itself_when_predicate_returns_true() {
         // Given
         final Result<String, Integer> success = new Success<>("SUCCESS");
-        final Predicate<String> filter = s -> true;
+        final Predicate<String> isAcceptable = s -> true;
         final Function<String, Integer> mapper = s -> fail("Should not happen");
         // When
-        final Result<String, Integer> result = success.filter(filter, mapper);
+        final Result<String, Integer> result = success.filter(isAcceptable, mapper);
         // Then
         assertThat(result).isSameAs(success);
     }
 
     @Test
-    void should_return_failure_when_filter_returns_false() {
+    void should_return_failure_when_predicate_returns_false() {
         // Given
         final Result<Integer, String> success = new Success<>(321);
-        final Predicate<Integer> filter = s -> false;
+        final Predicate<Integer> isAcceptable = s -> false;
         final Function<Integer, String> mapper = s -> FAILURE;
         final Result<Integer, String> expected = new Failure<>(FAILURE);
         // When
-        final Result<Integer, String> result = success.filter(filter, mapper);
+        final Result<Integer, String> result = success.filter(isAcceptable, mapper);
         // Then
         assertThat(result).isEqualTo(expected);
     }

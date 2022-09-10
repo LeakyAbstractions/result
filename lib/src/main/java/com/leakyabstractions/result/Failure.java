@@ -96,8 +96,17 @@ final class Failure<S, F> implements Result<S, F> {
     }
 
     @Override
-    public Result<S, F> filter(Predicate<? super S> predicate, Function<? super S, ? extends F> mapper) {
+    public Result<S, F> filter(Predicate<? super S> isAcceptable, Function<? super S, ? extends F> mapper) {
         return this;
+    }
+
+    @Override
+    public Result<S, F> fallBack(Predicate<? super F> isRecoverable, Function<? super F, ? extends S> mapper) {
+        requireNonNull(isRecoverable, "predicate");
+        if (!isRecoverable.test(this.value)) return this;
+        requireNonNull(mapper, "mapper");
+        final S success = requireNonNull(mapper.apply(this.value), "success value returned by mapper");
+        return new Success<>(success);
     }
 
     @Override

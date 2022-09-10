@@ -11,21 +11,21 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests for {@link Failure#filter(Predicate, Function)}.
+ * Tests for {@link Success#fallBack(Predicate, Function)}.
  *
  * @author Guillermo Calvo
  */
-@DisplayName("Failure filter")
-class Failure_filter_Test {
+@DisplayName("Success fallBack")
+class Success_fallBack_Test {
 
     @Test
     void should_return_itself_no_matter_what() {
         // Given
-        final Result<Integer, String> failure = new Failure<>("FAILURE");
-        final Predicate<Integer> isAcceptable = s -> fail("Should not happen");
+        final Result<String, Integer> failure = new Success<>("SUCCESS");
+        final Predicate<Integer> isRecoverable = s -> fail("Should not happen");
         final Function<Integer, String> mapper = s -> fail("Should not happen");
         // When
-        final Result<Integer, String> result = failure.filter(isAcceptable, mapper);
+        final Result<String, Integer> result = failure.fallBack(isRecoverable, mapper);
         // Then
         assertThat(result).isSameAs(failure);
     }

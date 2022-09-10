@@ -6,9 +6,14 @@
 [![Latest Release](https://img.shields.io/github/release/leakyabstractions/result.svg?logo=github)](https://github.com/leakyabstractions/result/releases/latest)
 [![Javadoc](https://img.shields.io/endpoint?url=https://dev.leakyabstractions.com/result/badge.json&label=javadoc&color=blue)](https://dev.leakyabstractions.com/result/javadoc/)
 
-# Result Library for Java
+![Result Library for Java](docs/result-magic-ball.png)
 
-![Result](https://dev.leakyabstractions.com/result/result-banner-centered.png)
+> *If you seek advice... then this Java library is for you! `Result` objects have all the answers you need. Start by
+> "asking the ball" a Yes or No question, then turn it over and let the answers magically appear. Results can be either
+> positive ("Success") or negative ("Failure"). Great fun for software developers and adults alike. Colors and
+> decorations may vary.*
+
+# Result Library for Java
 
 The purpose of this library is to provide a type-safe encapsulation of operation results that may have succeeded or
 failed, instead of throwing exceptions.
@@ -38,6 +43,7 @@ or a failure value that explains what went wrong.
 |                         | `ifFailure`             |
 | `ifPresentOrElse`       | `ifSuccessOrElse`       |
 | `filter`                | `filter`                |
+|                         | `fallBack`              |
 | `map`                   | `mapSuccess`            |
 |                         | `mapFailure`            |
 |                         | `map`                   |
