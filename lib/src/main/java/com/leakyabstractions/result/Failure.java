@@ -67,7 +67,7 @@ final class Failure<S, F> implements Result<S, F> {
 
     @Override
     public S orElseMap(Function<? super F, ? extends S> mapper) {
-        requireNonNull(mapper, "mapper");
+        requireNonNull(mapper, "mapper"); // NOSONAR
         return mapper.apply(this.value);
     }
 
@@ -104,7 +104,7 @@ final class Failure<S, F> implements Result<S, F> {
     public Result<S, F> fallBack(Predicate<? super F> isRecoverable, Function<? super F, ? extends S> mapper) {
         requireNonNull(isRecoverable, "predicate");
         if (!isRecoverable.test(this.value)) return this;
-        requireNonNull(mapper, "mapper");
+        requireNonNull(mapper, "mapper"); // NOSONAR
         final S success = requireNonNull(mapper.apply(this.value), "success value returned by mapper");
         return new Success<>(success);
     }
@@ -126,7 +126,7 @@ final class Failure<S, F> implements Result<S, F> {
 
     @Override
     public <F2> Result<S, F2> mapFailure(Function<? super F, ? extends F2> mapper) {
-        requireNonNull(mapper, "mapper");
+        requireNonNull(mapper, "mapper"); // NOSONAR
         final F2 failure = requireNonNull(mapper.apply(this.value), "failure value returned by mapper");
         return new Failure<>(failure);
     }
@@ -150,7 +150,7 @@ final class Failure<S, F> implements Result<S, F> {
     @Override
     @SuppressWarnings("unchecked")
     public <F2> Result<S, F2> flatMapFailure(Function<? super F, ? extends Result<? extends S, ? extends F2>> mapper) {
-        requireNonNull(mapper, "mapper");
+        requireNonNull(mapper, "mapper"); // NOSONAR
         final Result<?, ?> result = requireNonNull(mapper.apply(this.value), "result object returned by mapper");
         return (Result<S, F2>) result;
     }
