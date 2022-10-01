@@ -18,4 +18,12 @@ javadoc {
                 'implSpec:a:Impl Spec:'
                 )
     }
+    doLast {
+        // work around https://github.com/gradle/gradle/issues/4046
+        copy {
+            from 'src/main/java'
+            into "${project.buildDir}/docs/javadoc/"
+            include '**/doc-files/**/*'
+        }
+    }
 }
