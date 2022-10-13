@@ -1,12 +1,12 @@
 // Configure source code formatting
 spotless {
     java {
-        eclipse().configFile rootProject.file('common/.formatting.xml')
-        importOrderFile rootProject.file('common/.importorder')
+        eclipse().configFile rootProject.file('.formatting.xml')
+        importOrderFile rootProject.file('.importorder')
         removeUnusedImports()
     }
     groovyGradle {
-        greclipse().configFile rootProject.file('common/.formatting.xml')
-        importOrderFile rootProject.file('common/.importorder')
+        greclipse().configFile rootProject.file('.formatting.xml')
+        importOrderFile rootProject.file('.importorder')
     }
 }
