@@ -79,18 +79,18 @@ The best way to think of `Result` is as a super-powered version of `Optional`. T
 
 ## Transforming Values
 
-- [`map`][MAP]
-  transforms either the success or the failure value of a result.
 - [`mapSuccess`][MAP_SUCCESS]
   transform the value of a successful result.
 - [`mapFailure`][MAP_FAILURE]
   transform the value of a failed result.
-- [`flatMap`][FLATMAP]
-  transforms a result into a different one.
+- [`map`][MAP]
+  transforms either the success or the failure value of a result.
 - [`flatMapSuccess`][FLATMAP_SUCCESS]
   transforms a successful result into a different one.
 - [`flatMapFailure`][FLATMAP_FAILURE]
   transforms a failed result into a different one.
+- [`flatMap`][FLATMAP]
+  transforms a result into a different one.
 
 
 # Additional Info

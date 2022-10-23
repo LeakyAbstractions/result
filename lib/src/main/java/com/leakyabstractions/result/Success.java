@@ -96,9 +96,9 @@ final class Success<S, F> implements Result<S, F> {
 
     @Override
     public Result<S, F> filter(Predicate<? super S> isAcceptable, Function<? super S, ? extends F> mapper) {
-        requireNonNull(isAcceptable, "predicate");
+        requireNonNull(isAcceptable, "isAcceptable");
         if (isAcceptable.test(this.value)) return this;
-        requireNonNull(mapper, "mapper");
+        requireNonNull(mapper, "mapper"); // NOSONAR
         final F failure = requireNonNull(mapper.apply(this.value), "failure value returned by mapper");
         return new Failure<>(failure);
     }
@@ -119,7 +119,7 @@ final class Success<S, F> implements Result<S, F> {
 
     @Override
     public <S2> Result<S2, F> mapSuccess(Function<? super S, ? extends S2> mapper) {
-        requireNonNull(mapper, "mapper");
+        requireNonNull(mapper, "mapper"); // NOSONAR
         final S2 success = requireNonNull(mapper.apply(this.value), "success value returned by mapper");
         return new Success<>(success);
     }
@@ -143,7 +143,7 @@ final class Success<S, F> implements Result<S, F> {
     @Override
     @SuppressWarnings("unchecked")
     public <S2> Result<S2, F> flatMapSuccess(Function<? super S, ? extends Result<? extends S2, ? extends F>> mapper) {
-        requireNonNull(mapper, "mapper");
+        requireNonNull(mapper, "mapper"); // NOSONAR
         final Result<?, ?> result = requireNonNull(mapper.apply(this.value), "result object returned by mapper");
         return (Result<S2, F>) result;
     }

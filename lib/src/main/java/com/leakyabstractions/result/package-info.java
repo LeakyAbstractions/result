@@ -1,5 +1,7 @@
 /**
  * A Java library to handle success and failure without exceptions
+ * <p>
+ * <img src="doc-files/result.svg" alt="Result Library">
  * <h2>Result Library for Java</h2>
  * <p>
  * The purpose of this library is to provide a type-safe encapsulation of operation results that may have succeeded or
@@ -10,94 +12,6 @@
  * The best way to think of {@code Result} is as a super-powered version of {@code Optional}. The only difference is
  * that whereas {@code Optional} may contain a successful value or express the absence of a value, {@code Result}
  * contains either a successful value or a failure value that explains what went wrong.
- * <div class="overview-summary overviewSummary">
- * <table class="summary-table memberSummary">
- * <caption> Result objects have methods equivalent to those in Optional, plus a few more to handle failure values.
- * </caption> <thead>
- * <tr>
- * <th class="col-first colFirst">Optional</th>
- * <th class="col-last colLast">Result</th>
- * </tr>
- * </thead> <tbody>
- * <tr class="row-color rowColor">
- * <td>{@link java.util.Optional#isPresent() isPresent}</td>
- * <td>{@link Result#hasSuccess() hasSuccess}</td>
- * </tr>
- * <tr class="alt-color altColor">
- * <td>isEmpty</td>
- * <td>{@link Result#hasFailure() hasFailure}</td>
- * </tr>
- * <tr class="row-color rowColor">
- * <td>{@link java.util.Optional#get() get}</td>
- * <td>{@link Result#getSuccess() getSuccess}</td>
- * </tr>
- * <tr class="alt-color altColor">
- * <td>&nbsp;</td>
- * <td>{@link Result#getFailure() getFailure}</td>
- * </tr>
- * <tr class="row-color rowColor">
- * <td>{@link java.util.Optional#orElse(Object) orElse}</td>
- * <td>{@link Result#orElse(Object) orElse}</td>
- * </tr>
- * <tr class="alt-color altColor">
- * <td>{@link java.util.Optional#orElseGet(Supplier) orElseGet}</td>
- * <td>{@link Result#orElseMap(Function) orElseMap}</td>
- * </tr>
- * <tr class="row-color rowColor">
- * <td>orElseThrow</td>
- * <td>&nbsp;</td>
- * </tr>
- * <tr class="alt-color altColor">
- * <td>stream</td>
- * <td>{@link Result#stream() stream}</td>
- * </tr>
- * <tr class="row-color rowColor">
- * <td>{@link java.util.Optional#ifPresent(Consumer) isPresent}</td>
- * <td>{@link Result#ifSuccess(Consumer) ifSuccess}</td>
- * </tr>
- * <tr class="alt-color altColor">
- * <td>&nbsp;</td>
- * <td>{@link Result#ifFailure(Consumer) ifFailure}</td>
- * </tr>
- * <tr class="row-color rowColor">
- * <td>ifPresentOrElse</td>
- * <td>{@link Result#ifSuccessOrElse(Consumer, Consumer) ifSuccessOrElse}</td>
- * </tr>
- * <tr class="alt-color altColor">
- * <td>{@link java.util.Optional#filter(Predicate) filter}</td>
- * <td>{@link Result#filter(Predicate, Function) filter}</td>
- * </tr>
- * <tr class="row-color rowColor">
- * <td>&nbsp;</td>
- * <td>{@link Result#fallBack(Predicate, Function) fallBack}</td>
- * </tr>
- * <tr class="alt-color altColor">
- * <td>{@link java.util.Optional#map(Function) map}</td>
- * <td>{@link Result#mapSuccess(Function) mapSuccess}</td>
- * </tr>
- * <tr class="row-color rowColor">
- * <td>&nbsp;</td>
- * <td>{@link Result#mapFailure(Function) mapFailure}</td>
- * </tr>
- * <tr class="alt-color altColor">
- * <td>&nbsp;</td>
- * <td>{@link Result#map(Function, Function) map}</td>
- * </tr>
- * <tr class="row-color rowColor">
- * <td>{@link java.util.Optional#flatMap(Function) flatMap}</td>
- * <td>{@link Result#flatMapSuccess(Function) flatMapSuccess}</td>
- * </tr>
- * <tr class="alt-color altColor">
- * <td>or</td>
- * <td>{@link Result#flatMapFailure(Function) flatMapFailure}</td>
- * </tr>
- * <tr class="row-color rowColor">
- * <td>&nbsp;</td>
- * <td>{@link Result#flatMap(Function, Function) flatMap}</td>
- * </tr>
- * </tbody>
- * </table>
- * </div>
  * <h3>Result Library in a Nutshell</h3>
  * <p>
  * Before {@code Result}, we would wrap exception-throwing {@code foobar} method invocation inside a {@code try} block
@@ -167,8 +81,3 @@
  */
 
 package com.leakyabstractions.result;
-
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.Supplier;

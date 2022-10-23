@@ -15,8 +15,8 @@ import org.junit.jupiter.api.Test;
  *
  * @author Guillermo Calvo
  */
-@DisplayName("Failure fallback")
-class Failure_fallback_Test {
+@DisplayName("Failure fallBack")
+class Failure_fallBack_Test {
 
     private static final String SUCCESS = "SUCCESS";
 
