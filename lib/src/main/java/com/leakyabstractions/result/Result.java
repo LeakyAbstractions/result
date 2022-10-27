@@ -190,18 +190,35 @@ public interface Result<S, F> {
      * If this is a successful result, returns a sequential stream containing only its success value; otherwise returns
      * an empty stream.
      * <p>
-     * <img src="doc-files/stream.svg" alt="">
+     * <img src="doc-files/streamSuccess.svg" alt="">
      *
      * <pre class="row-color rowColor">
      * <code>// Example
-     * void testStream(Result&lt;Integer, String&gt; result) {
-     *   Stream&lt;Integer&gt; x = result.stream();
+     * void testStreamSuccess(Result&lt;Integer, String&gt; result) {
+     *   Stream&lt;Integer&gt; x = result.streamSuccess();
      * }</code>
      * </pre>
      *
      * @return this result's success value as a stream if successful; otherwise an empty stream.
      */
-    Stream<S> stream();
+    Stream<S> streamSuccess();
+
+    /**
+     * If this is a failed result, returns a sequential stream containing only its failure value; otherwise returns an
+     * empty stream.
+     * <p>
+     * <img src="doc-files/streamFailure.svg" alt="">
+     *
+     * <pre class="row-color rowColor">
+     * <code>// Example
+     * void testStreamFailure(Result&lt;Integer, String&gt; result) {
+     *   Stream&lt;String&gt; x = result.streamFailure();
+     * }</code>
+     * </pre>
+     *
+     * @return this result's failure value as a stream if failed; otherwise an empty stream.
+     */
+    Stream<F> streamFailure();
 
     /**
      * If this is a successful result, performs the given action with its success value; otherwise does nothing.

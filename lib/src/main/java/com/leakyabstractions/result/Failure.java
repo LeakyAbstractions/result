@@ -72,8 +72,13 @@ final class Failure<S, F> implements Result<S, F> {
     }
 
     @Override
-    public Stream<S> stream() {
+    public Stream<S> streamSuccess() {
         return Stream.empty();
+    }
+
+    @Override
+    public Stream<F> streamFailure() {
+        return Stream.of(this.value);
     }
 
     @Override
