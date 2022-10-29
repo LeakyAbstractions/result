@@ -38,7 +38,8 @@ or a failure value that explains what went wrong.
 | `orElse`                | `orElse`                |
 | `orElseGet`             | `orElseMap`             |
 | `orElseThrow`           |                         |
-| `stream`                | `stream`                |
+| `stream`                | `streamSuccess`         |
+|                         | `streamFailure`         |
 | `ifPresent`             | `ifSuccess`             |
 |                         | `ifFailure`             |
 | `ifPresentOrElse`       | `ifSuccessOrElse`       |

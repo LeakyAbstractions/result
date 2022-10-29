@@ -9,20 +9,20 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests for {@link Failure#stream()}.
+ * Tests for {@link Failure#streamFailure()}.
  *
  * @author Guillermo Calvo
  */
-@DisplayName("Failure stream")
-class Failure_stream_Test {
+@DisplayName("Failure streamFailure")
+class Failure_streamFailure_Test {
 
     @Test
-    void should_return_empty_stream() {
+    void should_return_non_empty_stream() {
         // Given
         final Result<Integer, String> failure = new Failure<>("FAILURE");
         // When
-        final Stream<Integer> stream = failure.stream();
+        final Stream<String> stream = failure.streamFailure();
         // Then
-        assertThat(stream).isEmpty();
+        assertThat(stream).singleElement().isEqualTo("FAILURE");
     }
 }

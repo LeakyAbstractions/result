@@ -55,8 +55,11 @@ The best way to think of `Result` is as a super-powered version of `Optional`. T
   returns a result's success value, or the given one.
 - [`orElseMap`][OR_ELSE_MAP]
   returns a result's success value, or maps its failure value.
-- [`stream`][STREAM]
+- [`streamSuccess`][STREAM_SUCCESS]
   returns a result's success value as a possibly-empty stream.
+- [`streamFailure`][STREAM_FAILURE]
+  returns a result's failure value as a possibly-empty stream.
+
 
 ## Conditional Actions
 
@@ -131,7 +134,8 @@ expected to uphold this code.
 [GET_FAILURE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#getFailure--
 [OR_ELSE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#orElse-S-
 [OR_ELSE_MAP]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#orElseMap-java.util.function.Function-
-[STREAM]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#stream--
+[STREAM_SUCCESS]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#streamSuccess--
+[STREAM_FAILURE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#streamFailure--
 [IF_SUCCESS]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#ifSuccess-java.util.function.Consumer-
 [IF_FAILURE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#ifFailure-java.util.function.Consumer-
 [IF_SUCCESS_OR_ELSE]: https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#ifSuccessOrElse-java.util.function.Consumer,java.util.function.Consumer-
