@@ -69,14 +69,6 @@ jobs:
           ${{ runner.os }}-gradle-
 
     # ================================
-    # GOOGLE JAVA FORMAT WORKAROUND
-    # ================================
-    - name: Set Gradle properties on JDK16+
-      if: ${{ matrix.jdk >= 16 }}
-      shell: bash
-      run: cat google-java-format.properties >> gradle.properties
-
-    # ================================
     # BUILD
     # ================================
     - name: Build
