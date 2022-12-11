@@ -11,9 +11,6 @@ on:
     - main
     - develop
 
-env:
-  GRADLE_OPTS: '-Dorg.gradle.daemon=false'
-
 jobs:
   build:
 
@@ -22,22 +19,21 @@ jobs:
 
     strategy:
       matrix:
-        jdk: [ 8, 11, 17 ]
+        jdk: [ 8, 11, 17, 19 ]
 
     steps:
 
     # ================================
     # CHECKOUT
     # ================================
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
+    - name: Checkout git branch
+      uses: actions/checkout@v3
 
     # ================================
     # SET UP JDK
     # ================================
     - name: Set up JDK
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v3
       with:
         distribution: 'zulu'
         java-package: jdk
@@ -47,7 +43,7 @@ jobs:
     # CACHE SONARCLOUD PACKAGES
     # ================================
     - name: Cache SonarCloud packages
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         key: ${{ runner.os }}-sonar
         path: |
@@ -56,50 +52,28 @@ jobs:
           ${{ runner.os }}-sonar
 
     # ================================
-    # CACHE GRADLE PACKAGES
+    # SETUP GRADLE
     # ================================
-    - name: Cache Gradle packages
-      uses: actions/cache@v2
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
       with:
-        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-        path: |
-          ~/.gradle/caches
-          ~/.gradle/wrapper
-        restore-keys: |
-          ${{ runner.os }}-gradle-
+        cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
 
     # ================================
     # BUILD
     # ================================
     - name: Build
-      run: ./gradlew build --info
-
-    # ================================
-    # JAVADOC
-    # ================================
-    - name: Javadoc
-      run: ./gradlew javadoc --info
-
-    # ================================
-    # UPLOAD JAVADOC
-    # ================================
-    - name: Upload Javadoc files
-      uses: actions/upload-artifact@v2
+      uses: gradle/gradle-build-action@v2
       with:
-        name: javadoc
-        path: lib/build/docs/javadoc/
+        arguments: build -x check --info --scan
 
     # ================================
-    # TEST
+    # CHECK
     # ================================
-    - name: Test
-      run: ./gradlew test --info
-
-    # ================================
-    # CODE COVERAGE
-    # ================================
-    - name: Code Coverage
-      run: ./gradlew jacocoTestReport jacocoTestCoverageVerification --info
+    - name: Check
+      uses: gradle/gradle-build-action@v2
+      with:
+        arguments: check --info --scan
 
     # ================================
     # ANALYZE
@@ -111,4 +85,6 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_RESULT }}
         SONAR_HOST_URL: https://sonarcloud.io
         SONAR_ORGANIZATION: leakyabstractions
-      run: ./gradlew :lib:sonarqube --info
+      uses: gradle/gradle-build-action@v2
+      with:
+        arguments: sonarqube --info --scan
