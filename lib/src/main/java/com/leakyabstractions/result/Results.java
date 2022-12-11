@@ -87,8 +87,8 @@ public class Results {
      * @param value the value to check if {@code null}
      * @param failureSupplier the supplier function that produces a failure value
      * @return the new result
-     * @throws NullPointerException if both {@code value} and {@code failureSupplier} are {@code null}, or if
-     *     {@code failureSupplier} returns {@code null}
+     * @throws NullPointerException if both {@code value} and {@code failureSupplier} are {@code
+     *     null}, or if {@code failureSupplier} returns {@code null}
      */
     public static <S, F> Result<S, F> ofNullable(S value, Supplier<? extends F> failureSupplier) {
         if (value != null) return new Success<>(value);
@@ -127,14 +127,18 @@ public class Results {
      * @throws NullPointerException if {@code optional} is {@code null}; or if {@code optional} is empty and
      *     {@code failureSupplier} is {@code null}; or if {@code failureSupplier} returns {@code null}
      */
-    public static <S, F> Result<S, F> ofOptional(Optional<S> optional, Supplier<? extends F> failureSupplier) {
+    public static <S, F> Result<S, F> ofOptional(
+            Optional<S> optional, Supplier<? extends F> failureSupplier) {
         requireNonNull(optional, "optional");
-        return optional.map((Function<S, Result<S, F>>) Success::new).orElseGet(() -> {
-            requireNonNull(failureSupplier, "failure supplier");
-            final F failure = failureSupplier.get();
-            requireNonNull(failure, "failure value returned by supplier");
-            return new Failure<>(failure);
-        });
+        return optional
+                .map((Function<S, Result<S, F>>) Success::new)
+                .orElseGet(
+                        () -> {
+                            requireNonNull(failureSupplier, "failure supplier");
+                            final F failure = failureSupplier.get();
+                            requireNonNull(failure, "failure value returned by supplier");
+                            return new Failure<>(failure);
+                        });
     }
 
     /**

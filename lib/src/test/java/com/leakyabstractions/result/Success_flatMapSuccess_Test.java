@@ -67,7 +67,8 @@ class Success_flatMapSuccess_Test {
         return new Success<>(value);
     }
 
-    private static <T, T2> Result<T2, Void> bind(Result<T, Void> result, Function<T, Result<T2, Void>> function) {
+    private static <T, T2> Result<T2, Void> bind(
+            Result<T, Void> result, Function<T, Result<T2, Void>> function) {
         return result.flatMapSuccess(function);
     }
 

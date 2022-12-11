@@ -27,15 +27,15 @@ import java.util.stream.Stream;
  * <p>
  * On the one hand, a result object conveys one of these two mutually-exclusive states:
  * <ul>
- * <li><strong>Success</strong>: the operation completed entirely.</li>
- * <li><strong>Failure</strong>: the operation could not get through.</li>
+ * <li><strong>Success</strong>: the operation completed entirely.
+ * <li><strong>Failure</strong>: the operation could not get through.
  * </ul>
  * <p>
  * On the other hand, it also holds a non-{@code null} value whose meaning totally depends on the semantics defined by
  * the operation:
  * <ul>
- * <li>A <em>successful</em> result wraps a value of type {@code S}.</li>
- * <li>A <em>failed</em> result wraps a value of type {@code F}.</li>
+ * <li>A <em>successful</em> result wraps a value of type {@code S}.
+ * <li>A <em>failed</em> result wraps a value of type {@code F}.
  * </ul>
  * <p>
  * Result state can be determined via {@link #hasSuccess() hasSuccess()} or {@link #hasFailure() hasFailure()}.
@@ -50,21 +50,21 @@ import java.util.stream.Stream;
  *     <a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/doc-files/ValueBased.html">
  *     value-based</a> type. Classes that implement {@code Result}:
  *     <ul>
- *     <li>MUST declare only {@code final} instance fields (though these may contain references to mutable
- *     objects);</li>
+ *     <li>MUST declare only {@code final} instance fields (though these may contain references to mutable objects);
  *     <li>MUST have implementations of {@code equals}, {@code hashCode}, and {@code toString} which are computed solely
  *     from the values of the class's instance fields (and the members of the objects they reference), not from the
- *     instance's identity;</li>
+ *     instance's identity;
  *     <li>MUST treat instances as <em>freely substitutable</em> when equal, meaning that interchanging any two
  *     instances {@code x} and {@code y} that are equal according to {@code equals()} produces no visible change in the
- *     behavior of the class's methods;</li>
- *     <li>SHOULD NOT perform any synchronization using an instance's monitor;</li>
- *     <li>MUST NOT declare (or has deprecated any) accessible constructors;</li>
+ *     behavior of the class's methods;
+ *     <li>SHOULD NOT perform any synchronization using an instance's monitor;
+ *     <li>MUST NOT declare (or has deprecated any) accessible constructors;
  *     <li>MUST NOT provide any instance creation mechanism that promises a unique identity on each method call - in
  *     particular, any factory method's contract must allow for the possibility that if two independently-produced
- *     instances are equal according to {@code equals()}, they may also be equal according to {@code ==};</li>
+ *     instances are equal according to {@code
+ *           equals()}, they may also be equal according to {@code ==};
  *     <li>MUST be {@code final}, and extend either {@code Object} or a hierarchy of abstract classes that declare no
- *     instance fields or instance initializers and whose constructors are empty.</li>
+ *     instance fields or instance initializers and whose constructors are empty.
  *     </ul>
  * @author Guillermo Calvo
  * @see com.leakyabstractions.result
@@ -279,12 +279,13 @@ public interface Result<S, F> {
      * @param successAction the action to be applied to this result's success value
      * @param failureAction the action to be applied to this result's failure value
      * @return this result
-     * @throws NullPointerException if this is a successful result and {@code successAction} is {@code null}; or if it
-     *     is failed and {@code failureAction} is {@code null}
+     * @throws NullPointerException if this is a successful result and {@code successAction} is {@code
+     *     null}; or if it is failed and {@code failureAction} is {@code null}
      * @see #ifFailure(Consumer)
      * @see #ifSuccess(Consumer)
      */
-    Result<S, F> ifSuccessOrElse(Consumer<? super S> successAction, Consumer<? super F> failureAction);
+    Result<S, F> ifSuccessOrElse(
+            Consumer<? super S> successAction, Consumer<? super F> failureAction);
 
     /**
      * If this is a successful result whose value does not match the given predicate, returns a new failed result with a
@@ -307,8 +308,8 @@ public interface Result<S, F> {
      * @param mapper the mapping function that produces the failure value
      * @return a new failed result with the value produced by {@code mapper} if this is a successful result whose value
      *     does not match the given predicate; otherwise this result
-     * @throws NullPointerException if this is a successful result and {@code isAcceptable} is {@code null}; or if its
-     *     success value is not acceptable and {@code mapper} is {@code null} or returns {@code null}
+     * @throws NullPointerException if this is a successful result and {@code isAcceptable} is {@code
+     *     null}; or if its success value is not acceptable and {@code mapper} is {@code null} or returns {@code null}
      * @see #fallBack(Predicate, Function)
      */
     Result<S, F> filter(Predicate<? super S> isAcceptable, Function<? super S, ? extends F> mapper);
@@ -334,11 +335,12 @@ public interface Result<S, F> {
      * @param mapper the mapping function that produces the success value
      * @return a new successful result with the value produced by {@code mapper} if this is a failed result whose value
      *     matches the given predicate; otherwise this result
-     * @throws NullPointerException if this is a failed result and {@code isRecoverable} is {@code null}; or if its
-     *     failure value is recoverable and {@code mapper} is {@code null} or returns {@code null}
+     * @throws NullPointerException if this is a failed result and {@code isRecoverable} is {@code
+     *     null}; or if its failure value is recoverable and {@code mapper} is {@code null} or returns {@code null}
      * @see #filter(Predicate, Function)
      */
-    Result<S, F> fallBack(Predicate<? super F> isRecoverable, Function<? super F, ? extends S> mapper);
+    Result<S, F> fallBack(
+            Predicate<? super F> isRecoverable, Function<? super F, ? extends S> mapper);
 
     /**
      * If this is a successful result, returns a new successful result with the value produced by the given mapping
@@ -417,9 +419,11 @@ public interface Result<S, F> {
      * @param <F2> the type of the value returned by {@code failureMapper}
      * @param successMapper the mapping function that produces a success value
      * @param failureMapper the mapping function that produces a failure value
-     * @return a new result with a value produced by either {@code successMapper} or {@code failureMapper}
-     * @throws NullPointerException if this is a successful result and {@code successMapper} is {@code null} or returns
-     *     {@code null}; or if this is a failed result and {@code failureMapper} is {@code null} or returns {@code null}
+     * @return a new result with a value produced by either {@code successMapper} or {@code
+     *     failureMapper}
+     * @throws NullPointerException if this is a successful result and {@code successMapper} is {@code
+     *     null} or returns {@code null}; or if this is a failed result and {@code failureMapper} is {@code null} or
+     *     returns {@code null}
      * @see #mapFailure(Function)
      * @see #mapSuccess(Function)
      */
@@ -428,8 +432,8 @@ public interface Result<S, F> {
             Function<? super F, ? extends F2> failureMapper);
 
     /**
-     * If this is a successful result, returns a new result produced by the given, {@code Result}-bearing mapping
-     * function; otherwise returns a failed result with this result's failure value.
+     * If this is a successful result, returns a new result produced by the given, {@code
+     * Result}-bearing mapping function; otherwise returns a failed result with this result's failure value.
      * <p>
      * The mapping function will be applied to this result's success value to produce a new result. State and success
      * type may be different from this result's.
@@ -454,7 +458,8 @@ public interface Result<S, F> {
      * @see #flatMap(Function, Function)
      * @see #flatMapFailure(Function)
      */
-    <S2> Result<S2, F> flatMapSuccess(Function<? super S, ? extends Result<? extends S2, ? extends F>> mapper);
+    <S2> Result<S2, F> flatMapSuccess(
+            Function<? super S, ? extends Result<? extends S2, ? extends F>> mapper);
 
     /**
      * If this is a failed result, returns a new result produced by the given, {@code Result}-bearing mapping function;
@@ -483,7 +488,8 @@ public interface Result<S, F> {
      * @see #flatMap(Function, Function)
      * @see #flatMapSuccess(Function)
      */
-    <F2> Result<S, F2> flatMapFailure(Function<? super F, ? extends Result<? extends S, ? extends F2>> mapper);
+    <F2> Result<S, F2> flatMapFailure(
+            Function<? super F, ? extends Result<? extends S, ? extends F2>> mapper);
 
     /**
      * Returns a new result produced by the appropriate {@code Result}-bearing mapping function.
@@ -509,8 +515,9 @@ public interface Result<S, F> {
      * @param successMapper the mapping function that produces a new result if this is a successful result
      * @param failureMapper the mapping function that produces a new result if this is a failed result
      * @return the result produced by either {@code successMapper} or {@code failureMapper}
-     * @throws NullPointerException if this is a successful result and {@code successMapper} is {@code null} or returns
-     *     {@code null}; or if this is a failed result and {@code failureMapper} is {@code null} or returns {@code null}
+     * @throws NullPointerException if this is a successful result and {@code successMapper} is {@code
+     *     null} or returns {@code null}; or if this is a failed result and {@code failureMapper} is {@code null} or
+     *     returns {@code null}
      * @see #flatMapFailure(Function)
      * @see #flatMapSuccess(Function)
      */

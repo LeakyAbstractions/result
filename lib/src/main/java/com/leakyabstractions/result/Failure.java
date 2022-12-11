@@ -87,7 +87,8 @@ final class Failure<S, F> implements Result<S, F> {
     }
 
     @Override
-    public Result<S, F> ifSuccessOrElse(Consumer<? super S> successAction, Consumer<? super F> failureAction) {
+    public Result<S, F> ifSuccessOrElse(
+            Consumer<? super S> successAction, Consumer<? super F> failureAction) {
         requireNonNull(failureAction, "failure action");
         failureAction.accept(this.value);
         return this;
@@ -101,12 +102,14 @@ final class Failure<S, F> implements Result<S, F> {
     }
 
     @Override
-    public Result<S, F> filter(Predicate<? super S> isAcceptable, Function<? super S, ? extends F> mapper) {
+    public Result<S, F> filter(
+            Predicate<? super S> isAcceptable, Function<? super S, ? extends F> mapper) {
         return this;
     }
 
     @Override
-    public Result<S, F> fallBack(Predicate<? super F> isRecoverable, Function<? super F, ? extends S> mapper) {
+    public Result<S, F> fallBack(
+            Predicate<? super F> isRecoverable, Function<? super F, ? extends S> mapper) {
         requireNonNull(isRecoverable, "isRecoverable");
         if (!isRecoverable.test(this.value)) return this;
         requireNonNull(mapper, "mapper"); // NOSONAR
@@ -148,13 +151,15 @@ final class Failure<S, F> implements Result<S, F> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <S2> Result<S2, F> flatMapSuccess(Function<? super S, ? extends Result<? extends S2, ? extends F>> mapper) {
+    public <S2> Result<S2, F> flatMapSuccess(
+            Function<? super S, ? extends Result<? extends S2, ? extends F>> mapper) {
         return (Result<S2, F>) this;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public <F2> Result<S, F2> flatMapFailure(Function<? super F, ? extends Result<? extends S, ? extends F2>> mapper) {
+    public <F2> Result<S, F2> flatMapFailure(
+            Function<? super F, ? extends Result<? extends S, ? extends F2>> mapper) {
         requireNonNull(mapper, "mapper"); // NOSONAR
         final Result<?, ?> result = requireNonNull(mapper.apply(this.value), "result object returned by mapper");
         return (Result<S, F2>) result;
