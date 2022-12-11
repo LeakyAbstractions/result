@@ -24,10 +24,21 @@ jobs:
     steps:
 
     # ================================
+    # SHALLOW CLONE
+    # ================================
+    - name: Shallow clone
+      if: ${{ matrix.jdk != 17 }}
+      uses: actions/checkout@v3
+
+    # ================================
     # CHECKOUT
     # ================================
     - name: Checkout git branch
+      if: ${{ matrix.jdk == 17 }}
       uses: actions/checkout@v3
+      with:
+        # Fetch all history for all tags and branches (recommended by SonarQube)
+        fetch-depth: 0
 
     # ================================
     # SET UP JDK
