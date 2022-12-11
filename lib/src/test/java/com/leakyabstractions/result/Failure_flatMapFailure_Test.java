@@ -67,7 +67,8 @@ class Failure_flatMapFailure_Test {
         return new Failure<>(value);
     }
 
-    private static <T, T2> Result<Void, T2> bind(Result<Void, T> result, Function<T, Result<Void, T2>> function) {
+    private static <T, T2> Result<Void, T2> bind(
+            Result<Void, T> result, Function<T, Result<Void, T2>> function) {
         return result.flatMapFailure(function);
     }
 

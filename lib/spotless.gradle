@@ -1,6 +1,11 @@
 // Configure source code formatting
 spotless {
     java {
+        def googleJavaFormatVersion = libs.versions.google.java.format.asProvider().get()
+        if (JavaVersion.current() <= JavaVersion.VERSION_1_8) {
+            googleJavaFormatVersion = libs.versions.google.java.format.jdk8.get()
+        }
+        googleJavaFormat(googleJavaFormatVersion)
         eclipse().configFile rootProject.file('.formatting.xml')
         importOrderFile rootProject.file('.importorder')
         removeUnusedImports()

@@ -19,6 +19,6 @@ class Failure_toString_Test {
         // Given
         final Result<Integer, String> failure = new Failure<>("FAILURE");
         // Then
-        assertThat(failure).hasToString("failure[FAILURE]");
+        assertThat(failure).hasToString("Failure[FAILURE]");
     }
 }

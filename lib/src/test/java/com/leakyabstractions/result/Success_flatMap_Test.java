@@ -70,7 +70,8 @@ class Success_flatMap_Test {
         return new Success<>(value);
     }
 
-    private static <T, T2> Result<T2, T2> bind(Result<T, T> result, Function<T, Result<T2, T2>> function) {
+    private static <T, T2> Result<T2, T2> bind(
+            Result<T, T> result, Function<T, Result<T2, T2>> function) {
         return result.flatMap(function, function);
     }
 

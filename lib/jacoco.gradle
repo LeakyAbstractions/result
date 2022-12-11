@@ -4,6 +4,7 @@ jacoco {
 }
 
 jacocoTestReport {
+    dependsOn test
     reports {
         csv.required = false
         xml.required = true
@@ -12,6 +13,7 @@ jacocoTestReport {
 }
 
 jacocoTestCoverageVerification {
+    dependsOn jacocoTestReport
     violationRules {
         rule {
             limit {
@@ -32,4 +34,8 @@ jacocoTestCoverageVerification {
             }
         }
     }
+}
+
+check {
+    finalizedBy jacocoTestCoverageVerification
 }
