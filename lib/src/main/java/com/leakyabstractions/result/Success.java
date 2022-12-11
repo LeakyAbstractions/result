@@ -178,6 +178,6 @@ final class Success<S, F> implements Result<S, F> {
 
     @Override
     public String toString() {
-        return String.format("success[%s]", this.value);
+        return new StringBuilder("Success[").append(this.value).append("]").toString();
     }
 }

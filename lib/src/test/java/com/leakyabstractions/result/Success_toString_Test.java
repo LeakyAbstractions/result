@@ -19,6 +19,6 @@ class Success_toString_Test {
         // Given
         final Result<String, Integer> success = new Success<>("SUCCESS");
         // Then
-        assertThat(success).hasToString("success[SUCCESS]");
+        assertThat(success).hasToString("Success[SUCCESS]");
     }
 }
