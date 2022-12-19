@@ -11,12 +11,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests for {@link Success#fallBack(Predicate, Function)}.
+ * Tests for {@link Success#recover(Predicate, Function)}.
  *
  * @author Guillermo Calvo
  */
-@DisplayName("Success fallBack")
-class Success_fallBack_Test {
+@DisplayName("Success recover")
+class Success_recover_Test {
 
     @Test
     void should_return_itself_no_matter_what() {
@@ -25,7 +25,7 @@ class Success_fallBack_Test {
         final Predicate<Integer> isRecoverable = s -> fail("Should not happen");
         final Function<Integer, String> mapper = s -> fail("Should not happen");
         // When
-        final Result<String, Integer> result = failure.fallBack(isRecoverable, mapper);
+        final Result<String, Integer> result = failure.recover(isRecoverable, mapper);
         // Then
         assertThat(result).isSameAs(failure);
     }

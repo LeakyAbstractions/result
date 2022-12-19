@@ -11,12 +11,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests for {@link Failure#fallBack(Predicate, Function)}.
+ * Tests for {@link Failure#recover(Predicate, Function)}.
  *
  * @author Guillermo Calvo
  */
-@DisplayName("Failure fallBack")
-class Failure_fallBack_Test {
+@DisplayName("Failure recover")
+class Failure_recover_Test {
 
     private static final String SUCCESS = "SUCCESS";
 
@@ -27,7 +27,7 @@ class Failure_fallBack_Test {
         final Predicate<String> isRecoverable = s -> false;
         final Function<String, Integer> mapper = s -> fail("Should not happen");
         // When
-        final Result<Integer, String> result = failure.fallBack(isRecoverable, mapper);
+        final Result<Integer, String> result = failure.recover(isRecoverable, mapper);
         // Then
         assertThat(result).isSameAs(failure);
     }
@@ -40,7 +40,7 @@ class Failure_fallBack_Test {
         final Function<Integer, String> mapper = s -> SUCCESS;
         final Result<String, Integer> expected = new Success<>(SUCCESS);
         // When
-        final Result<String, Integer> result = failure.fallBack(isRecoverable, mapper);
+        final Result<String, Integer> result = failure.recover(isRecoverable, mapper);
         // Then
         assertThat(result).isEqualTo(expected);
     }

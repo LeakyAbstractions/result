@@ -44,7 +44,7 @@ or a failure value that explains what went wrong.
 |                         | `ifFailure`             |
 | `ifPresentOrElse`       | `ifSuccessOrElse`       |
 | `filter`                | `filter`                |
-|                         | `fallBack`              |
+|                         | `recover`               |
 | `map`                   | `mapSuccess`            |
 |                         | `mapFailure`            |
 |                         | `map`                   |

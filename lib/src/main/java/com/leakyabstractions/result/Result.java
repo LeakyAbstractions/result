@@ -310,7 +310,7 @@ public interface Result<S, F> {
      *     does not match the given predicate; otherwise this result
      * @throws NullPointerException if this is a successful result and {@code isAcceptable} is {@code
      *     null}; or if its success value is not acceptable and {@code mapper} is {@code null} or returns {@code null}
-     * @see #fallBack(Predicate, Function)
+     * @see #recover(Predicate, Function)
      */
     Result<S, F> filter(Predicate<? super S> isAcceptable, Function<? super S, ? extends F> mapper);
 
@@ -320,14 +320,14 @@ public interface Result<S, F> {
      * <p>
      * The mapping function will be applied to this result's failure value to produce the success value.
      * <p>
-     * <img src="doc-files/fallBack.svg" alt="">
+     * <img src="doc-files/recover.svg" alt="">
      *
      * <pre class="row-color rowColor">
      * <code>// Example
-     * void testFallBack(Result&lt;Integer, String&gt; result) {
+     * void testRecover(Result&lt;Integer, String&gt; result) {
      *   Predicate&lt;String&gt; isRecoverable = "B"::equals;
      *   Function&lt;String, Integer&gt; mapper = f -&gt; 5;
-     *   Result&lt;Integer, String&gt; x = result.fallBack(isRecoverable, mapper);
+     *   Result&lt;Integer, String&gt; x = result.recover(isRecoverable, mapper);
      * }</code>
      * </pre>
      *
@@ -339,8 +339,7 @@ public interface Result<S, F> {
      *     null}; or if its failure value is recoverable and {@code mapper} is {@code null} or returns {@code null}
      * @see #filter(Predicate, Function)
      */
-    Result<S, F> fallBack(
-            Predicate<? super F> isRecoverable, Function<? super F, ? extends S> mapper);
+    Result<S, F> recover(Predicate<? super F> isRecoverable, Function<? super F, ? extends S> mapper);
 
     /**
      * If this is a successful result, returns a new successful result with the value produced by the given mapping
