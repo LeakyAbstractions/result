@@ -1,12 +1,12 @@
 [versions]
-assertj = "3.23.1"
+assertj = "3.24.2"
 google-java-format = "1.15.0"
 google-java-format-jdk8 = "1.7"
 jacoco = "0.8.8"
-junit = "5.9.1"
-nexus-publish = "1.1.0"
-sonarqube = "3.5.0.2730"
-spotless = "6.12.0"
+junit = "5.9.2"
+nexus-publish = "1.2.0"
+sonarqube = "4.0.0.2929"
+spotless = "6.13.0" # Spotless 6.14.0 requires JRE 11 or newer
 
 [libraries]
 assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj" }

@@ -523,4 +523,41 @@ public interface Result<S, F> {
     <S2, F2> Result<S2, F2> flatMap(
             Function<? super S, ? extends Result<? extends S2, ? extends F2>> successMapper,
             Function<? super F, ? extends Result<? extends S2, ? extends F2>> failureMapper);
+
+    /**
+     * Indicates whether some other object is "equal to" this result.
+     * <p>
+     * The other object is considered equal if:
+     * <ul>
+     * <li>it is also a {@code Result} and;
+     * <li>both objects are instances of the same class and;
+     * <li>their values are "equal to" each other via {@code equals()}.
+     * </ul>
+     *
+     * @param obj the object to be tested for equality
+     * @return {@code true} if the other object is "equal to" this object; otherwise {@code false}
+     * @see #hashCode()
+     */
+    @Override
+    boolean equals(Object obj);
+
+    /**
+     * Returns the hash code of this result's success or failure value.
+     *
+     * @return hash code value of this result's success or failure value
+     */
+    @Override
+    int hashCode();
+
+    /**
+     * Returns a non-empty string representation of this result suitable for debugging.
+     * <p>
+     * The exact presentation format is unspecified and may vary between implementations and versions.
+     *
+     * @implSpec The returned string must include the string representation of its success or failure value. Successful
+     *     and failed results must be unambiguously differentiable.
+     * @return the string representation of this instance
+     */
+    @Override
+    String toString();
 }
