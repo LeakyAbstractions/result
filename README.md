@@ -160,7 +160,7 @@ By participating, you are expected to uphold this code.
 
 ## Author
 
-Copyright 2022 [Guillermo Calvo](https://github.com/guillermocalvo)
+Copyright 2023 [Guillermo Calvo](https://github.com/guillermocalvo)
 
 [![](https://guillermo.dev/assets/images/thumb.png)](https://guillermo.dev/)
 
