@@ -19,7 +19,7 @@ jobs:
 
     strategy:
       matrix:
-        jdk: [ 8, 11, 17, 19 ]
+        jdk: [ 8, 11, 17, 20 ]
 
     steps:
 
@@ -92,8 +92,7 @@ jobs:
     - name: Analyze
       if: ${{ matrix.jdk == 17 }}
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_RESULT }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: https://sonarcloud.io
         SONAR_ORGANIZATION: leakyabstractions
       uses: gradle/gradle-build-action@v2
