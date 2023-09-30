@@ -139,7 +139,7 @@ Here you can find the full [Javadoc documentation][JAVADOC].
 
 ## Benchmarks
 
-You may want to visualize the latest [Benchmark report][BENCHMARK].
+You may want to visualize the latest [benchmark report][BENCHMARK].
 
 
 ## Looking for Support?

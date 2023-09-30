@@ -7,5 +7,5 @@
   "color": "light-green",
   "label": "Result",
   "message": "{{ site.current_version }}",
-  "logoSvg": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256' role='img'><path fill="#000" d="M128 0a128 128 0 1 0 0 256 128 128 0 0 0 0-256z"/><path fill="#fff" d="M136 57 96 44l-24 75 11 4 10-32 25 8 4 7-8 25 10 3 9-29-3-8 8-4 6-21zm-7 9 3 7-3 12-7 3-26-8 7-22zm-18-43a69 69 0 1 1 0 138 69 69 0 0 1 0-138z"/></svg>"
+  "logoSvg": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256' role='img'><path fill='#000' d='M128 0a128 128 0 1 0 0 256 128 128 0 0 0 0-256z'/><path fill='#fff' d='M136 57 96 44l-24 75 11 4 10-32 25 8 4 7-8 25 10 3 9-29-3-8 8-4 6-21zm-7 9 3 7-3 12-7 3-26-8 7-22zm-18-43a69 69 0 1 1 0 138 69 69 0 0 1 0-138z'/></svg>"
 }

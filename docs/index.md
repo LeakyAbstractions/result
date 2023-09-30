@@ -151,7 +151,7 @@ Here you can find the full [Javadoc documentation][JAVADOC].
 
 ## Benchmarks
 
-You may want to visualize the latest [Benchmark report][BENCHMARK].
+You may want to visualize the latest [benchmark report][BENCHMARK].
 
 
 ## Looking for Support?
@@ -213,6 +213,7 @@ See the License for the specific language governing permissions and limitations 
 
 [ARTIFACTS]:                    https://search.maven.org/artifact/com.leakyabstractions/result/
 [AUTHOR]:                       https://github.com/guillermocalvo/
+[BENCHMARK]:                    https://dev.leakyabstractions.com/result-benchmark/
 [CODE_OF_CONDUCT]:              https://dev.leakyabstractions.com/result/CODE_OF_CONDUCT.html
 [CONTRIBUTING]:                 https://dev.leakyabstractions.com/result/CONTRIBUTING.html
 [FILTER]:                       https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#filter-java.util.function.Predicate-java.util.function.Function-
