@@ -149,6 +149,11 @@ Artifacts are available in [Maven Central][ARTIFACTS].
 Here you can find the full [Javadoc documentation][JAVADOC].
 
 
+## Benchmarks
+
+You may want to visualize the latest [Benchmark report][BENCHMARK].
+
+
 ## Looking for Support?
 
 We'd love to help. Check out the [support guidelines][SUPPORT].

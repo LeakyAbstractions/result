@@ -3,15 +3,12 @@
 [![Quality Gate Status][BADGE_QUALITY_GATE]][QUALITY_GATE]
 [![Coverage][BADGE_CODE_COVERAGE]][CODE_COVERAGE]
 [![Maven Central][BADGE_ARTIFACTS]][ARTIFACTS]
-[![Latest Release][BADGE_LATEST_RELEASE]][LATEST_RELEASE]
-[![Javadoc][BADGE_JAVADOC]][JAVADOC]
+[![Benchmark Report][BADGE_BENCHMARK]][BENCHMARK]
 
-![Result Library for Java](docs/result-magic-ball.png)
 
-> *If you seek advice... then this Java library is for you! `Result` objects have all the answers you need. Start by
-> "asking the ball" a Yes or No question, then turn it over and let the answers magically appear. Results can be either
-> positive ("Success") or negative ("Failure"). Great fun for software developers and adults alike. Colors and
-> decorations may vary.*
+![Result Library for Java](docs/result.svg)
+> A Java library to handle success and failure without exceptions
+
 
 # Result Library for Java
 
@@ -80,9 +77,9 @@ public int getFoobarLength() {
 
 ```
 
-This approach is lengthy, and that's not the only problem -- it's also slow. Conventional wisdom says that exceptional
-logic shouldn't be used for normal program flow. _Result_ makes us deal with expected, non-exceptional error situations
-explicitly as a way of enforcing good programming practices.
+This approach is lengthy, and that's not the only problem -- it's also [very slow][BENCHMARK]. Conventional wisdom says
+that exceptional logic shouldn't be used for normal program flow. _Result_ makes us deal with expected, non-exceptional
+error situations explicitly as a way of enforcing good programming practices.
 
 Let's now look at how the above code could be refactored if method `foobar` returned a _Result_ object instead of
 throwing an exception:
@@ -138,6 +135,11 @@ Artifacts are available in [Maven Central][ARTIFACTS].
 ## Javadoc
 
 Here you can find the full [Javadoc documentation][JAVADOC].
+
+
+## Benchmarks
+
+You may want to visualize the latest [Benchmark report][BENCHMARK].
 
 
 ## Looking for Support?
@@ -199,12 +201,12 @@ See the License for the specific language governing permissions and limitations 
 
 [ARTIFACTS]:                    https://search.maven.org/artifact/com.leakyabstractions/result/
 [AUTHOR]:                       https://github.com/guillermocalvo/
-[BADGE_ARTIFACTS]:              https://img.shields.io/endpoint?url=https://dev.leakyabstractions.com/result/badge.json&logo=java&label=maven-central&labelColor=555
+[BADGE_ARTIFACTS]:              https://img.shields.io/endpoint?url=https://dev.leakyabstractions.com/result/badge.json&logo=Gradle&label=maven-central&labelColor=555
+[BADGE_BENCHMARK]:              https://img.shields.io/endpoint?url=https://dev.leakyabstractions.com/result-benchmark/badge.json&style=flat
 [BADGE_BUILD_STATUS]:           https://github.com/leakyabstractions/result/workflows/Build/badge.svg
 [BADGE_CODE_COVERAGE]:          https://sonarcloud.io/api/project_badges/measure?project=LeakyAbstractions_result&metric=coverage
-[BADGE_JAVADOC]:                https://img.shields.io/endpoint?url=https://dev.leakyabstractions.com/result/badge.json&label=javadoc&color=blue
-[BADGE_LATEST_RELEASE]:         https://img.shields.io/github/release/leakyabstractions/result.svg?logo=github
 [BADGE_QUALITY_GATE]:           https://sonarcloud.io/api/project_badges/measure?project=LeakyAbstractions_result&metric=alert_status
+[BENCHMARK]:                    https://dev.leakyabstractions.com/result-benchmark/
 [BUILD_STATUS]:                 https://github.com/LeakyAbstractions/result/actions?query=workflow%3ABuild
 [CODE_COVERAGE]:                https://sonarcloud.io/component_measures?id=LeakyAbstractions_result&metric=coverage&view=list
 [CODE_OF_CONDUCT]:              https://dev.leakyabstractions.com/result/CODE_OF_CONDUCT.html
@@ -212,7 +214,6 @@ See the License for the specific language governing permissions and limitations 
 [GUILLERMO]:                    https://guillermo.dev/
 [GUILLERMO_IMAGE]:              https://guillermo.dev/assets/images/thumb.png
 [JAVADOC]:                      https://dev.leakyabstractions.com/result/javadoc/
-[LATEST_RELEASE]:               https://github.com/leakyabstractions/result/releases/latest/
 [PRAGVER]:                      https://pragver.github.io/
 [QUALITY_GATE]:                 https://sonarcloud.io/dashboard?id=LeakyAbstractions_result
 [QUICK_GUIDE]:                  https://dev.leakyabstractions.com/result/
