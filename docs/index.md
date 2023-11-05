@@ -216,34 +216,34 @@ See the License for the specific language governing permissions and limitations 
 [BENCHMARK]:                    https://dev.leakyabstractions.com/result-benchmark/
 [CODE_OF_CONDUCT]:              https://dev.leakyabstractions.com/result/CODE_OF_CONDUCT.html
 [CONTRIBUTING]:                 https://dev.leakyabstractions.com/result/CONTRIBUTING.html
-[FILTER]:                       https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#filter-java.util.function.Predicate-java.util.function.Function-
-[FLATMAP]:                      https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#flatMap-java.util.function.Function-java.util.function.Function-
-[FLATMAP_FAILURE]:              https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#flatMapFailure-java.util.function.Function-
-[FLATMAP_SUCCESS]:              https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#flatMapSuccess-java.util.function.Function-
-[GET_FAILURE]:                  https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#getFailure--
-[GET_SUCCESS]:                  https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#getSuccess--
+[FILTER]:                       https://dev.leakyabstractions.com/result-api/javadoc/{{ site.api_version }}/com/leakyabstractions/api/result/Result.html#filter-java.util.function.Predicate-java.util.function.Function-
+[FLATMAP]:                      https://dev.leakyabstractions.com/result-api/javadoc/{{ site.api_version }}/com/leakyabstractions/api/result/Result.html#flatMap-java.util.function.Function-java.util.function.Function-
+[FLATMAP_FAILURE]:              https://dev.leakyabstractions.com/result-api/javadoc/{{ site.api_version }}/com/leakyabstractions/api/result/Result.html#flatMapFailure-java.util.function.Function-
+[FLATMAP_SUCCESS]:              https://dev.leakyabstractions.com/result-api/javadoc/{{ site.api_version }}/com/leakyabstractions/api/result/Result.html#flatMapSuccess-java.util.function.Function-
+[GET_FAILURE]:                  https://dev.leakyabstractions.com/result-api/javadoc/{{ site.api_version }}/com/leakyabstractions/api/result/Result.html#getFailure--
+[GET_SUCCESS]:                  https://dev.leakyabstractions.com/result-api/javadoc/{{ site.api_version }}/com/leakyabstractions/api/result/Result.html#getSuccess--
 [GRADLE]:                       https://gradle.org/
 [GUILLERMO]:                    https://guillermo.dev/
 [GUILLERMO_IMAGE]:              https://guillermo.dev/assets/images/thumb.png
-[HAS_FAILURE]:                  https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#hasFailure--
-[HAS_SUCCESS]:                  https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#hasSuccess--
-[IF_FAILURE]:                   https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#ifFailure-java.util.function.Consumer-
-[IF_SUCCESS]:                   https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#ifSuccess-java.util.function.Consumer-
-[IF_SUCCESS_OR_ELSE]:           https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#ifSuccessOrElse-java.util.function.Consumer-java.util.function.Consumer-
+[HAS_FAILURE]:                  https://dev.leakyabstractions.com/result-api/javadoc/{{ site.api_version }}/com/leakyabstractions/result/api/Result.html#hasFailure--
+[HAS_SUCCESS]:                  https://dev.leakyabstractions.com/result-api/javadoc/{{ site.api_version }}/com/leakyabstractions/result/api/Result.html#hasSuccess--
+[IF_FAILURE]:                   https://dev.leakyabstractions.com/result-api/javadoc/{{ site.api_version }}/com/leakyabstractions/result/api/Result.html#ifFailure-java.util.function.Consumer-
+[IF_SUCCESS]:                   https://dev.leakyabstractions.com/result-api/javadoc/{{ site.api_version }}/com/leakyabstractions/result/api/Result.html#ifSuccess-java.util.function.Consumer-
+[IF_SUCCESS_OR_ELSE]:           https://dev.leakyabstractions.com/result-api/javadoc/{{ site.api_version }}/com/leakyabstractions/result/api/Result.html#ifSuccessOrElse-java.util.function.Consumer-java.util.function.Consumer-
 [JAVADOC]:                      https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/
-[MAP]:                          https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#map-java.util.function.Function-java.util.function.Function-
-[MAP_FAILURE]:                  https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#mapFailure-java.util.function.Function-
-[MAP_SUCCESS]:                  https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#mapSuccess-java.util.function.Function-
+[MAP]:                          https://dev.leakyabstractions.com/result-api/javadoc/{{ site.api_version }}/com/leakyabstractions/result/api/Result.html#map-java.util.function.Function-java.util.function.Function-
+[MAP_FAILURE]:                  https://dev.leakyabstractions.com/result-api/javadoc/{{ site.api_version }}/com/leakyabstractions/result/api/Result.html#mapFailure-java.util.function.Function-
+[MAP_SUCCESS]:                  https://dev.leakyabstractions.com/result-api/javadoc/{{ site.api_version }}/com/leakyabstractions/result/api/Result.html#mapSuccess-java.util.function.Function-
 [MAVEN]:                        https://maven.apache.org/
-[NEW_FAILURE]:                  https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Results.html#failure-F-
-[NEW_SUCCESS]:                  https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Results.html#success-S-
-[OF_CALLABLE]:                  https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Results.html#ofCallable-java.util.concurrent.Callable-
-[OF_NULLABLE]:                  https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Results.html#ofNullable-S-F-
-[OF_OPTIONAL]:                  https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Results.html#ofOptional-java.util.Optional-F-
-[OR_ELSE]:                      https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#orElse-S-
-[OR_ELSE_MAP]:                  https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#orElseMap-java.util.function.Function-
+[NEW_FAILURE]:                  https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/core/Results.html#failure-F-
+[NEW_SUCCESS]:                  https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/core/Results.html#success-S-
+[OF_CALLABLE]:                  https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/core/Results.html#ofCallable-java.util.concurrent.Callable-
+[OF_NULLABLE]:                  https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/core/Results.html#ofNullable-S-F-
+[OF_OPTIONAL]:                  https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/core/Results.html#ofOptional-java.util.Optional-F-
+[OR_ELSE]:                      https://dev.leakyabstractions.com/result-api/javadoc/{{ site.api_version }}/com/leakyabstractions/result/api/Result.html#orElse-S-
+[OR_ELSE_MAP]:                  https://dev.leakyabstractions.com/result-api/javadoc/{{ site.api_version }}/com/leakyabstractions/result/api/Result.html#orElseMap-java.util.function.Function-
 [PRAGVER]:                      https://pragver.github.io/
-[RECOVER]:                      https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#recover-java.util.function.Predicate-java.util.function.Function-
-[STREAM_FAILURE]:               https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#streamFailure--
-[STREAM_SUCCESS]:               https://dev.leakyabstractions.com/result/javadoc/{{ site.current_version }}/com/leakyabstractions/result/Result.html#streamSuccess--
+[RECOVER]:                      https://dev.leakyabstractions.com/result-api/javadoc/{{ site.api_version }}/com/leakyabstractions/result/api/Result.html#recover-java.util.function.Predicate-java.util.function.Function-
+[STREAM_FAILURE]:               https://dev.leakyabstractions.com/result-api/javadoc/{{ site.api_version }}/com/leakyabstractions/result/api/Result.html#streamFailure--
+[STREAM_SUCCESS]:               https://dev.leakyabstractions.com/result-api/javadoc/{{ site.api_version }}/com/leakyabstractions/result/api/Result.html#streamSuccess--
 [SUPPORT]:                      https://dev.leakyabstractions.com/result/SUPPORT.html
