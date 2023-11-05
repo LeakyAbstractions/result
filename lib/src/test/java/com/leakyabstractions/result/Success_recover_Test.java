@@ -10,6 +10,8 @@ import java.util.function.Predicate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.leakyabstractions.result.api.Result;
+
 /**
  * Tests for {@link Success#recover(Predicate, Function)}.
  *

@@ -11,6 +11,8 @@ import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.leakyabstractions.result.api.Result;
+
 /**
  * Tests for {@link Results#ofOptional(Optional, Object)}.
  *

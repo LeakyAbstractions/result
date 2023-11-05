@@ -8,6 +8,8 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.leakyabstractions.result.api.Result;
+
 /**
  * Tests for {@link Success#streamSuccess()}.
  *

@@ -25,6 +25,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+import com.leakyabstractions.result.api.Result;
+
 /**
  * Default implementation of a successful {@link Result}.
  *

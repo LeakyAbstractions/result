@@ -9,6 +9,8 @@ import java.util.function.Function;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.leakyabstractions.result.api.Result;
+
 /**
  * Tests for {@link Failure#map(Function, Function)}.
  *

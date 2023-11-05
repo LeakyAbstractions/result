@@ -23,6 +23,8 @@ import java.util.concurrent.Callable;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import com.leakyabstractions.result.api.Result;
+
 /**
  * This class consists exclusively of static methods that operate on or return {@link Result} instances.
  *

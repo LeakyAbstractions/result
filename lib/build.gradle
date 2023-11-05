@@ -12,6 +12,10 @@ repositories {
     mavenCentral()
 }
 
+dependencies {
+    api libs.bundles.api
+}
+
 apply from: project.file('compile.gradle')
 apply from: project.file('spotless.gradle')
 apply from: project.file('test.gradle')

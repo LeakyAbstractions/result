@@ -5,6 +5,7 @@ google-java-format-jdk8 = "1.7"
 jacoco = "0.8.10"
 junit = "5.10.0"
 nexus-publish = "2.0.0-rc-1"
+result-api = "0.1.0.2"
 sonarqube = "4.0.0.2929"
 spotless = "6.13.0" # Spotless 6.14.0 requires JRE 11 or newer
 
@@ -12,8 +13,10 @@ spotless = "6.13.0" # Spotless 6.14.0 requires JRE 11 or newer
 assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj" }
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
+result-api = { module = "com.leakyabstractions:result-api", version.ref = "result-api" }
 
 [bundles]
+api = [ "result-api" ]
 test-implementation = [ "assertj-core", "junit-jupiter-api" ]
 test-runtime = [ "junit-jupiter-engine" ]
 

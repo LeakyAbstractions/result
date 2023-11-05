@@ -13,6 +13,8 @@ import java.util.concurrent.Callable;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.leakyabstractions.result.api.Result;
+
 /**
  * Tests for {@link Results#ofCallable(Callable)}.
  *
