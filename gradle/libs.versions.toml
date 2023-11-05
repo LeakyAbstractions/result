@@ -6,7 +6,7 @@ jacoco = "0.8.10"
 junit = "5.10.0"
 nexus-publish = "2.0.0-rc-1"
 result-api = "0.1.0.2"
-sonarqube = "4.0.0.2929"
+sonarqube = "4.4.1.3373"
 spotless = "6.13.0" # Spotless 6.14.0 requires JRE 11 or newer
 
 [libraries]
