@@ -27,14 +27,14 @@ jobs:
     # SHALLOW CLONE
     # ================================
     - name: Shallow clone
-      if: ${{ matrix.jdk != 17 }}
+      if: ${{ matrix.jdk != 21 }}
       uses: actions/checkout@v3
 
     # ================================
     # CHECKOUT
     # ================================
     - name: Checkout git branch
-      if: ${{ matrix.jdk == 17 }}
+      if: ${{ matrix.jdk == 21 }}
       uses: actions/checkout@v3
       with:
         # Fetch all history for all tags and branches (recommended by SonarQube)
@@ -90,7 +90,7 @@ jobs:
     # ANALYZE
     # ================================
     - name: Analyze
-      if: ${{ matrix.jdk == 17 }}
+      if: ${{ matrix.jdk == 21 }}
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: https://sonarcloud.io
