@@ -87,6 +87,12 @@ jobs:
         arguments: check --info --scan
 
     # ================================
+    # COMPATIBILITY REPORT
+    # ================================
+    - name: Compatibility report
+      run: cat ./api-compatibility/build/report.txt >> $GITHUB_STEP_SUMMARY
+
+    # ================================
     # ANALYZE
     # ================================
     - name: Analyze

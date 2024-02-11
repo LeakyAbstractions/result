@@ -2,6 +2,7 @@
 assertj = "3.24.2"
 google-java-format = "1.17.0"
 jacoco = "0.8.10"
+japicmp = "0.4.2"
 junit = "5.10.1"
 nexus-publish = "2.0.0-rc-1"
 result-api = "0.1.0.2"
@@ -20,6 +21,7 @@ test-implementation = [ "assertj-core", "junit-jupiter-api" ]
 test-runtime = [ "junit-jupiter-engine" ]
 
 [plugins]
+japicmp = { id = "me.champeau.gradle.japicmp", version.ref = "japicmp" }
 nexus-publish = { id = "io.github.gradle-nexus.publish-plugin", version.ref = "nexus-publish" }
 sonarqube = { id = "org.sonarqube", version.ref = "sonarqube" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }

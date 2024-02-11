@@ -1,0 +1,37 @@
+
+plugins {
+    id 'me.champeau.gradle.japicmp'
+}
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    current
+    previous
+}
+
+dependencies {
+    current project(":${artifactId}")
+    previous "${group}:${artifactId}:${previousVersion}"
+}
+
+tasks.register("clean", Delete) {
+    delete layout.buildDirectory
+}
+
+tasks.register("check", me.champeau.gradle.japicmp.JapicmpTask) {
+    final textReport  = layout.buildDirectory.file('report.txt').get().asFile
+    final htmlReport  = layout.buildDirectory.file('report.html').get().asFile
+    newClasspath.from(configurations.current)
+    oldClasspath.from(configurations.previous)
+    txtOutputFile               = textReport
+    htmlOutputFile              = htmlReport
+    onlyModified                = true
+    failOnModification          = false
+    failOnSourceIncompatibility = false
+    doLast {
+        logger.quiet(textReport.text)
+    }
+}
