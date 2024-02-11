@@ -57,7 +57,7 @@ jobs:
     - name: Publish Javadoc to GitHub Pages
       shell: bash
       run: |
-        cp -r lib/build/docs/javadoc docs/javadoc/${GITHUB_REF#refs/tags/}
+        cp -r result/build/docs/javadoc docs/javadoc/${GITHUB_REF#refs/tags/}
         git config user.name "Guillermo Calvo"
         git config user.email "guillermo@guillermo.dev"
         git add docs/javadoc/${GITHUB_REF#refs/tags/}

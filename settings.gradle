@@ -1,3 +1,3 @@
 
-rootProject.name = 'result-core'
-include('lib')
+rootProject.name = 'result-root'
+include('result')
