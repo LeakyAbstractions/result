@@ -1,6 +1,7 @@
 
 plugins {
     id 'java-library'
+    id 'jvm-test-suite'
     id 'com.diffplug.spotless'
     id 'jacoco'
     id 'org.sonarqube'

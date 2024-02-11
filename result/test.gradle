@@ -1,10 +1,16 @@
-// Use JUnit Platform to execute the tests
-tasks.named('test') {
-    useJUnitPlatform()
-}
 
-// Configure test dependencies
-dependencies {
-    testRuntimeOnly libs.bundles.test.runtime
-    testImplementation libs.bundles.test.implementation
+// Configure test suite
+testing {
+    suites {
+        test {
+            useJUnitJupiter()
+            dependencies {
+                //runtimeOnly libs.bundles.test.runtime
+                runtimeOnly libs.junit.jupiter.engine
+                //implementation libs.bundles.test.implementation
+                implementation libs.assertj.core
+                implementation libs.junit.jupiter.api
+            }
+        }
+    }
 }
