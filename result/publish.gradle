@@ -7,12 +7,14 @@ java {
 // Configure publishing repositories and publications
 publishing {
     repositories {
-        maven {
-            name = 'GitHubPackages'
-            url = uri('https://maven.pkg.github.com/LeakyAbstractions/result')
-            credentials {
-                username = System.env.GITHUB_USERNAME
-                password = System.env.GITHUB_PASSWORD
+        if (project.hasProperty('githubUsername') && project.hasProperty('githubPassword')) {
+            maven {
+                name = 'GitHubPackages'
+                url = uri('https://maven.pkg.github.com/LeakyAbstractions/result')
+                credentials {
+                    username = project.githubUsername
+                    password = project.githubPassword
+                }
             }
         }
     }
@@ -20,9 +22,9 @@ publishing {
         mavenRelease(MavenPublication) {
             pom {
                 groupId         = rootProject.group
-                artifactId      = project.artifactId
-                name            = project.artifactName
-                description     = project.artifactDescription
+                artifactId      = rootProject.artifactId
+                name            = rootProject.artifactName
+                description     = rootProject.description
                 version         = rootProject.version
                 url             = rootProject.homepage
                 licenses {
@@ -61,16 +63,12 @@ publishing {
 }
 
 signing {
-    def signingKey = System.env.SIGNING_KEY
-    def signingPassword = System.env.SIGNING_PASSWORD
-    useInMemoryPgpKeys(signingKey, signingPassword)
+    required = project.hasProperty('signingKey') && project.hasProperty('signingPassword')
+    useInMemoryPgpKeys(project.findProperty('signingKey'), project.findProperty('signingPassword'))
     sign publishing.publications.mavenRelease
 }
 
-publish {
-    finalizedBy publishToSonatype
-}
-
-publishToSonatype {
-    finalizedBy ':closeAndReleaseSonatypeStagingRepository'
+if (hasProperty('publishToSonatype')) {
+    publish.finalizedBy publishToSonatype
+    publishToSonatype.finalizedBy ':closeAndReleaseSonatypeStagingRepository'
 }

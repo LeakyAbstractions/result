@@ -3,8 +3,8 @@ sonarqube {
     properties {
         property 'sonar.host.url',          System.env.SONAR_HOST_URL
         property 'sonar.organization',      System.env.SONAR_ORGANIZATION
-        property 'sonar.projectName',       project.sonarProjectName
-        property 'sonar.projectKey',        project.sonarProjectKey
+        property 'sonar.projectName',       rootProject.sonarProjectName
+        property 'sonar.projectKey',        rootProject.sonarProjectKey
         property 'sonar.projectVersion',    rootProject.version
         property 'sonar.links.homepage',    rootProject.homepage
         property 'sonar.links.ci',          rootProject.ciUrl
