@@ -1,3 +1,4 @@
 
-rootProject.name = 'result'
-include('lib')
+rootProject.name = 'result-root'
+include('result')
+include('api-compatibility')

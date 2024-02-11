@@ -1,0 +1,16 @@
+
+// Configure test suite
+testing {
+    suites {
+        test {
+            useJUnitJupiter()
+            dependencies {
+                //runtimeOnly libs.bundles.test.runtime
+                runtimeOnly libs.junit.jupiter.engine
+                //implementation libs.bundles.test.implementation
+                implementation libs.assertj.core
+                implementation libs.junit.jupiter.api
+            }
+        }
+    }
+}

@@ -43,7 +43,6 @@ To add the dependency using [**Maven**][MAVEN], use the following:
     <groupId>com.leakyabstractions</groupId>
     <artifactId>result</artifactId>
     <version>{{ site.current_version }}</version>
-    <scope>test</scope>
 </dependency>
 ```
 
@@ -52,7 +51,7 @@ internally:
 
 ```gradle
 dependencies {
-    implementation 'com.leakyabstractions:result:{{ site.current_version }}'
+    implementation("com.leakyabstractions:result:{{ site.current_version }}")
 }
 ```
 
@@ -60,7 +59,7 @@ If you are building a library that will use <tt>Result</tt> type in its public A
 
 ```gradle
 dependencies {
-    api 'com.leakyabstractions:result:{{ site.current_version }}'
+    api("com.leakyabstractions:result:{{ site.current_version }}")
 }
 ```
 
@@ -172,7 +171,7 @@ By participating, you are expected to uphold this code.
 
 ## Author
 
-Copyright 2023 [Guillermo Calvo][AUTHOR].
+Copyright 2024 [Guillermo Calvo][AUTHOR].
 
 [![][GUILLERMO_IMAGE]][GUILLERMO]
 
