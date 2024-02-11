@@ -18,13 +18,13 @@ jobs:
     # CHECKOUT
     # ================================
     - name: Checkout git tag
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     # ================================
     # SET UP JDK
     # ================================
     - name: Set up JDK
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         distribution: 'zulu'
         java-package: jdk
@@ -48,7 +48,7 @@ jobs:
         ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.SONATYPE_USERNAME }}
         ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.SONATYPE_PASSWORD }}
         ORG_GRADLE_PROJECT_sonatypeStagingProfileId: ${{ secrets.SONATYPE_STAGING_PROFILE_ID }}
-      uses: gradle/gradle-build-action@v2
+      uses: gradle/actions/setup-gradle@v3
       with:
         arguments: publish -Prelease --info --scan
 
