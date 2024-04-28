@@ -41,6 +41,13 @@ jobs:
         fetch-depth: 0
 
     # ================================
+    # VALIDATE GRADLE WRAPPER
+    # ================================
+    - name: Validate Gradle Wrapper files
+      if: ${{ matrix.jdk == 21 }}
+      uses: gradle/actions/wrapper-validation@v3
+
+    # ================================
     # SET UP JDK
     # ================================
     - name: Set up JDK
