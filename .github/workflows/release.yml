@@ -7,7 +7,7 @@ on:
     tags: ['[0-9]+.[0-9]+.[0-9]+.[0-9]+*']
 
 jobs:
-  build:
+  publish:
 
     name: Publish
     runs-on: ubuntu-latest
@@ -31,10 +31,14 @@ jobs:
         java-version: 21
 
     # ================================
-    # CREATE RELEASE
+    # SET UP GRADLE
     # ================================
-    - name: Create Release
-      uses: softprops/action-gh-release@v1
+    - name: Set up Gradle
+      uses: gradle/actions/setup-gradle@v3
+      with:
+        build-scan-publish: true
+        build-scan-terms-of-use-url: "https://gradle.com/help/legal-terms-of-use"
+        build-scan-terms-of-use-agree: "yes"
 
     # ================================
     # PUBLISH
@@ -48,9 +52,7 @@ jobs:
         ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.SONATYPE_USERNAME }}
         ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.SONATYPE_PASSWORD }}
         ORG_GRADLE_PROJECT_sonatypeStagingProfileId: ${{ secrets.SONATYPE_STAGING_PROFILE_ID }}
-      uses: gradle/actions/setup-gradle@v3
-      with:
-        arguments: publish -Prelease --info --scan
+      run: ./gradlew publish -Prelease --info
 
     # ================================
     # PUBLISH JAVADOC
@@ -65,3 +67,9 @@ jobs:
         git status
         git commit --message "Publish Javadoc to GitHub Pages"
         git push origin HEAD:main
+
+    # ================================
+    # CREATE RELEASE
+    # ================================
+    - name: Create Release
+      uses: softprops/action-gh-release@v2

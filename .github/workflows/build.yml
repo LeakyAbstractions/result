@@ -58,9 +58,39 @@ jobs:
         java-version: ${{ matrix.jdk }}
 
     # ================================
+    # SET UP GRADLE
+    # ================================
+    - name: Set up Gradle
+      uses: gradle/actions/setup-gradle@v3
+      with:
+        build-scan-publish: true
+        build-scan-terms-of-use-url: "https://gradle.com/help/legal-terms-of-use"
+        build-scan-terms-of-use-agree: "yes"
+        cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
+
+    # ================================
+    # BUILD
+    # ================================
+    - name: Build
+      run: ./gradlew build -x check --info
+
+    # ================================
+    # CHECK
+    # ================================
+    - name: Check
+      run: ./gradlew check --info
+
+    # ================================
+    # COMPATIBILITY REPORT
+    # ================================
+    - name: Compatibility report
+      run: cat ./api-compatibility/build/report.txt >> $GITHUB_STEP_SUMMARY
+
+    # ================================
     # CACHE SONARCLOUD PACKAGES
     # ================================
     - name: Cache SonarCloud packages
+      if: ${{ matrix.jdk == 21 }}
       uses: actions/cache@v4
       with:
         key: ${{ runner.os }}-sonar
@@ -70,44 +100,12 @@ jobs:
           ${{ runner.os }}-sonar
 
     # ================================
-    # SETUP GRADLE
+    # ANALYZE WITH SONARCLOUD
     # ================================
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v3
-      with:
-        cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
-
-    # ================================
-    # BUILD
-    # ================================
-    - name: Build
-      uses: gradle/actions/setup-gradle@v3
-      with:
-        arguments: build -x check --info --scan
-
-    # ================================
-    # CHECK
-    # ================================
-    - name: Check
-      uses: gradle/actions/setup-gradle@v3
-      with:
-        arguments: check --info --scan
-
-    # ================================
-    # COMPATIBILITY REPORT
-    # ================================
-    - name: Compatibility report
-      run: cat ./api-compatibility/build/report.txt >> $GITHUB_STEP_SUMMARY
-
-    # ================================
-    # ANALYZE
-    # ================================
-    - name: Analyze
+    - name: Analyze with SonarCloud
       if: ${{ matrix.jdk == 21 }}
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: https://sonarcloud.io
         SONAR_ORGANIZATION: leakyabstractions
-      uses: gradle/actions/setup-gradle@v3
-      with:
-        arguments: sonarqube --info --scan
+      run: ./gradlew sonarqube --info
