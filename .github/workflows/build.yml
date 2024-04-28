@@ -69,9 +69,19 @@ jobs:
         cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
 
     # ================================
+    # EXPORT GRADLE PROPERTIES
+    # ================================
+    - name: Export Gradle properties
+      id: properties
+      uses: guillermocalvo/gradle-properties@v3
+      with:
+        output_file: ${{ github.output }}
+        export: version,previousVersion
+
+    # ================================
     # BUILD
     # ================================
-    - name: Build
+    - name: Build version ${{ steps.properties.outputs.version }}
       run: ./gradlew build -x check --info
 
     # ================================
@@ -83,7 +93,8 @@ jobs:
     # ================================
     # COMPATIBILITY REPORT
     # ================================
-    - name: Compatibility report
+    - name: Compatibility with version ${{ steps.properties.outputs.previousVersion }}
+      if: ${{ matrix.jdk == 21 }}
       run: cat ./api-compatibility/build/report.txt >> $GITHUB_STEP_SUMMARY
 
     # ================================
@@ -109,3 +120,15 @@ jobs:
         SONAR_HOST_URL: https://sonarcloud.io
         SONAR_ORGANIZATION: leakyabstractions
       run: ./gradlew sonarqube --info
+
+    # ================================
+    # PUBLISH SNAPSHOT
+    # ================================
+    - name: Publish snapshot version ${{ steps.properties.outputs.version }}
+      if: ${{ matrix.jdk == 21 && github.event_name == 'push' && github.ref_name == github.event.repository.default_branch && endsWith(steps.properties.outputs.version, '-SNAPSHOT') }}
+      env:
+        ORG_GRADLE_PROJECT_githubUsername: ${{ secrets.PUBLISH_USERNAME }}
+        ORG_GRADLE_PROJECT_githubPassword: ${{ secrets.PUBLISH_PASSWORD }}
+        ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.SONATYPE_USERNAME }}
+        ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.SONATYPE_PASSWORD }}
+      run: ./gradlew publish -Psnapshot --info
