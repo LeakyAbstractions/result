@@ -1,0 +1,49 @@
+
+# Discover vulnerabilities with CodeQL
+name: CodeQL
+
+on:
+  push:
+    branches:
+    - main
+    - develop
+  pull_request:
+    branches:
+    - main
+    - develop
+  schedule:
+    - cron: '0 8 * * 0'
+
+jobs:
+  analyze:
+
+    name: Analyze Java
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    permissions:
+      security-events: write
+
+    steps:
+
+    # ================================
+    # SHALLOW CLONE
+    # ================================
+    - name: Shallow clone
+      uses: actions/checkout@v4
+
+    # ================================
+    # SET UP CODEQL
+    # ================================
+    - name: Set up CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: java-kotlin
+        build-mode: none
+
+    # ================================
+    # ANALYZE
+    # ================================
+    - name: Analyze with CodeQL
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:java-kotlin"

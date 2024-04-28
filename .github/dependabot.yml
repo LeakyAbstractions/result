@@ -1,0 +1,21 @@
+version: 2
+
+updates:
+
+  # ================================
+  # UPDATE GRADLE DEPENDENCIES
+  # ================================
+  - package-ecosystem: gradle
+    directory: /
+    target-branch: develop
+    schedule:
+        interval: weekly
+
+  # ================================
+  # UPDATE GITHUB ACTIONS
+  # ================================
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: develop
+    schedule:
+        interval: weekly

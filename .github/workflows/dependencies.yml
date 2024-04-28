@@ -1,0 +1,41 @@
+
+# Submit dependencies
+name: Dependencies
+
+on:
+  push:
+    branches:
+    - main
+
+permissions:
+  contents: write
+
+jobs:
+  dependencies:
+
+    name: Submit dependencies
+    runs-on: ubuntu-latest
+
+    steps:
+
+    # ================================
+    # SHALLOW CLONE
+    # ================================
+    - name: Shallow clone
+      uses: actions/checkout@v4
+
+    # ================================
+    # SET UP JDK
+    # ================================
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'zulu'
+        java-package: jdk
+        java-version: 21
+
+    # ================================
+    # SUBMIT DEPENDENCIES
+    # ================================
+    - name: Generate and submit dependency graph
+      uses: gradle/actions/dependency-submission@v3
