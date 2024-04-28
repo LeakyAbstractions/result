@@ -1,0 +1,32 @@
+
+# Schedule Gradle Wrapper updates
+name: Update Gradle Wrapper
+
+on:
+  schedule:
+    - cron: "0 8 * * *"
+  workflow_dispatch:
+
+jobs:
+  update-gradle-wrapper:
+
+    name: Update Gradle Wrapper
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    # ================================
+    # SHALLOW CLONE
+    # ================================
+    - name: Shallow clone
+      uses: actions/checkout@v4
+
+    # ================================
+    # UPDATE GRADLE WRAPPER
+    # ================================
+    - name: Update Gradle Wrapper
+      uses: gradle-update/update-gradle-wrapper-action@v1
+      with:
+        release-channel: stable
+        base-branch: main
+        target-branch: develop
