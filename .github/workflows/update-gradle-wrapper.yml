@@ -28,5 +28,5 @@ jobs:
       uses: gradle-update/update-gradle-wrapper-action@v1
       with:
         release-channel: stable
-        base-branch: main
+        base-branch: develop
         target-branch: develop
