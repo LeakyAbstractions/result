@@ -5,6 +5,7 @@ spotless {
         googleJavaFormat(googleJavaFormatVersion)
         eclipse().configFile rootProject.file('.formatting.xml')
         importOrderFile rootProject.file('.importorder')
+        licenseHeaderFile rootProject.file('.licenseheader')
         removeUnusedImports()
     }
     groovyGradle {
