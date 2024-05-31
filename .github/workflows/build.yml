@@ -21,20 +21,26 @@ jobs:
       matrix:
         jdk: [ 11, 17, 21 ]
 
+    env:
+      is_latest_jdk:  ${{ matrix.jdk == 21                                          && 'yes' || '' }}
+      is_main:        ${{ github.ref_name == github.event.repository.default_branch && 'yes' || '' }}
+      is_develop:     ${{ github.ref_name == 'develop'                              && 'yes' || '' }}
+      is_fork:        ${{ github.event_name == 'pull_request'                       && 'yes' || '' }}
+
     steps:
 
     # ================================
     # SHALLOW CLONE
     # ================================
     - name: Shallow clone
-      if: ${{ matrix.jdk != 21 }}
+      if: ${{ !env.is_latest_jdk || env.is_fork }}
       uses: actions/checkout@v4
 
     # ================================
     # CHECKOUT
     # ================================
     - name: Checkout git branch
-      if: ${{ matrix.jdk == 21 }}
+      if: ${{ env.is_latest_jdk && !env.is_fork }}
       uses: actions/checkout@v4
       with:
         # Fetch all history for all tags and branches (recommended by SonarQube)
@@ -44,7 +50,7 @@ jobs:
     # VALIDATE GRADLE WRAPPER
     # ================================
     - name: Validate Gradle Wrapper files
-      if: ${{ matrix.jdk == 21 }}
+      if: ${{ env.is_latest_jdk }}
       uses: gradle/actions/wrapper-validation@v3
 
     # ================================
@@ -66,7 +72,7 @@ jobs:
         build-scan-publish: true
         build-scan-terms-of-use-url: "https://gradle.com/help/legal-terms-of-use"
         build-scan-terms-of-use-agree: "yes"
-        cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
+        cache-read-only: ${{ !env.is_main && !env.is_develop }}
 
     # ================================
     # EXPORT GRADLE PROPERTIES
@@ -82,13 +88,13 @@ jobs:
     # BUILD
     # ================================
     - name: Build version ${{ steps.properties.outputs.version }}
-      run: ./gradlew build -x check --info
+      run: ./gradlew build -x check
 
     # ================================
     # CHECK
     # ================================
     - name: Check
-      run: ./gradlew check --info
+      run: ./gradlew check
 
     # ================================
     # COMPATIBILITY REPORT
@@ -101,7 +107,7 @@ jobs:
     # CACHE SONARCLOUD PACKAGES
     # ================================
     - name: Cache SonarCloud packages
-      if: ${{ matrix.jdk == 21 }}
+      if: ${{ env.is_latest_jdk && !env.is_fork }}
       uses: actions/cache@v4
       with:
         key: ${{ runner.os }}-sonar
@@ -114,21 +120,21 @@ jobs:
     # ANALYZE WITH SONARCLOUD
     # ================================
     - name: Analyze with SonarCloud
-      if: ${{ matrix.jdk == 21 }}
+      if: ${{ env.is_latest_jdk && !env.is_fork }}
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: https://sonarcloud.io
         SONAR_ORGANIZATION: leakyabstractions
-      run: ./gradlew sonarqube --info
+      run: ./gradlew sonar
 
     # ================================
     # PUBLISH SNAPSHOT
     # ================================
     - name: Publish snapshot version ${{ steps.properties.outputs.version }}
-      if: ${{ matrix.jdk == 21 && github.event_name == 'push' && github.ref_name == github.event.repository.default_branch && endsWith(steps.properties.outputs.version, '-SNAPSHOT') }}
+      if: ${{ env.is_latest_jdk && !env.is_fork && env.is_main && endsWith(steps.properties.outputs.version, '-SNAPSHOT') }}
       env:
         ORG_GRADLE_PROJECT_githubUsername: ${{ secrets.PUBLISH_USERNAME }}
         ORG_GRADLE_PROJECT_githubPassword: ${{ secrets.PUBLISH_PASSWORD }}
         ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.SONATYPE_USERNAME }}
         ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.SONATYPE_PASSWORD }}
-      run: ./gradlew publish -Psnapshot --info
+      run: ./gradlew publish -Psnapshot

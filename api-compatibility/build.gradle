@@ -14,7 +14,7 @@ configurations {
 
 dependencies {
     current project(":${artifactId}")
-    previous "${group}:${artifactId}:${previousVersion}"
+    previous project.ext.previousVersion == project.version ? project(":${artifactId}") : "${group}:${artifactId}:${previousVersion}"
 }
 
 tasks.register("clean", Delete) {
