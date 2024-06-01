@@ -101,7 +101,8 @@ jobs:
     # ================================
     - name: Compatibility with version ${{ steps.properties.outputs.previousVersion }}
       if: ${{ matrix.jdk == 21 }}
-      run: cat ./api-compatibility/build/report.txt >> $GITHUB_STEP_SUMMARY
+      # $GITHUB_STEP_SUMMARY supports content up to a size of 1024k
+      run: head -c 1MiB ./api-compatibility/build/report.txt >> $GITHUB_STEP_SUMMARY
 
     # ================================
     # CACHE SONARCLOUD PACKAGES
