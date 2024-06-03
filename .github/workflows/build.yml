@@ -97,6 +97,18 @@ jobs:
       run: ./gradlew check
 
     # ================================
+    # SEMANTIC VERSIONING
+    # ================================
+    - name: Semantic versioning
+      if: ${{ matrix.jdk == 21 }}
+      run: |
+        SEMVER=`cat ./api-compatibility/build/semver.txt`
+        BADGE="https://dev.leakyabstractions.com/result/semver-${SEMVER}.json"
+        URL="https://img.shields.io/endpoint?url=$BADGE"
+        echo "## Compatibility Report" >> $GITHUB_STEP_SUMMARY
+        echo "![Semantic Versioning]($URL)" >> $GITHUB_STEP_SUMMARY
+
+    # ================================
     # COMPATIBILITY REPORT
     # ================================
     - name: Compatibility with version ${{ steps.properties.outputs.previousVersion }}
