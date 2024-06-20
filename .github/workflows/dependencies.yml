@@ -40,5 +40,7 @@ jobs:
     - name: Generate and submit dependency graph
       uses: gradle/actions/dependency-submission@v3
       env:
+        # Exclude all dependencies that originate solely in the 'api-compatibility' project
+        DEPENDENCY_GRAPH_EXCLUDE_PROJECTS: ':api-compatibility'
         # Exclude dependencies that are only resolved in test classpaths
         DEPENDENCY_GRAPH_EXCLUDE_CONFIGURATIONS: '.*[Tt]est(Compile|Runtime)Classpath'
