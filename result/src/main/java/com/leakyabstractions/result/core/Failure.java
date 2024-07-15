@@ -30,7 +30,7 @@ import com.leakyabstractions.result.api.Result;
 /**
  * Default implementation of a failed {@link Result}.
  *
- * @author Guillermo Calvo
+ * @author <a href="https://guillermo.dev/">Guillermo Calvo</a>
  * @param <S> the type of the success value
  * @param <F> the type of the failure value
  */
@@ -181,6 +181,6 @@ final class Failure<S, F> implements Result<S, F> {
 
     @Override
     public String toString() {
-        return new StringBuilder("Failure[").append(this.value).append("]").toString();
+        return "Failure[" + this.value + "]";
     }
 }

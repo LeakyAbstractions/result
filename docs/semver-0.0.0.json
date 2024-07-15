@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "style": "for-the-badge",
+  "labelColor": "gray",
+  "color": "green",
+  "label": "semver",
+  "message": "OK",
+  "namedLogo": "semver"
+}
