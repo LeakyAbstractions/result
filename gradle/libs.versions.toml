@@ -5,7 +5,7 @@ jacoco = "0.8.10"
 japicmp = "0.4.3"
 junit = "5.10.2"
 nexus-publish = "2.0.0"
-result-api = "0.1.0.4"
+result-api = "0.1.1.0"
 sonarqube = "5.0.0.4638"
 spotless = "6.25.0"
 
