@@ -26,10 +26,11 @@ import java.util.function.Supplier;
 import com.leakyabstractions.result.api.Result;
 
 /**
- * This class consists exclusively of static methods that operate on or return {@link Result} instances.
+ * This class consists exclusively of static methods that return {@link Result} instances.
  *
- * @author Guillermo Calvo
- * @see com.leakyabstractions.result
+ * @author <a href="https://guillermo.dev/">Guillermo Calvo</a>
+ * @see com.leakyabstractions.result.api.Result
+ * @see com.leakyabstractions.result.core
  */
 public class Results {
 
@@ -38,12 +39,12 @@ public class Results {
     }
 
     /**
-     * Creates a new successful result with a given value.
+     * Creates a new successful {@link Result}.
      *
-     * @param <S> the success type of the result
-     * @param <F> the failure type of the result
+     * @param <S> the success type of the {@code Result}
+     * @param <F> the failure type of the {@code Result}
      * @param success the success value
-     * @return the new successful result
+     * @return a successful {@code Result} holding {@code success}
      * @throws NullPointerException if {@code success} is {@code null}
      */
     public static <S, F> Result<S, F> success(S success) {
@@ -52,12 +53,12 @@ public class Results {
     }
 
     /**
-     * Creates a new failed result with a given value.
+     * Creates a new failed {@link Result}.
      *
-     * @param <S> the success type of the result
-     * @param <F> the failure type of the result
+     * @param <S> the success type of the {@code Result}
+     * @param <F> the failure type of the {@code Result}
      * @param failure the failure value
-     * @return the new failed result
+     * @return a failed {@code Result} holding {@code failure}
      * @throws NullPointerException if {@code failure} is {@code null}
      */
     public static <S, F> Result<S, F> failure(F failure) {
@@ -66,34 +67,34 @@ public class Results {
     }
 
     /**
-     * If the given {@code value} is not {@code null}, returns a new successful result with it; otherwise returns a new
-     * failed result with {@code failure}.
+     * Creates a new {@link Result} based on a possibly-null success value and a non-null failure value.
      *
-     * @param <S> the success type of the result
-     * @param <F> the failure type of the result
-     * @param value the value to check if {@code null}
-     * @param failure the failure value to use in case {@code value} is {@code null}
-     * @return the new result
-     * @throws NullPointerException if both {@code value} and {@code failure} are {@code null}
+     * @param <S> the success type of the {@code Result}
+     * @param <F> the failure type of the {@code Result}
+     * @param success the success value to use if non-null
+     * @param failure the failure value to use if {@code success} is {@code null}
+     * @return a successful {@code Result} holding {@code success} if non-null; otherwise, a failed {@code Result}
+     *     holding {@code failure}
+     * @throws NullPointerException if both {@code success} and {@code failure} are {@code null}
      */
-    public static <S, F> Result<S, F> ofNullable(S value, F failure) {
-        return value != null ? new Success<>(value) : failure(failure);
+    public static <S, F> Result<S, F> ofNullable(S success, F failure) {
+        return success != null ? new Success<>(success) : failure(failure);
     }
 
     /**
-     * If the given {@code value} is not {@code null}, returns a new successful result with it; otherwise returns a new
-     * failed result with a value produced by the given supplier function.
+     * Creates a new {@link Result} based on a possibly-null success value and a failure {@link Supplier}.
      *
-     * @param <S> the success type of the result
-     * @param <F> the failure type of the result
-     * @param value the value to check if {@code null}
-     * @param failureSupplier the supplier function that produces a failure value
-     * @return the new result
-     * @throws NullPointerException if both {@code value} and {@code failureSupplier} are {@code
+     * @param <S> the success type of the {@code Result}
+     * @param <F> the failure type of the {@code Result}
+     * @param success the success value to use if non-null
+     * @param failureSupplier the {@code Supplier} that produces a failure value
+     * @return a successful {@code Result} holding {@code success} if non-null; otherwise, a failed {@code Result}
+     *     holding the value produced by {@code failureSupplier}
+     * @throws NullPointerException if both {@code success} and {@code failureSupplier} are {@code
      *     null}, or if {@code failureSupplier} returns {@code null}
      */
-    public static <S, F> Result<S, F> ofNullable(S value, Supplier<? extends F> failureSupplier) {
-        if (value != null) return new Success<>(value);
+    public static <S, F> Result<S, F> ofNullable(S success, Supplier<? extends F> failureSupplier) {
+        if (success != null) return new Success<>(success);
         requireNonNull(failureSupplier, "failure supplier");
         final F failure = failureSupplier.get();
         requireNonNull(failure, "failure value returned by supplier");
@@ -101,38 +102,38 @@ public class Results {
     }
 
     /**
-     * If the given {@code optional} is not empty, returns a new successful result with its value; otherwise returns a
-     * new failed result with {@code failure}.
+     * Creates a new {@link Result} based on an {@link Optional} success value and a non-null failure value.
      *
-     * @param <S> the success type of the result
-     * @param <F> the failure type of the result
-     * @param optional the optional to check if empty
-     * @param failure the failure value to use in case {@code optional} is empty
-     * @return the new result
-     * @throws NullPointerException if {@code optional} is {@code null}; or if {@code optional} is empty and
+     * @param <S> the success type of the {@code Result}
+     * @param <F> the failure type of the {@code Result}
+     * @param success the {@code Optional} success value to use if non-empty
+     * @param failure the failure value to use if {@code success} is empty
+     * @return a successful {@code Result} holding the {@code Optional} success value if non-empty; otherwise, a failed
+     *     {@code Result} holding {@code failure}
+     * @throws NullPointerException if {@code success} is {@code null}; or if {@code success} is empty and
      *     {@code failure} is {@code null}
      */
-    public static <S, F> Result<S, F> ofOptional(Optional<S> optional, F failure) {
-        requireNonNull(optional, "optional");
-        return optional.map((Function<S, Result<S, F>>) Success::new).orElseGet(() -> failure(failure));
+    public static <S, F> Result<S, F> ofOptional(Optional<S> success, F failure) {
+        requireNonNull(success, "optional");
+        return success.map((Function<S, Result<S, F>>) Success::new).orElseGet(() -> failure(failure));
     }
 
     /**
-     * If the given {@code optional} is not empty, returns a new successful result with its value; otherwise returns a
-     * new failed result with a value produced by the given supplier function.
+     * Creates a new {@link Result} based on an {@link Optional} success value and a failure {@link Supplier}.
      *
      * @param <S> the success type of the result
      * @param <F> the failure type of the result
-     * @param optional the optional to check if empty
-     * @param failureSupplier the supplier function that produces a failure value
-     * @return the new result
-     * @throws NullPointerException if {@code optional} is {@code null}; or if {@code optional} is empty and
-     *     {@code failureSupplier} is {@code null}; or if {@code failureSupplier} returns {@code null}
+     * @param success the {@code Optional} success value to use if non-empty
+     * @param failureSupplier the {@code Supplier} that produces a failure value
+     * @return a successful {@code Result} holding the {@code Optional} success value if non-empty; otherwise, a failed
+     *     {@code Result} holding the value produced by {@code failureSupplier}
+     * @throws NullPointerException if {@code success} is {@code null}; or if {@code success} is empty and
+     *     {@code failureSupplier} is {@code null} or returns {@code null}
      */
     public static <S, F> Result<S, F> ofOptional(
-            Optional<S> optional, Supplier<? extends F> failureSupplier) {
-        requireNonNull(optional, "optional");
-        return optional
+            Optional<S> success, Supplier<? extends F> failureSupplier) {
+        requireNonNull(success, "optional");
+        return success
                 .map((Function<S, Result<S, F>>) Success::new)
                 .orElseGet(
                         () -> {
@@ -144,19 +145,19 @@ public class Results {
     }
 
     /**
-     * If the given {@code callable} produces a success value, returns a new successful result with it; otherwise
-     * returns a new failed result with the exception thrown by {@code callable}.
+     * Creates a new {@link Result} based on a {@link Callable} task.
      *
-     * @param <S> the success type of the result
-     * @param callable the task that produces a success value, or throws an exception if unable to do so
-     * @return the new result
-     * @throws NullPointerException if {@code callable} is {@code null}; or if {@code callable} returns {@code null}
+     * @param <S> the success type of the {@code Result}
+     * @param task the {@code Callable} that produces a success value, or throws an {@link Exception} if unable to do so
+     * @return a successful {@code Result} holding the value produced by {@code task} if it completed as intended;
+     *     otherwise a failed {@code Result} holding the {@code Exception} thrown by {@code task}
+     * @throws NullPointerException if {@code task} is {@code null} or returns {@code null}
      */
-    public static <S> Result<S, Exception> ofCallable(Callable<? extends S> callable) {
-        requireNonNull(callable, "callable");
+    public static <S> Result<S, Exception> ofCallable(Callable<? extends S> task) {
+        requireNonNull(task, "callable");
         final S success;
         try {
-            success = callable.call();
+            success = task.call();
         } catch (Exception exception) {
             return new Failure<>(exception);
         }

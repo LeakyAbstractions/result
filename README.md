@@ -6,123 +6,67 @@
 [![Benchmark Report][BADGE_BENCHMARK]][BENCHMARK]
 
 
-![Result Library for Java](docs/result.svg)
-> A Java library to handle success and failure without exceptions
+![][LOGO_DARK]
+![][LOGO_LIGHT]
+
+## A Java library to handle success and failure without exceptions
+
+Wave goodbye to slow exceptions and embrace clean, efficient error handling by encapsulating operations that may succeed
+or fail in a type-safe way.
+
+- **Boost Performance**: Avoid exception overhead and benefit from faster operations.
+- **Simple API**: Leverage a familiar interface for a smooth learning curve.
+- **Streamlined Error Handling**: Handle failure explicitly to simplify error propagation.
+- **Safe Execution**: Ensure safer and more predictable operation outcomes.
+- **Enhanced Readability**: Reduce complexity to make your code easier to understand.
+- **Functional Style**: Embrace elegant, functional programming paradigms.
+- **Lightweight**: Keep your project slim with no extra dependencies.
+- **Open Source**: Enjoy transparent, permissive Apache 2 licensing.
+- **Pure Java**: Seamless compatibility from JDK8 to the latest versions.
+
+> [!NOTE]
+> `Result` objects represent the outcome of an operation, removing the need to check for null. Operations that succeed
+> produce results encapsulating a *success* value; operations that fail produce results with a *failure* value. Success
+> and failure can be represented by whatever types make the most sense for each operation.
 
 
-# Result Library for Java
+## Results in a Nutshell
 
-The purpose of this library is to provide a type-safe encapsulation of operation results that may have succeeded or
-failed, instead of throwing exceptions.
+In Java, methods that can fail typically do so by throwing exceptions. Then, exception-throwing methods are called from
+inside a `try` block to handle errors in a separate `catch` block.
 
-If you like `Optional` but feel that it sometimes falls too short, you'll love `Result`.
+![Using Exceptions][USING_EXCEPTIONS]
 
-The best way to think of _Result_ is as a super-powered version of _Optional_. The only difference is that whereas
-_Optional_ may contain a successful value or express the absence of a value, _Result_ contains either a successful value
-or a failure value that explains what went wrong.
+This approach is lengthy, and that's not the only problem -- it's also very slow.
 
-<details style="margin-bottom: 20px">
- <summary style="display: list-item"><code>Result</code> objects have methods equivalent to those in
- <code>Optional</code>, plus a few more to handle failure values.</summary>
- <div markdown="1">
+> [!TIP]
+> Conventional wisdom says **exceptional logic shouldn't be used for normal program flow**. Results make us deal with
+> expected error situations explicitly to enforce good practices and make our programs [run faster][BENCHMARK].
 
-| Optional                | Result                  |
-|-------------------------|-------------------------|
-| `isPresent`             | `hasSuccess`            |
-| `isEmpty`               | `hasFailure`            |
-| `get`                   | `getSuccess`            |
-|                         | `getFailure`            |
-| `orElse`                | `orElse`                |
-| `orElseGet`             | `orElseMap`             |
-| `orElseThrow`           |                         |
-| `stream`                | `streamSuccess`         |
-|                         | `streamFailure`         |
-| `ifPresent`             | `ifSuccess`             |
-|                         | `ifFailure`             |
-| `ifPresentOrElse`       | `ifSuccessOrElse`       |
-| `filter`                | `filter`                |
-|                         | `recover`               |
-| `map`                   | `mapSuccess`            |
-|                         | `mapFailure`            |
-|                         | `map`                   |
-| `flatMap`               | `flatMapSuccess`        |
-| `or`                    | `flatMapFailure`        |
-|                         | `flatMap`               |
+Let's now look at how the above code could be refactored if `connect()` returned a `Result` object instead of throwing
+an exception.
 
- </div>
-</details>
+![Using Results][USING_RESULTS]
 
----
+In the example above, we used only 4 lines of code to replace the 10 that worked for the first one. But we can
+effortlessly make it shorter by chaining methods. In fact, since we were returning `-1` just to signal that the
+underlying operation failed, we are better off returning a `Result` object upstream. This will allow us to compose
+operations on top of `getServerUptime()` just like we did with `connect()`.
+
+![Embracing Results][EMBRACING_RESULTS]
+
+> [!NOTE]
+> `Result` objects are immutable, providing thread safety without the need for synchronization. This makes them ideal
+> for multi-threaded applications, ensuring predictability and eliminating side effects.
 
 
-## Result Library in a Nutshell
+## Ready to Tap into the Power of Results?
 
-Before _Result_, we would wrap exception-throwing `foobar` method invocation inside a `try` block so that errors can be
-handled inside a `catch` block.
+Read the [guide][GUIDE_HOME] and transform your error handling today.
 
-```java
-
-public int getFoobarLength() {
-    int length;
-    try {
-        final String result = foobar();
-        this.commit(result);
-        length = result.length();
-    } catch(SomeException problem) {
-        this.rollback(problem);
-        length = -1;
-    }
-    return length;
-}
-
-```
-
-This approach is lengthy, and that's not the only problem -- it's also [very slow][BENCHMARK]. Conventional wisdom says
-that exceptional logic shouldn't be used for normal program flow. _Result_ makes us deal with expected, non-exceptional
-error situations explicitly as a way of enforcing good programming practices.
-
-Let's now look at how the above code could be refactored if method `foobar` returned a _Result_ object instead of
-throwing an exception:
-
-```java
-
-public int getFoobarLength() {
-    final Result<String, SomeFailure> result = foobar();
-    result.ifSuccessOrElse(this::commit, this::rollback);
-    final Result<Integer, SomeFailure> resultLength = result.mapSuccess(String::length);
-    return resultLength.orElse(-1);
-}
-
-```
-
-In the above example, we use only four lines of code to replace the ten that worked in the first example. But we can
-make it even shorter by chaining methods in typical functional programming style:
-
-```java
-
-public int getFoobarLength() {
-    return foobar().ifSuccessOrElse(this::commit, this::rollback).mapSuccess(String::length).orElse(-1);
-}
-
-```
-
-In fact, since we are using `-1` here just to signal that the underlying operation failed, we'd be better off returning
-a _Result_ object upstream:
-
-```java
-
-public Result<Integer, SomeFailure> getFoobarLength() {
-    return foobar().ifSuccessOrElse(this::commit, this::rollback).mapSuccess(String::length);
-}
-
-```
-
-This allows others to easily compose operations on top of ours, just like we did with `foobar`.
-
-
-## Getting Started
-
-Please read the [Quick Guide][QUICK_GUIDE] to know how to add this library to your build.
+- :seedling: [Getting Started][GUIDE_START]
+- :potted_plant: [Basic Usage][GUIDE_BASIC]
+- :rocket: [Advanced Usage][GUIDE_ADVANCED]
 
 
 ## Releases
@@ -201,7 +145,7 @@ See the License for the specific language governing permissions and limitations 
 
 [ARTIFACTS]:                    https://search.maven.org/artifact/com.leakyabstractions/result/
 [AUTHOR]:                       https://github.com/guillermocalvo/
-[BADGE_ARTIFACTS]:              https://img.shields.io/endpoint?url=https://dev.leakyabstractions.com/result/badge.json&logo=Gradle&label=maven-central&labelColor=555
+[BADGE_ARTIFACTS]:              https://img.shields.io/endpoint?url=https://dev.leakyabstractions.com/result/badge.json&logo=Gradle&label=Maven+Central&labelColor=555
 [BADGE_BENCHMARK]:              https://img.shields.io/endpoint?url=https://dev.leakyabstractions.com/result-benchmark/badge.json&style=flat
 [BADGE_BUILD_STATUS]:           https://github.com/leakyabstractions/result/workflows/Build/badge.svg
 [BADGE_CODE_COVERAGE]:          https://sonarcloud.io/api/project_badges/measure?project=LeakyAbstractions_result&metric=coverage
@@ -209,12 +153,20 @@ See the License for the specific language governing permissions and limitations 
 [BENCHMARK]:                    https://dev.leakyabstractions.com/result-benchmark/
 [BUILD_STATUS]:                 https://github.com/LeakyAbstractions/result/actions?query=workflow%3ABuild
 [CODE_COVERAGE]:                https://sonarcloud.io/component_measures?id=LeakyAbstractions_result&metric=coverage&view=list
-[CODE_OF_CONDUCT]:              https://dev.leakyabstractions.com/result/CODE_OF_CONDUCT.html
-[CONTRIBUTING]:                 https://dev.leakyabstractions.com/result/CONTRIBUTING.html
+[CODE_OF_CONDUCT]:              https://github.com/LeakyAbstractions/.github/blob/main/CODE_OF_CONDUCT.md
+[CONTRIBUTING]:                 https://github.com/LeakyAbstractions/.github/blob/main/CONTRIBUTING.md
+[EMBRACING_RESULTS]:            docs/embracing-results.png
+[LOGO_DARK]:                    docs/result-logo.dark.svg#gh-dark-mode-only
+[LOGO_LIGHT]:                   docs/result-logo.svg#gh-light-mode-only
+[GUIDE_ADVANCED]:               https://result.leakyabstractions.com/docs/advanced
+[GUIDE_BASIC]:                  https://result.leakyabstractions.com/docs/basic
+[GUIDE_HOME]:                   https://result.leakyabstractions.com/
+[GUIDE_START]:                  https://result.leakyabstractions.com/docs/start
 [GUILLERMO]:                    https://guillermo.dev/
 [GUILLERMO_IMAGE]:              https://guillermo.dev/assets/images/thumb.png
-[JAVADOC]:                      https://dev.leakyabstractions.com/result/javadoc/
+[JAVADOC]:                      https://javadoc.io/doc/com.leakyabstractions/result/latest/
 [PRAGVER]:                      https://pragver.github.io/
 [QUALITY_GATE]:                 https://sonarcloud.io/dashboard?id=LeakyAbstractions_result
-[QUICK_GUIDE]:                  https://dev.leakyabstractions.com/result/
-[SUPPORT]:                      https://dev.leakyabstractions.com/result/SUPPORT.html
+[SUPPORT]:                      https://github.com/LeakyAbstractions/.github/blob/main/SUPPORT.md
+[USING_EXCEPTIONS]:             docs/using-exceptions.png
+[USING_RESULTS]:                docs/using-results.png
