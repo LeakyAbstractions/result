@@ -1,0 +1,10 @@
+---
+---
+{
+  "schemaVersion": 1,
+  "style": "for-the-badge",
+  "labelColor": "fff",
+  "label": "",
+  "color": "fff",
+  "message": "{{ site.current_version }}"
+}
