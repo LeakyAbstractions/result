@@ -181,6 +181,6 @@ final class Failure<S, F> implements Result<S, F> {
 
     @Override
     public String toString() {
-        return new StringBuilder("Failure[").append(this.value).append("]").toString();
+        return "Failure[" + this.value + "]";
     }
 }

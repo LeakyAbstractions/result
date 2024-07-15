@@ -180,6 +180,6 @@ final class Success<S, F> implements Result<S, F> {
 
     @Override
     public String toString() {
-        return new StringBuilder("Success[").append(this.value).append("]").toString();
+        return "Success[" + this.value + "]";
     }
 }
