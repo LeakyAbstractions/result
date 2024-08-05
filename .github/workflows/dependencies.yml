@@ -38,7 +38,7 @@ jobs:
     # SUBMIT DEPENDENCIES
     # ================================
     - name: Generate and submit dependency graph
-      uses: gradle/actions/dependency-submission@v3
+      uses: gradle/actions/dependency-submission@v4
       env:
         # Exclude all dependencies that originate solely in the 'api-compatibility' project
         DEPENDENCY_GRAPH_EXCLUDE_PROJECTS: ':api-compatibility'
