@@ -29,8 +29,8 @@ import com.leakyabstractions.result.api.Result;
  * This class consists exclusively of static methods that return {@link Result} instances.
  *
  * @author <a href="https://guillermo.dev/">Guillermo Calvo</a>
+ * @see com.leakyabstractions.result.core Creating Results
  * @see com.leakyabstractions.result.api.Result
- * @see com.leakyabstractions.result.core
  */
 public class Results {
 
