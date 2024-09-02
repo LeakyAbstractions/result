@@ -63,6 +63,8 @@ Read the [guide][GUIDE_HOME] and transform your error handling today.
 - 🪴 [Basic Usage][GUIDE_BASIC]
 - 🚀 [Advanced Usage][GUIDE_ADVANCED]
 
+Also available as an **ebook** in multiple formats. [Download your free copy now!][GUIDE_BOOK]
+
 
 # Additional Info
 
@@ -148,6 +150,7 @@ See the License for the specific language governing permissions and limitations 
 [EMBRACING_RESULTS]:            embracing-results.png
 [GUIDE_ADVANCED]:               https://result.leakyabstractions.com/docs/advanced
 [GUIDE_BASIC]:                  https://result.leakyabstractions.com/docs/basic
+[GUIDE_BOOK]:                   https://leanpub.com/result/
 [GUIDE_HOME]:                   https://result.leakyabstractions.com/
 [GUIDE_START]:                  https://result.leakyabstractions.com/docs/start
 [GUILLERMO]:                    https://guillermo.dev/
