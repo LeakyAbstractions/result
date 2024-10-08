@@ -2,7 +2,7 @@
 assertj = "3.26.3"
 google-java-format = "1.19.2"
 jacoco = "0.8.10"
-japicmp = "0.4.3"
+japicmp = "0.4.4"
 junit = "5.11.2"
 nexus-publish = "2.0.0"
 result-api = "1.0.0.0"
