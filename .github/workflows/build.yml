@@ -97,24 +97,12 @@ jobs:
       run: ./gradlew check
 
     # ================================
-    # SEMANTIC VERSIONING
-    # ================================
-    - name: Semantic versioning
-      if: ${{ env.is_latest_jdk }}
-      run: |
-        SEMVER=`cat ./api-compatibility/build/semver.txt`
-        BADGE="https://dev.leakyabstractions.com/result/semver-${SEMVER}.json"
-        URL="https://img.shields.io/endpoint?url=$BADGE"
-        echo "## Compatibility Report" >> $GITHUB_STEP_SUMMARY
-        echo "![Semantic Versioning]($URL)" >> $GITHUB_STEP_SUMMARY
-
-    # ================================
     # COMPATIBILITY REPORT
     # ================================
     - name: Compatibility with version ${{ steps.properties.outputs.previousVersion }}
       if: ${{ env.is_latest_jdk }}
       # $GITHUB_STEP_SUMMARY supports content up to a size of 1024k
-      run: head -c 1MiB ./api-compatibility/build/report.txt >> $GITHUB_STEP_SUMMARY
+      run: head -c 1MiB ./api-compatibility/build/report.md >> $GITHUB_STEP_SUMMARY
 
     # ================================
     # CACHE SONARCLOUD PACKAGES

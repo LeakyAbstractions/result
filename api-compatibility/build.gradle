@@ -25,11 +25,13 @@ tasks.register("check", me.champeau.gradle.japicmp.JapicmpTask) {
     final semverReport= layout.buildDirectory.file('semver.txt').get().asFile
     final textReport  = layout.buildDirectory.file('report.txt').get().asFile
     final htmlReport  = layout.buildDirectory.file('report.html').get().asFile
+    final mdReport    = layout.buildDirectory.file('report.md').get().asFile
     newClasspath.from(configurations.current)
     oldClasspath.from(configurations.previous)
     semverOutputFile            = semverReport
     txtOutputFile               = textReport
     htmlOutputFile              = htmlReport
+    mdOutputFile                = mdReport
     onlyModified                = true
     failOnModification          = false
     failOnSourceIncompatibility = false
