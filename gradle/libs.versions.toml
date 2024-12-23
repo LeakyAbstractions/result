@@ -1,5 +1,5 @@
 [versions]
-assertj = "3.26.3"
+assertj = "3.27.0"
 google-java-format = "1.19.2"
 jacoco = "0.8.10"
 japicmp = "0.4.5"
