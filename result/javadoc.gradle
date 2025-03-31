@@ -1,7 +1,7 @@
 // Configure Javadoc
 javadoc {
     options {
-        title project.artifactName
+        title = project.artifactName
         header "${project.artifactName} ${rootProject.version}"
         author true
         links 'https://javadoc.io/doc/com.leakyabstractions/result-api/latest/'
