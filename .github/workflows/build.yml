@@ -75,19 +75,9 @@ jobs:
         cache-read-only: ${{ !env.is_main && !env.is_develop }}
 
     # ================================
-    # EXPORT GRADLE PROPERTIES
-    # ================================
-    - name: Export Gradle properties
-      id: properties
-      uses: guillermocalvo/gradle-properties@v3
-      with:
-        output_file: ${{ github.output }}
-        export: version,previousVersion
-
-    # ================================
     # BUILD
     # ================================
-    - name: Build version ${{ steps.properties.outputs.version }}
+    - name: Build
       run: ./gradlew build -x check
 
     # ================================
@@ -99,7 +89,7 @@ jobs:
     # ================================
     # COMPATIBILITY REPORT
     # ================================
-    - name: Compatibility with version ${{ steps.properties.outputs.previousVersion }}
+    - name: Compatibility with previous version
       if: ${{ env.is_latest_jdk }}
       # $GITHUB_STEP_SUMMARY supports content up to a size of 1024k
       run: head -c 1MiB ./api-compatibility/build/report.md >> $GITHUB_STEP_SUMMARY
