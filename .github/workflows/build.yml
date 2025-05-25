@@ -75,9 +75,19 @@ jobs:
         cache-read-only: ${{ !env.is_main && !env.is_develop }}
 
     # ================================
+    # EXPORT GRADLE PROPERTIES
+    # ================================
+    - name: Export Gradle properties
+      id: properties
+      uses: guillermocalvo/gradle-properties@v3
+      with:
+        output_file: ${{ github.output }}
+        export: version
+
+    # ================================
     # BUILD
     # ================================
-    - name: Build
+    - name: Build version ${{ steps.properties.outputs.version }}
       run: ./gradlew build -x check
 
     # ================================
@@ -126,6 +136,6 @@ jobs:
       env:
         ORG_GRADLE_PROJECT_githubUsername: ${{ secrets.PUBLISH_USERNAME }}
         ORG_GRADLE_PROJECT_githubPassword: ${{ secrets.PUBLISH_PASSWORD }}
-        ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.SONATYPE_USERNAME }}
-        ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.SONATYPE_PASSWORD }}
+        ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+        ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
       run: ./gradlew publish -Psnapshot
