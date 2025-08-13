@@ -22,7 +22,7 @@ jobs:
     # SHALLOW CLONE
     # ================================
     - name: Shallow clone
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
 
     # ================================
     # SET UP JDK

@@ -34,14 +34,14 @@ jobs:
     # ================================
     - name: Shallow clone
       if: ${{ !env.is_latest_jdk || env.is_fork }}
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
 
     # ================================
     # CHECKOUT
     # ================================
     - name: Checkout git branch
       if: ${{ env.is_latest_jdk && !env.is_fork }}
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         # Fetch all history for all tags and branches (recommended by SonarQube)
         fetch-depth: 0
@@ -60,8 +60,8 @@ jobs:
       uses: actions/setup-java@v4
       with:
         distribution: 'zulu'
-        java-package: jdk
         java-version: ${{ matrix.jdk }}
+        java-package: jdk
 
     # ================================
     # SET UP GRADLE
