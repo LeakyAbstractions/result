@@ -19,10 +19,10 @@ jobs:
 
     strategy:
       matrix:
-        jdk: [ 17, 21, 24 ]
+        jdk: [ 17, 21, 25 ]
 
     env:
-      is_latest_jdk:  ${{ matrix.jdk == 24                                          && 'yes' || '' }}
+      is_latest_jdk:  ${{ matrix.jdk == 25                                          && 'yes' || '' }}
       is_main:        ${{ github.ref_name == github.event.repository.default_branch && 'yes' || '' }}
       is_develop:     ${{ github.ref_name == 'develop'                              && 'yes' || '' }}
       is_fork:        ${{ github.event_name == 'pull_request'                       && 'yes' || '' }}
