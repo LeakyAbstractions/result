@@ -3,13 +3,10 @@
 testing {
     suites {
         test {
-            useJUnitJupiter()
+            useJUnitJupiter(libs.versions.junit)
             dependencies {
-                //runtimeOnly libs.bundles.test.runtime
-                runtimeOnly libs.junit.jupiter.engine
-                //implementation libs.bundles.test.implementation
-                implementation libs.assertj.core
-                implementation libs.junit.jupiter.api
+                runtimeOnly.bundle(libs.bundles.test.runtime)
+                implementation.bundle(libs.bundles.test.implementation)
             }
         }
     }
