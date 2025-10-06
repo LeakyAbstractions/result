@@ -38,7 +38,7 @@ jobs:
     # SUBMIT DEPENDENCIES
     # ================================
     - name: Generate and submit dependency graph
-      uses: gradle/actions/dependency-submission@v4
+      uses: gradle/actions/dependency-submission@v5
       with:
         dependency-graph-exclude-projects: api-compatibility
         dependency-graph-exclude-configurations: '.*[Tt]est(Compile|Runtime)Classpath'
