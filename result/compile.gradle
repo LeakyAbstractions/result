@@ -1,11 +1,16 @@
 // Java toolchain
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(8)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
 // Configure java compiler
 tasks.withType(JavaCompile).all {
     options.compilerArgs.addAll(['-Xlint:all', '-Werror'])
+    if (name != 'compileTestJava') {
+        options.release = 8
+        // source value 8 is obsolete and will be removed in a future release
+        options.compilerArgs.addAll(['-Xlint:-options'])
+    }
 }

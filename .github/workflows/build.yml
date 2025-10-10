@@ -19,7 +19,7 @@ jobs:
 
     strategy:
       matrix:
-        jdk: [ 17, 21, 25 ]
+        jdk: [ 21, 25 ]
 
     env:
       is_latest_jdk:  ${{ matrix.jdk == 25                                          && 'yes' || '' }}
