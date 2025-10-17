@@ -45,7 +45,6 @@
  * <p>
  * Finally, if we have a task that may either return a success value or throw an exception, we can encapsulate it as a
  * result so we don't need to use a <em>try-catch</em> block.
- * <p>
  * <ul>
  * <li>{@link com.leakyabstractions.result.core.Results#ofCallable(java.util.concurrent.Callable)
  * Results.ofCallable(Callable&lt;S&gt;)}.
