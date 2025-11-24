@@ -34,14 +34,14 @@ jobs:
     # ================================
     - name: Shallow clone
       if: ${{ !env.is_latest_jdk || env.is_fork }}
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
 
     # ================================
     # CHECKOUT
     # ================================
     - name: Checkout git branch
       if: ${{ env.is_latest_jdk && !env.is_fork }}
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         # Fetch all history for all tags and branches (recommended by SonarQube)
         fetch-depth: 0
