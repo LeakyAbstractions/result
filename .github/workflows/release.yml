@@ -18,7 +18,7 @@ jobs:
     # CHECKOUT
     # ================================
     - name: Checkout git tag
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
 
     # ================================
     # SET UP JDK
