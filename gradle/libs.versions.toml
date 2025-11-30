@@ -1,16 +1,17 @@
 [versions]
-assertj = "3.26.3"
-google-java-format = "1.19.2"
-jacoco = "0.8.10"
-japicmp = "0.4.3"
-junit = "5.11.0"
+assertj = "3.27.6"
+google-java-format = "1.32.0"
+jacoco = "0.8.14"
+japicmp = "0.4.6"
+junit = "6.0.1"
 nexus-publish = "2.0.0"
-result-api = "1.0.0.0"
-sonarqube = "5.1.0.4882"
-spotless = "6.25.0"
+result-api = "1.0.1.0"
+sonarqube = "7.1.0.6387"
+spotless = "8.1.0"
 
 [libraries]
 assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj" }
+google-java-format = { module = "com.google.googlejavaformat:google-java-format", version.ref = "google-java-format" }
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
 result-api = { module = "com.leakyabstractions:result-api", version.ref = "result-api" }
@@ -18,7 +19,7 @@ result-api = { module = "com.leakyabstractions:result-api", version.ref = "resul
 [bundles]
 api = [ "result-api" ]
 test-implementation = [ "assertj-core", "junit-jupiter-api" ]
-test-runtime = [ "junit-jupiter-engine" ]
+test-runtime = [ "junit-jupiter-engine", "google-java-format" ]
 
 [plugins]
 japicmp = { id = "me.champeau.gradle.japicmp", version.ref = "japicmp" }

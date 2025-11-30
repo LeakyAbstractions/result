@@ -108,7 +108,7 @@ By participating, you are expected to uphold this code.
 
 ## Author
 
-Copyright 2024 [Guillermo Calvo][AUTHOR].
+Copyright 2025 [Guillermo Calvo][AUTHOR].
 
 [![][GUILLERMO_IMAGE]][GUILLERMO]
 

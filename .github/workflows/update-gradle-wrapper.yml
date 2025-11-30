@@ -19,14 +19,16 @@ jobs:
     # SHALLOW CLONE
     # ================================
     - name: Shallow clone
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     # ================================
     # UPDATE GRADLE WRAPPER
     # ================================
     - name: Update Gradle Wrapper
-      uses: gradle-update/update-gradle-wrapper-action@v1
+      uses: gradle-update/update-gradle-wrapper-action@v2
       with:
         release-channel: stable
         base-branch: develop
         target-branch: develop
+        pr-title-template: 'Gradle Wrapper %targetVersion%'
+        commit-message-template: 'Update Gradle Wrapper to version %targetVersion%'

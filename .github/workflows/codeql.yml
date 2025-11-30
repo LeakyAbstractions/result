@@ -29,13 +29,13 @@ jobs:
     # SHALLOW CLONE
     # ================================
     - name: Shallow clone
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     # ================================
     # SET UP CODEQL
     # ================================
     - name: Set up CodeQL
-      uses: github/codeql-action/init@v3
+      uses: github/codeql-action/init@v4
       with:
         languages: java-kotlin
         build-mode: autobuild
@@ -44,6 +44,6 @@ jobs:
     # ANALYZE
     # ================================
     - name: Analyze with CodeQL
-      uses: github/codeql-action/analyze@v3
+      uses: github/codeql-action/analyze@v4
       with:
         category: "/language:java-kotlin"
