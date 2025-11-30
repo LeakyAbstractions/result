@@ -5,6 +5,12 @@ java {
     }
 }
 
+jar {
+    manifest {
+        attributes('Automatic-Module-Name': 'com.leakyabstractions.result.core')
+    }
+}
+
 // Configure java compiler
 tasks.withType(JavaCompile).all {
     options.compilerArgs.addAll(['-Xlint:all', '-Werror'])

@@ -13,6 +13,10 @@ and this project adheres to [Pragmatic Versioning](https://pragver.github.io/spe
 
 - Bump **result-api** from 1.0.0.0 to 1.0.1.0.
 
+### Added
+
+- Add automatic module name `com.leakyabstractions.result.core`.
+
 
 ## [1.0.0.0]
 
