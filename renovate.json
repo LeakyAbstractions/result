@@ -1,0 +1,28 @@
+{
+  "extends": ["config:base"],
+
+  "schedule": ["every day before 5am"],
+
+  "baseBranches": ["develop"],
+
+  "enabledManagers": [
+    "gradle",
+    "gradle-wrapper",
+    "github-actions"
+  ],
+
+  "packageRules": [
+    {
+      "matchManagers": ["gradle-wrapper"],
+      "groupName": "gradle wrapper updates"
+    },
+    {
+      "matchManagers": ["gradle"],
+      "groupName": "gradle dependency updates"
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "groupName": "github actions updates"
+    }
+  ]
+}
