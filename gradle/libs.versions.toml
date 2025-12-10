@@ -1,12 +1,12 @@
 [versions]
 assertj = "3.27.6"
-google-java-format = "1.32.0"
+google-java-format = "1.33.0"
 jacoco = "0.8.14"
 japicmp = "0.4.6"
 junit = "6.0.1"
 nexus-publish = "2.0.0"
 result-api = "1.0.1.0"
-sonarqube = "7.1.0.6387"
+sonarqube = "7.2.0.6526"
 spotless = "8.1.0"
 
 [libraries]
