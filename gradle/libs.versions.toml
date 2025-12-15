@@ -6,7 +6,7 @@ japicmp = "0.4.6"
 junit = "6.0.1"
 nexus-publish = "2.0.0"
 result-api = "1.0.1.0"
-sonarqube = "7.2.0.6526"
+sonarqube = "7.2.1.6560"
 spotless = "8.1.0"
 
 [libraries]
