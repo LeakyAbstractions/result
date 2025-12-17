@@ -44,7 +44,7 @@ class Results_ofCallable_Test {
     @Test
     void should_throw_exception_when_null_callable() {
         // Given
-        final Callable<Result<String, Integer>> callable = null;
+        final Callable<String> callable = null;
         // When
         final Throwable thrown = catchThrowable(() -> Results.ofCallable(callable));
         // Then
@@ -54,7 +54,7 @@ class Results_ofCallable_Test {
     @Test
     void should_throw_exception_when_callable_returns_null() {
         // Given
-        final Callable<Result<String, Integer>> callable = () -> null;
+        final Callable<String> callable = () -> null;
         // When
         final Throwable thrown = catchThrowable(() -> Results.ofCallable(callable));
         // Then
