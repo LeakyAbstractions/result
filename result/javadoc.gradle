@@ -4,14 +4,6 @@ javadoc {
         title = project.artifactName
         header "${project.artifactName} ${rootProject.version}"
         author true
-        links 'https://javadoc.io/doc/com.leakyabstractions/result-api/latest/'
-        links 'https://docs.oracle.com/javase/8/docs/api/'
-    }
-    configure(options) {
-        tags(
-                'apiNote:a:API Note:',
-                'implNote:a:Impl Note:',
-                'implSpec:a:Impl Spec:'
-                )
+        links 'https://javadoc.io/doc/com.leakyabstractions/result-api/' + libs.versions.result.api.get()
     }
 }
