@@ -164,4 +164,33 @@ public class Results {
         requireNonNull(success, "success value returned by callable");
         return new Success<>(success);
     }
+
+    /**
+     * Creates a new {@link Result} based on a {@link Callable} task and a mapping {@link Function}.
+     *
+     * @param <S> the success type of the {@code Result}
+     * @param <T> the type returned by the {@code task}
+     * @param task the {@code Callable} that produces a possibly-null value, or throws an {@link Exception} if unable to
+     *     do so
+     * @param mapper the mapping {@code Function} that transforms the value produced by {@code task} into a success
+     *     value, or throws an {@link Exception} if unable to do so
+     * @return a successful {@code Result} holding the value produced by {@code task} and transformed by {@code mapper}
+     *     if both completed as intended; otherwise a failed {@code Result} holding the {@code Exception} thrown by
+     *     either one
+     * @throws NullPointerException if either {@code task} or {@code mapper} is {@code null}, or if {@code mapper}
+     *     returns {@code null}
+     */
+    public static <S, T> Result<S, Exception> ofCallable(
+            Callable<? extends T> task, Function<? super T, ? extends S> mapper) {
+        requireNonNull(task, "callable");
+        requireNonNull(mapper, "mapper");
+        final S success;
+        try {
+            success = mapper.apply(task.call());
+        } catch (Exception exception) {
+            return new Failure<>(exception);
+        }
+        requireNonNull(success, "success value returned by mapper");
+        return new Success<>(success);
+    }
 }
