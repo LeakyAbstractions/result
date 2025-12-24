@@ -1,27 +1,35 @@
 {
-  "extends": ["config:base"],
-
-  "schedule": ["every day before 5am"],
-
-  "baseBranches": ["develop"],
-
+  "extends": [
+    "config:recommended"
+  ],
+  "schedule": [
+    "* 0-4 * * *"
+  ],
+  "baseBranchPatterns": [
+    "develop"
+  ],
   "enabledManagers": [
     "gradle",
     "gradle-wrapper",
     "github-actions"
   ],
-
   "packageRules": [
     {
-      "matchManagers": ["gradle-wrapper"],
+      "matchManagers": [
+        "gradle-wrapper"
+      ],
       "groupName": "gradle wrapper updates"
     },
     {
-      "matchManagers": ["gradle"],
+      "matchManagers": [
+        "gradle"
+      ],
       "groupName": "gradle dependency updates"
     },
     {
-      "matchManagers": ["github-actions"],
+      "matchManagers": [
+        "github-actions"
+      ],
       "groupName": "github actions updates"
     }
   ]
