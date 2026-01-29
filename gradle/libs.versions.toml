@@ -1,5 +1,5 @@
 [versions]
-assertj = "3.27.6"
+assertj = "3.27.7"
 google-java-format = "1.33.0"
 jacoco = "0.8.14"
 japicmp = "0.4.6"
@@ -7,7 +7,7 @@ junit = "6.0.2"
 nexus-publish = "2.0.0"
 result-api = "1.0.1.0"
 sonarqube = "7.2.2.6593"
-spotless = "8.1.0"
+spotless = "8.2.1"
 
 [libraries]
 assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj" }
