@@ -7,7 +7,7 @@ junit = "6.1.0"
 nexus-publish = "2.0.0"
 result-api = "1.0.1.0"
 sonarqube = "7.3.1.8318"
-spotless = "8.6.0"
+spotless = "8.7.0"
 
 [libraries]
 assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj" }
