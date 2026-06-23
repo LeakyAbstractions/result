@@ -34,14 +34,14 @@ jobs:
     # ================================
     - name: Shallow clone
       if: ${{ !env.is_latest_jdk || env.is_fork }}
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
 
     # ================================
     # CHECKOUT
     # ================================
     - name: Checkout git branch
       if: ${{ env.is_latest_jdk && !env.is_fork }}
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         # Fetch all history for all tags and branches (recommended by SonarQube)
         fetch-depth: 0
@@ -109,7 +109,7 @@ jobs:
     # ================================
     - name: Cache SonarCloud packages
       if: ${{ env.is_latest_jdk && !env.is_fork }}
-      uses: actions/cache@v5
+      uses: actions/cache@v6
       with:
         key: ${{ runner.os }}-sonar
         path: |
