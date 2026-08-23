@@ -21,40 +21,40 @@ publishing {
     publications {
         mavenRelease(MavenPublication) {
             pom {
-                groupId         = rootProject.group
-                artifactId      = rootProject.artifactId
-                name            = rootProject.artifactName
-                description     = rootProject.description
-                version         = rootProject.version
-                url             = rootProject.homepage
+                groupId = rootProject.group
+                artifactId = rootProject.artifactId
+                name = rootProject.artifactName
+                description = rootProject.description
+                version = rootProject.version
+                url = rootProject.homepage
                 licenses {
                     license {
-                        name    = rootProject.licenseName
-                        url     = rootProject.licenseUrl
+                        name = rootProject.licenseName
+                        url = rootProject.licenseUrl
                     }
                 }
                 developers {
                     developer {
-                        id      = rootProject.developerId
-                        name    = rootProject.developerName
-                        email   = rootProject.developerEmail
+                        id = rootProject.developerId
+                        name = rootProject.developerName
+                        email = rootProject.developerEmail
                     }
                 }
                 organization {
-                    name        = rootProject.organizationName
-                    url         = rootProject.organizationUrl
+                    name = rootProject.organizationName
+                    url = rootProject.organizationUrl
                 }
                 issueManagement {
-                    system      = rootProject.issuesSystem
-                    url         = rootProject.issuesUrl
+                    system = rootProject.issuesSystem
+                    url = rootProject.issuesUrl
                 }
                 ciManagement {
-                    system      = rootProject.ciSystem
-                    url         = rootProject.ciUrl
+                    system = rootProject.ciSystem
+                    url = rootProject.ciUrl
                 }
                 scm {
-                    url         = rootProject.repository
-                    connection  = rootProject.checkout
+                    url = rootProject.repository
+                    connection = rootProject.checkout
                 }
             }
             from(components.java)
