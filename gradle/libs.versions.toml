@@ -6,8 +6,8 @@ japicmp = "0.4.6"
 junit = "6.1.3"
 nexus-publish = "2.0.0"
 result-api = "1.0.1.0"
-sonarqube = "7.4.0.8496"
-spotless = "8.10.0"
+sonarqube = "7.5.0.8588"
+spotless = "8.10.2"
 
 [libraries]
 assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj" }
