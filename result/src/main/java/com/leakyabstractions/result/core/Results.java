@@ -135,13 +135,12 @@ public class Results {
         requireNonNull(success, "optional");
         return success
                 .map((Function<S, Result<S, F>>) Success::new)
-                .orElseGet(
-                        () -> {
-                            requireNonNull(failureSupplier, "failure supplier");
-                            final F failure = failureSupplier.get();
-                            requireNonNull(failure, "failure value returned by supplier");
-                            return new Failure<>(failure);
-                        });
+                .orElseGet(() -> {
+                    requireNonNull(failureSupplier, "failure supplier");
+                    final F failure = failureSupplier.get();
+                    requireNonNull(failure, "failure value returned by supplier");
+                    return new Failure<>(failure);
+                });
     }
 
     /**
